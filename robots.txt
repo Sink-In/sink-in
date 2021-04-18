@@ -1,0 +1,4 @@
+User-agent: *
+Sitemap: https://gosink.in/sitemap.xml
+Disallow: /ghost/
+Disallow: /p/
