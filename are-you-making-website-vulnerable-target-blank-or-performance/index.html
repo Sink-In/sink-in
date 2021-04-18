@@ -1,40 +1,490 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+
+    <title>Are you making your website vulnerable by adding target&#x3D;&quot;_blank&quot;?</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Sink In - Tech and Travel</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=8d817c4a26" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=2408e2b2b9" />
+
+    <meta name="description" content="Or, are you compromising the performance of your website? If you didn&#x27;t know this before, I&#x27;m pretty sure you&#x27;re more than convinced that using target&#x3D;&quot;_blank&quot; alone is dangerous for your website. And Indeed, it is one of the most underestimated vulnerabilities." />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://gosink.in/are-you-making-website-vulnerable-target-blank-or-performance/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="https://gosink.in/are-you-making-website-vulnerable-target-blank-or-performance/amp/" />
+    
+    <meta property="og:site_name" content="Sink In - Tech and Travel" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Are you making your website vulnerable by adding target&#x3D;&quot;_blank&quot;?" />
+    <meta property="og:description" content="Or, are you compromising the performance of your website? Okay, first, let me show you one example!" />
+    <meta property="og:url" content="https://gosink.in/are-you-making-website-vulnerable-target-blank-or-performance/" />
+    <meta property="og:image" content="https://gosink.in/content/images/2019/09/anonymous.jpeg" />
+    <meta property="article:published_time" content="2019-09-14T13:19:06.000Z" />
+    <meta property="article:modified_time" content="2019-11-26T08:14:19.000Z" />
+    <meta property="article:tag" content="Tech" />
+    <meta property="article:tag" content="javascript" />
+    <meta property="article:tag" content="Security" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/shah.apal" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Are you making your website vulnerable by adding target&#x3D;&quot;_blank&quot;?" />
+    <meta name="twitter:description" content="Or, are you compromising the performance of your website? Okay, first, let me show you one example!" />
+    <meta name="twitter:url" content="https://gosink.in/are-you-making-website-vulnerable-target-blank-or-performance/" />
+    <meta name="twitter:image" content="https://gosink.in/content/images/2019/09/anonymous.jpeg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Apal Shah" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Tech, javascript, Security" />
+    <meta name="twitter:site" content="@shah_apal" />
+    <meta property="og:image:width" content="2000" />
+    <meta property="og:image:height" content="1333" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Sink In - Tech and Travel",
+        "url": "https://gosink.in/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://gosink.in/content/images/2019/08/Final-logo.png"
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Apal Shah",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://gosink.in/author/apal/",
+        "sameAs": []
+    },
+    "headline": "Are you making your website vulnerable by adding target&#x3D;&quot;_blank&quot;?",
+    "url": "https://gosink.in/are-you-making-website-vulnerable-target-blank-or-performance/",
+    "datePublished": "2019-09-14T13:19:06.000Z",
+    "dateModified": "2019-11-26T08:14:19.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://gosink.in/content/images/2019/09/anonymous.jpeg",
+        "width": 2000,
+        "height": 1333
+    },
+    "keywords": "Tech, javascript, Security",
+    "description": "Or, are you compromising the performance of your website? Okay, first, let me show you one example!",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://gosink.in/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.2" />
+    <link rel="alternate" type="application/rss+xml" title="Sink In - Tech and Travel" href="https://gosink.in/rss/" />
+    <script defer src="https://unpkg.com/@tryghost/portal@~1.1.0/umd/portal.min.js" data-ghost="https://gosink.in/"></script><style> .gh-post-upgrade-cta-content,
+.gh-post-upgrade-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.gh-post-upgrade-cta-content {
+    border-radius: 8px;
+    padding: 40px 4vw;
+}
+
+.gh-post-upgrade-cta h2 {
+    color: #ffffff;
+    font-size: 28px;
+    letter-spacing: -0.2px;
+    margin: 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta p {
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta small {
+    font-size: 16px;
+    letter-spacing: -0.2px;
+}
+
+.gh-post-upgrade-cta a {
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a:hover {
+    color: #ffffff;
+    opacity: 0.8;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a.gh-btn {
+    display: block;
+    background: #ffffff;
+    text-decoration: none;
+    margin: 28px 0 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gh-post-upgrade-cta a.gh-btn:hover {
+    opacity: 0.92;
+}</style>
+    <link rel="stylesheet"
+      href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/night-owl.min.css">
+<!-- Fix Gist -->
+<style>
+    .gist {
+    	width: 100%;
+    }
+    .post-full-content pre {
+        box-shadow: 0 20px 25px -20px rgba(0,0,0,0.7);
+        word-wrap: normal;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        -webkit-hyphens: none;
+        hyphens: none;
+        font-size: 0.9em;
+        line-height: 1.3em;
+        border: rbg(1, 22, 39, 0.9);
+        background: rgba(1, 22, 39, 0.9);
+    }
+    .post-full-content pre code, .post-full-content pre tt {
+        white-space: pre;
+    }
+</style>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-63344841-6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-63344841-6');
+</script>
+
+<!-- Google Adsense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-7909119592155313",
+          enable_page_level_ads: true
+     });
+</script>
+<style>:root {--ghost-accent-color: #1c1c1c;}</style>
+
 </head>
-<body>
-    <div class="site-wrapper">
+<body class="post-template tag-tech tag-javascript tag-security">
+<div class="viewport">
 
-        <header class="site-header no-image">
-            <div class="site-nav-main outer">
-                <div class="inner">
-                    <nav class="site-nav-center">
-                        <a class="site-nav-logo" href="https://gosink.in"><img src="/content/images/size/w100/2019/08/Final-logo.png"
-                                alt="Sink In - Tech and Travel" /></a>
-                    </nav>
+    <header id="gh-head" class="gh-head has-cover">
+        <nav class="gh-head-inner inner gh-container">
+
+            <div class="gh-head-brand">
+                <a class="gh-head-logo" href="https://gosink.in">
+                        <img src="https://gosink.in/content/images/2019/08/Final-logo.png" alt="Sink In - Tech and Travel" />
+                </a>
+                <a class="gh-burger" role="button">
+                    <div class="gh-burger-box">
+                        <div class="gh-burger-inner"></div>
+                    </div>
+                </a>
+            </div>
+            <div class="gh-head-menu">
+                <ul class="nav">
+    <li class="nav-home"><a href="https://gosink.in/">Home</a></li>
+    <li class="nav-tech"><a href="https://gosink.in/tag/tech/">Tech</a></li>
+    <li class="nav-design"><a href="https://gosink.in/tag/design/">Design</a></li>
+    <li class="nav-travel"><a href="https://gosink.in/tag/travel/">Travel</a></li>
+    <li class="nav-entrepreneurship"><a href="https://gosink.in/tag/entrepreneurship/">Entrepreneurship</a></li>
+</ul>
+
+            </div>
+            <div class="gh-head-actions">
+                <div class="gh-social">
+                        <a class="gh-social-facebook" href="https://www.facebook.com/shah.apal" title="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16 0c8.837 0 16 7.163 16 16s-7.163 16-16 16S0 24.837 0 16 7.163 0 16 0zm5.204 4.911h-3.546c-2.103 0-4.443.885-4.443 3.934.01 1.062 0 2.08 0 3.225h-2.433v3.872h2.509v11.147h4.61v-11.22h3.042l.275-3.81h-3.397s.007-1.695 0-2.187c0-1.205 1.253-1.136 1.329-1.136h2.054V4.911z" /></svg></a>
+                        <a class="gh-social-twitter" href="https://twitter.com/shah_apal" title="Twitter" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+</a>
                 </div>
-            </div>
-        </header>
-
-        <main class="outer error-content">
-            <div class="inner">
-
-                <section class="error-message">
-                    <h1 class="error-code">400</h1>
-                    <p class="error-description">[post.hbs] post doesn&#x27;t match unless - 7:3</p>
-                    <a class="error-link" href="https://gosink.in">Go to the front page →</a>
-                </section>
-
 
             </div>
-        </main>
+        </nav>
+    </header>
+
+    <main>
+        
+
+
+
+<article class="article post tag-tech tag-javascript tag-security">
+
+    <header class="article-header gh-canvas">
+
+        <section class="article-tag">
+            <a href="https://gosink.in/tag/tech/">Tech</a>
+        </section>
+
+        <h1 class="article-title">Are you making your website vulnerable by adding target&#x3D;&quot;_blank&quot;?</h1>
+
+        <p class="article-excerpt">Or, are you compromising the performance of your website? Okay, first, let me show you one example!</p>
+
+        <div class="article-byline">
+            <section class="article-byline-content">
+                <ul class="author-list">
+                    <li class="author-list-item">
+                        <a href="/author/apal/" class="author-avatar">
+                            <img class="author-profile-image" src="//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x" alt="Apal Shah" />
+                        </a>
+                    </li>
+                </ul>
+                <div class="article-byline-meta">
+                    <h4 class="author-name"><a href="/author/apal/">Apal Shah</a></h4>
+                    <div class="byline-meta-content">
+                        <time class="byline-meta-date" datetime="2019-09-14">Sep 14, 2019</time>
+                        <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <figure class="article-image">
+            <img
+                srcset="/content/images/size/w300/2019/09/anonymous.jpeg 300w,
+                        /content/images/size/w600/2019/09/anonymous.jpeg 600w,
+                        /content/images/size/w1000/2019/09/anonymous.jpeg 1000w,
+                        /content/images/size/w2000/2019/09/anonymous.jpeg 2000w"
+                sizes="(min-width: 1400px) 1400px, 92vw"
+                src="/content/images/size/w2000/2019/09/anonymous.jpeg"
+                alt="Are you making your website vulnerable by adding target&#x3D;&quot;_blank&quot;?"
+            />
+        </figure>
+    </header>
+
+    <section class="gh-content gh-canvas">
+        <p>Or, are you compromising the performance of your website? Okay, first, let me show you one example! (Press back to come back to this blog after clicking the link.)</p><!--kg-card-begin: html--><a href="https://apal21.github.io/target-blank/pages/redirect.html" target="_blank" id="demo">Click this link to see the DEMO!</a><!--kg-card-end: html--><p></p><p>If you didn't know this before, I'm pretty sure you're more than convinced that using <code>target="_blank"</code> alone is dangerous for your website. And Indeed, it is one of the most underestimated vulnerabilities.</p><p>When I saw this happening for the first time, I couldn't believe it. It was unbelievable. How did I not know about this? I've seen popups filling up the forms, redirect the parent pages, etc. But I didn't notice that these data can actually be accessed by the cross-origin websites.</p><h3 id="let-s-see-when-people-generally-use-target-_blank-">Let's see when people generally use target="_blank"!</h3><ul><li>If they don't want their users to leave their page.</li><li>They want to differentiate between internal and external links.</li><li>They're having a page with infinite scroll and don't want their users to lose the scroll position.</li><li>If there is some form and they want to prevent the data loss.</li></ul><p>These are the major reasons and I'm not in favor or against of any use case because it totally depends on the situation. All of them are both good and bad in different situations.</p><hr><h2 id="how-can-attackers-exploit-your-website">How can attackers exploit your website?</h2><p>One of the use cases that comes to my mind after seeing this is the <strong>PHISHING</strong>!</p><p>In general, if some attacker wants to compromise your website's data, he/she will redirect your page to a clone of your website. And that might lead your users to compromise their credentials or any other sensitive data or information.</p><p>Even if someone doesn't want to exploit your website, they can significantly harm the performance of your website. We'll talk about this later in this blog.</p><p>This <code>target="_blank"</code><strong> </strong>comes with some cool features. We can access the whole document from the other page. We can get all the data, append some HTML, CSS or JavaScript, fill the forms and also submit them, and do infinite things if the domain is the same.</p><p>Fortunately, almost all browsers don't support to access the DOM if the domain of the website is not the same. But still, we do have access to the window object of the parent website. But I've read some blogs and some discussions saying they've seen cookie and session hijacking using this vulnerability. And to be honest I've tried that and I couldn't do that cross-origin in the latest browsers.</p><p>You can check the features and vulnerabilities in <a href="https://github.com/apal21/target-blank-vulnerabilities-features"><em>this GitHub repository</em></a> and don't hesitate to make a pull request if you want to add some more details or vulnerabilities.</p><hr><h2 id="let-s-see-how-this-works-">Let's see how this works!</h2><p>If you take a look the code of the anchor tag above (using inspect), there is nothing suspicious about that link. It has only 2 attributes - src and target. But the magic happens after clicking the link.</p><p>After clicking this link, the new window gets the whole reference of the window object of the parent website inside <code>window.opener</code>. The data can be fetched and modified from the child, and also we can do the same from the parent only if we use <code>window.open()</code> to open the link.</p><p>You can also check this by executing <code>window.opener</code> inside the console of the child window. To change the parent window's location, you can run this command:</p><pre><code class="language-javascript">window.opener;
+window.opener.location = 'https://gosink.in';</code></pre><h2 id="how-can-it-affect-performance">How can it affect performance?</h2><p>If you open the links with target="_blank" alone, it runs on the same process id. You can also check this in <code>System Monitor</code>, <code>Task Manager</code>, or <code>htop</code>. It appends all the javascript files to your process which leads to the poor performance of your website.</p><p>And if you've some knowledge of native programming, you'll agree that if you can get the same PID, you can get all the access that parent process has, and you can also traverse through the memory using pointers (<em>Not sure about <a href="https://webassembly.org/">WebAssembly</a></em>).</p><hr><h2 id="what-is-the-solution">What is the solution?</h2><p>The solution is pretty simple. We can prevent this by just adding <code>rel="noopener"</code> to our anchor tag. This makes window.opener null. But still, it lets the other page know from which page a user came from. To prevent that you can use <code>rel="noreferrer"</code>. If you use noreferrer you don't need to set noopener for the most browsers but personally I prefer to add both of them to be safe: <code>rel="noopener noreferrer"</code></p><h3 id="are-you-safe-if-you-only-redirect-users-using-javascript">Are you safe if you only redirect users using JavaScript?</h3><p>Of course not! window.open() does the same job. But you can set the window.opener to null like this:</p><pre><code class="language-javascript">const newWindow = window.open('https://gosink.in');
+newWindow.opener = null;</code></pre><hr><h2 id="conclusion">Conclusion</h2><p>You might be using this anchor tag properly but if some external modules/libraries are not using this properly, it may lead to compromise these things. So better check your website using <a href="https://developers.google.com/web/tools/lighthouse/">Google Lighthouse</a> before publishing your website to production.</p><p>I generally see no use case of using target="_blank" to enable the communication between a parent and its child window. And technically, it leads your website to perform poorly and some times you may end up compromise your users' data. So it is the best practice to use at least rel="noopener".</p>
+    </section>
+
+
+</article>
+
     </div>
+</section> --}}
+
+
+<aside class="read-more-wrap">
+    <div class="read-more inner">
+
+
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="/non-design-lessons-learned-while-designing-interfaces-2/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2021/01/Illustration.png 300w,
+                    /content/images/size/w600/2021/01/Illustration.png 600w,
+                    /content/images/size/w1000/2021/01/Illustration.png 1000w,
+                    /content/images/size/w2000/2021/01/Illustration.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="/content/images/size/w600/2021/01/Illustration.png"
+            alt="Non-Design lessons learned while designing interfaces"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/non-design-lessons-learned-while-designing-interfaces-2/">
+            <header class="post-card-header">
+                <h2 class="post-card-title">Non-Design lessons learned while designing interfaces</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>During my time at NextUX Design Agency, apart from designing screens and experience, I have learned so many non-design lessons that I would like to share.</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="/author/aman/" class="static-avatar">
+                        <img class="author-profile-image" src="/content/images/size/w100/2019/08/DNC-XEROX---784-1.jpg" alt="Aman Gupta" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/aman/">Aman Gupta</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-01-24">Jan 24, 2021</time> <span class="bull">&bull;</span> 8 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="/css-what-is-currentcolor-keyword/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2020/11/css-current-color.jpg 300w,
+                    /content/images/size/w600/2020/11/css-current-color.jpg 600w,
+                    /content/images/size/w1000/2020/11/css-current-color.jpg 1000w,
+                    /content/images/size/w2000/2020/11/css-current-color.jpg 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="/content/images/size/w600/2020/11/css-current-color.jpg"
+            alt="CSS — What is currentColor keyword?"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/css-what-is-currentcolor-keyword/">
+            <header class="post-card-header">
+                <h2 class="post-card-title">CSS — What is currentColor keyword?</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Did you know in CSS you can specify the color property once and use that value without specifying it again using the currentColor keyword?</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="/author/apal/" class="static-avatar">
+                        <img class="author-profile-image" src="//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x" alt="Apal Shah" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/apal/">Apal Shah</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-11-27">Nov 27, 2020</time> <span class="bull">&bull;</span> 2 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="/webrtc-switch-cameras-using-javascript-getusermedia/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2020/08/webrtc-video-call.jpeg 300w,
+                    /content/images/size/w600/2020/08/webrtc-video-call.jpeg 600w,
+                    /content/images/size/w1000/2020/08/webrtc-video-call.jpeg 1000w,
+                    /content/images/size/w2000/2020/08/webrtc-video-call.jpeg 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="/content/images/size/w600/2020/08/webrtc-video-call.jpeg"
+            alt="WebRTC — Switch Cameras using Javascript getUserMedia"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/webrtc-switch-cameras-using-javascript-getusermedia/">
+            <header class="post-card-header">
+                <h2 class="post-card-title">WebRTC — Switch Cameras using Javascript getUserMedia</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>To fetch or toggle between the front-facing camera and the back camera, we can simply use the "facingMode" which is widely supported in the majority of the browsers.</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="/author/apal/" class="static-avatar">
+                        <img class="author-profile-image" src="//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x" alt="Apal Shah" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/apal/">Apal Shah</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-08-30">Aug 30, 2020</time> <span class="bull">&bull;</span> 3 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
+    </div>
+</aside>
+
+
+    </main>
+
+    <footer class="site-footer outer">
+        <div class="inner">
+            <section class="copyright"><a href="https://gosink.in">Sink In - Tech and Travel</a> &copy; 2021</section>
+            <nav class="site-footer-nav">
+                
+            </nav>
+        </div>
+    </footer>
+
+</div>
+
+
+<script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous">
+</script>
+<script src="/assets/built/casper.js?v=2408e2b2b9"></script>
+<script>
+$(document).ready(function () {
+    // Mobile Menu Trigger
+    $('.gh-burger').click(function () {
+        $('body').toggleClass('gh-head-open');
+    });
+    // FitVids - Makes video embeds responsive
+    $(".gh-content").fitVids();
+});
+</script>
+
+<!-- Add noopener and noreferrer for security -->
+<script>
+    window.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll('a').forEach(link => {
+        if (
+          link.getAttribute('href').includes('http://') ||
+          link.getAttribute('href').includes('https://')
+        ) {
+          link.setAttribute('rel', 'noopener noreferrer nofollow');
+        }
+      });
+    }, false);
+</script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script> <script>
+  setTimeout(() => document.querySelector('#demo').removeAttribute('rel'), 1000);
+</script>
+
 </body>
 </html>

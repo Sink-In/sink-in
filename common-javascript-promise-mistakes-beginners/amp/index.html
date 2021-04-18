@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html ⚡>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <title>Common Javascript Promise mistakes every beginner should know and avoid</title>
+
+    <meta name="description" content="Whenever some new developer says that their code is not working or complain about the execution speed, I always check for these mistakes first. When I started coding 4 years back, I didn&#x27;t know about this and I used to ignore them. But after being assigned to a project which handles around a million requests in a few minutes, this was no longer a case." />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://gosink.in/common-javascript-promise-mistakes-beginners/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    
+    <meta property="og:site_name" content="Sink In - Tech and Travel" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Common Javascript Promise mistakes every beginner should know and avoid" />
+    <meta property="og:description" content="I wish I knew about all these mistakes while learning javascript and promises." />
+    <meta property="og:url" content="https://gosink.in/common-javascript-promise-mistakes-beginners/" />
+    <meta property="og:image" content="https://gosink.in/content/images/2019/12/promises-errors.png" />
+    <meta property="article:published_time" content="2019-12-29T18:34:13.000Z" />
+    <meta property="article:modified_time" content="2020-07-04T19:43:00.000Z" />
+    <meta property="article:tag" content="Tech" />
+    <meta property="article:tag" content="javascript" />
+    <meta property="article:tag" content="Node.js" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/shah.apal" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Common Javascript Promise mistakes every beginner should know and avoid" />
+    <meta name="twitter:description" content="I wish I knew about all these mistakes while learning javascript and promises." />
+    <meta name="twitter:url" content="https://gosink.in/common-javascript-promise-mistakes-beginners/" />
+    <meta name="twitter:image" content="https://gosink.in/content/images/2019/12/promises-errors.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Apal Shah" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Tech, javascript, Node.js" />
+    <meta name="twitter:site" content="@shah_apal" />
+    <meta property="og:image:width" content="1922" />
+    <meta property="og:image:height" content="818" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Sink In - Tech and Travel",
+        "url": "https://gosink.in/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://gosink.in/content/images/2019/08/Final-logo.png"
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Apal Shah",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://gosink.in/author/apal/",
+        "sameAs": []
+    },
+    "headline": "Common Javascript Promise mistakes every beginner should know and avoid",
+    "url": "https://gosink.in/common-javascript-promise-mistakes-beginners/",
+    "datePublished": "2019-12-29T18:34:13.000Z",
+    "dateModified": "2020-07-04T19:43:00.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://gosink.in/content/images/2019/12/promises-errors.png",
+        "width": 1922,
+        "height": 818
+    },
+    "keywords": "Tech, javascript, Node.js",
+    "description": "I wish I knew about all these mistakes while learning javascript and promises.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://gosink.in/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.2" />
+    <link rel="alternate" type="application/rss+xml" title="Sink In - Tech and Travel" href="https://gosink.in/rss/" />
+
+    <style amp-custom>
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    html {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        font-size: 62.5%;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+    body {
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        color: #3a4145;
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+        font-size: 1.7rem;
+        line-height: 1.55em;
+        font-weight: 400;
+        font-style: normal;
+        background: #fff;
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    p,
+    ul,
+    ol,
+    li,
+    dl,
+    dd,
+    hr,
+    pre,
+    form,
+    table,
+    video,
+    figure,
+    figcaption,
+    blockquote {
+        margin: 0;
+        padding: 0;
+    }
+
+    ul[class],
+    ol[class] {
+        padding: 0;
+        list-style: none;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
+    input,
+    button,
+    select,
+    textarea {
+        font: inherit;
+        -webkit-appearance: none;
+    }
+
+    fieldset {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    label {
+        display: block;
+        font-size: 0.9em;
+        font-weight: 700;
+    }
+
+    hr {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid currentcolor;
+        opacity: 0.1;
+    }
+
+    ::selection {
+        text-shadow: none;
+        background: #cbeafb;
+    }
+
+    mark {
+        background-color: #fdffb6;
+    }
+
+    small {
+        font-size: 80%;
+    }
+
+    sub,
+    sup {
+        position: relative;
+        font-size: 75%;
+        line-height: 0;
+        vertical-align: baseline;
+    }
+    sup {
+        top: -0.5em;
+    }
+    sub {
+        bottom: -0.25em;
+    }
+
+    ul li + li {
+        margin-top: 0.6em;
+    }
+
+    a {
+        color: var(--ghost-accent-color, #1292EE);
+        text-decoration-skip-ink: auto;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0;
+        font-weight: 700;
+        color: #121212;
+        line-height: 1.4em;
+    }
+
+    h1 {
+        font-size: 3.4rem;
+        line-height: 1.1em;
+    }
+
+    h2 {
+        font-size: 2.4rem;
+        line-height: 1.2em;
+    }
+
+    h3 {
+        font-size: 1.8rem;
+    }
+
+    h4 {
+        font-size: 1.7rem;
+    }
+
+    h5 {
+        font-size: 1.6rem;
+    }
+
+    h6 {
+        font-size: 1.6rem;
+    }
+
+    amp-img {
+        height: 100%;
+        width: 100%;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    amp-img img {
+        object-fit: cover;
+    }
+
+    .page-header {
+        padding: 50px 5vmin 30px;
+        text-align: center;
+        font-size: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .page-header a {
+        color: #121212;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 1.6rem;
+        letter-spacing: -0.1px;
+    }
+
+    .post {
+        max-width: 680px;
+        margin: 0 auto;
+    }
+
+    .post-header {
+        margin: 0 5vmin 5vmin;
+        text-align: center;
+    }
+
+    .post-meta {
+        margin: 1rem 0 0 0;
+        text-transform: uppercase;
+        color: #738a94;
+        font-weight: 500;
+        font-size: 1.3rem;
+    }
+
+    .post-image {
+        margin: 0 0 5vmin;
+    }
+
+    .post-image img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .post-content {
+        padding: 0 5vmin;
+    }
+
+    .post-content > * + * {
+        margin-top: 1.5em;
+    }
+
+    .post-content [id]:not(:first-child) {
+        margin: 2em 0 0;
+    }
+
+    .post-content > [id] + * {
+        margin-top: 1rem;
+    }
+
+    .post-content [id] + .kg-card,
+    .post-content blockquote + .kg-card {
+        margin-top: 40px;
+    }
+
+    .post-content > ul,
+    .post-content > ol,
+    .post-content > dl {
+        padding-left: 1.9em;
+    }
+
+    .post-content hr {
+        margin-top: 40px;
+    }
+
+    .post .post-content hr + * {
+        margin-top: 40px;
+    }
+
+    .post-content amp-img {
+        background-color: #f8f8f8;
+    }
+
+    .post-content blockquote {
+        position: relative;
+        font-style: italic;
+    }
+
+    .post-content blockquote::before {
+        content: "";
+        position: absolute;
+        left: -1.5em;
+        top: 0;
+        bottom: 0;
+        width: 0.3rem;
+        background: var(--ghost-accent-color, #1292EE);
+    }
+
+    .post-content :not(.kg-card):not([id]) + .kg-card {
+        margin-top: 40px;
+    }
+
+    .post-content .kg-card + :not(.kg-card) {
+        margin-top: 40px;
+    }
+
+    .kg-card figcaption {
+        padding: 1.5rem 1.5rem 0;
+        text-align: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+        line-height: 1.4em;
+        opacity: 0.6;
+    }
+
+    .kg-card figcaption strong {
+        color: rgba(0,0,0,0.8);
+    }
+
+    .post-content :not(pre) code {
+        vertical-align: middle;
+        padding: 0.15em 0.4em 0.15em;
+        border: #e1eaef 1px solid;
+        font-weight: 400;
+        font-size: 0.9em;
+        line-height: 1em;
+        color: #15171a;
+        background: #f0f6f9;
+        border-radius: 0.25em;
+    }
+
+    .post-content > pre {
+        overflow: scroll;
+        padding: 16px 20px;
+        color: #fff;
+        background: #1F2428;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px -2px rgba(0,0,0,.1), 0 0 1px rgba(0,0,0,.4);
+    }
+
+    .kg-embed-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .kg-image-card img {
+        margin: auto;
+    }
+
+    .kg-gallery-card + .kg-gallery-card {
+        margin-top: 0.75em;
+    }
+
+    .kg-gallery-container {
+        position: relative;
+    }
+
+    .kg-gallery-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .kg-gallery-image {
+        width: 100%;
+        height: 100%;
+    }
+
+    .kg-gallery-row:not(:first-of-type) {
+        margin: 0.75em 0 0 0;
+    }
+
+    .kg-gallery-image:not(:first-of-type) {
+        margin: 0 0 0 0.75em;
+    }
+
+    .kg-bookmark-card,
+    .kg-bookmark-publisher {
+        position: relative;
+    }
+
+    .kg-bookmark-container,
+    .kg-bookmark-container:hover {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row-reverse;
+        color: currentColor;
+        background: rgba(255,255,255,0.6);
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+        text-decoration: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+    }
+
+    .kg-bookmark-content {
+        flex-basis: 0;
+        flex-grow: 999;
+        padding: 20px;
+        order: 1;
+    }
+
+    .kg-bookmark-title {
+        font-weight: 600;
+        font-size: 1.5rem;
+        line-height: 1.3em;
+    }
+
+    .kg-bookmark-description {
+        display: -webkit-box;
+        max-height: 45px;
+        margin: 0.5em 0 0 0;
+        font-size: 1.4rem;
+        line-height: 1.55em;
+        overflow: hidden;
+        opacity: 0.8;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .kg-bookmark-metadata {
+        margin-top: 20px;
+    }
+
+    .kg-bookmark-metadata {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+        line-height: 1.3em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .kg-bookmark-description {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    }
+
+    .kg-bookmark-metadata amp-img {
+        width: 18px;
+        height: 18px;
+        max-width: 18px;
+        max-height: 18px;
+        margin-right: 10px;
+    }
+
+    .kg-bookmark-thumbnail {
+        display: flex;
+        flex-basis: 20rem;
+        flex-grow: 1;
+        justify-content: flex-end;
+    }
+
+    .kg-bookmark-thumbnail amp-img {
+        max-height: 200px;
+    }
+
+    .kg-bookmark-author {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .kg-bookmark-publisher::before {
+        content: "•";
+        margin: 0 .5em;
+    }
+
+    .kg-width-full.kg-card-hascaption {
+        display: grid;
+        grid-template-columns: inherit;
+    }
+
+    .post-content table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .post-content th {
+        padding: 0.5em 0.8em;
+        text-align: left;
+        font-size: .75em;
+        text-transform: uppercase;
+    }
+
+    .post-content td {
+        padding: 0.4em 0.7em;
+    }
+
+    .post-content tbody tr:nth-child(2n + 1) {
+        background-color: rgba(0,0,0,0.1);
+        padding: 1px;
+    }
+
+    .post-content tbody tr:nth-child(2n + 2) td:last-child {
+        box-shadow:
+            inset 1px 0 rgba(0,0,0,0.1),
+            inset -1px 0 rgba(0,0,0,0.1);
+    }
+
+    .post-content tbody tr:nth-child(2n + 2) td {
+        box-shadow: inset 1px 0 rgba(0,0,0,0.1);
+    }
+
+    .post-content tbody tr:last-child {
+        border-bottom: 1px solid rgba(0,0,0,.1);
+    }
+
+    .page-footer {
+        padding: 60px 5vmin;
+        margin: 60px auto 0;
+        text-align: center;
+        background-color: #f8f8f8;
+    }
+
+    .page-footer h3 {
+        margin: 0.5rem 0 0 0;
+    }
+
+    .page-footer p {
+        max-width: 500px;
+        margin: 1rem auto 1.5rem;
+        font-size: 1.7rem;
+        line-height: 1.5em;
+        color: rgba(0,0,0,0.6)
+    }
+
+    .powered {
+        display: inline-flex;
+        align-items: center;
+        margin: 30px 0 0;
+        padding: 6px 9px 6px 6px;
+        border: rgba(0,0,0,0.1) 1px solid;
+        font-size: 12px;
+        line-height: 12px;
+        letter-spacing: -0.2px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+        font-weight: 500;
+        color: #222;
+        text-decoration: none;
+        background: #fff;
+        border-radius: 6px;
+    }
+
+    .powered svg {
+        height: 16px;
+        width: 16px;
+        margin: 0 6px 0 0;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            font-size: 1.6rem;
+        }
+        h1 {
+            font-size: 3rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        h1 {
+            font-size: 2.6rem;
+            line-height: 1.15em;
+        }
+        h2 {
+            font-size: 2rem;
+            line-height: 1.2em;
+        }
+        h3 {
+            font-size: 1.7rem;
+        }
+    }
+
+    :root {--ghost-accent-color: #1c1c1c;}
+    </style>
+
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+
+    
+
+</head>
+
+<body class="amp-template">
+    <header class="page-header">
+        <a href="https://gosink.in">
+                <amp-img class="site-icon" src="https://gosink.in/content/images/2019/08/favicon.png" width="50" height="50" layout="fixed"></amp-img>
+        </a>
+    </header>
+
+    <main class="content" role="main">
+        <article class="post">
+
+            <header class="post-header">
+                <h1 class="post-title">Common Javascript Promise mistakes every beginner should know and avoid</h1>
+                <section class="post-meta">
+                    Apal Shah -
+                    <time class="post-date" datetime="2019-12-29">29 Dec 2019</time>
+                </section>
+            </header>
+            <figure class="post-image">
+                <amp-img src="https://gosink.in/content/images/2019/12/promises-errors.png" width="600" height="340" layout="responsive"></amp-img>
+            </figure>
+            <section class="post-content">
+
+                <p>Whenever some new developer says that their code is not working or complain about the execution speed, I always check for these mistakes first. When I started coding 4 years back, I didn't know about this and I used to ignore them. But after being assigned to a project which handles around a million requests in a few minutes, this was no longer a case. I had no other option but to optimize the code (<em>Because we'd reached the level where vertical scaling was no longer possible</em>).</p><p>So in this article, I would like to talk about these common mistakes everyone makes and usually ignores. And also there are some possible solutions to these mistakes.</p><hr></hr><h2 id="mistake-1-using-try-catch-inside-the-promise-block">Mistake #1: Using try/catch inside the Promise block</h2><p>It's redundant to use <code>try/catch</code> inside a Promise block (<em>btw, this contradicts the Mistake #2</em>). If your code throws an error inside the Promise block, it'll automatically be handled by the catch scope.</p><pre><code class="language-javascript">// This is redundant
+new Promise((resolve, reject) =&gt; {
+  try {
+    const data = someFunction();
+    // your logic
+    resolve();
+  } catch (e) {
+    reject(e);
+  }
+})
+  .then(data =&gt; console.log(data))
+  .catch(error =&gt; console.log(error));</code></pre><p>Instead, let the code throw an error and handle it outside your Promise like this:</p><pre><code class="language-javascript">// Instead try this
+new Promise((resolve, reject) =&gt; {
+  const data = someFunction();
+  // your logic
+  resolve()
+})
+  .then(data =&gt; console.log(data))
+  .catch(error =&gt; console.log(error));
+</code></pre><p>This will always work except in the case below.</p><h2 id="mistake-2-using-async-function-inside-your-promise-block">Mistake #2: Using async function inside your Promise block</h2><h3 id="there-are-some-side-effects-of-an-async-function-inside-a-promise-block">There are some side effects of an async function inside a Promise block</h3><p>Now, let's say in your Promise block, you want to perform some async task and you add the `async` keyword and your code might throw an error. But now, you cannot handle this error even if there is a <code>.catch()</code> block or you <code>await</code> your promise inside a <code>try/catch</code> block.</p><pre><code class="language-javascript">// This code can't handle this error
+new Promise(async () =&gt; {
+  throw new Error('message');
+}).catch(e =&gt; console.log(e.message));
+
+
+// This will also fail to handle the error
+(async () =&gt; {
+  try {
+    await new Promise(async () =&gt; {
+      throw new Error('message');
+    });
+  } catch (e) {
+    console.log(e.message);
+  }
+})();
+</code></pre><p>Whenever I see async functions inside a Promise block, I always try to separate the async logic outside the Promise block to make that block synchronous. And this works 9/10 times. But still, for some cases, you might need an async function. In that case, you don't have any other option but to handle that manually by <code>try/catch</code> block.</p><pre><code class="language-javascript">new Promise(async (resolve, reject) =&gt; {
+  try {
+    throw new Error('message');
+  } catch (error) {
+    reject(error);
+  }
+}).catch(e =&gt; console.log(e.message));
+
+
+// Or using async/await
+(async () =&gt; {
+  try {
+    await new Promise(async (resolve, reject) =&gt; {
+      try {
+        throw new Error('message');
+      } catch (error) {
+        reject(error);
+      }
+    });
+  } catch (e) {
+    console.log(e.message);
+  }
+})();
+</code></pre><h2 id="mistake-3-forgetting-catch-block">Mistake #3: Forgetting .catch() block</h2><p>Typically, this is a mistake you generally don't know you're making until some of your test cases fail. Or if you're a kind of test-atheist who doesn't believe in writing tests, this code will definitely crash in production. Because the production environment strictly follows Murphy's law.</p><blockquote>"Anything that can go wrong will go wrong" - Murphy's law</blockquote><p>To make your code more elegant, you can await your promise in the <code>try/catch</code> block instead of using <code>.then().catch()</code>.</p><h2 id="mistake-4-not-using-promise-all-">Mistake #4: Not using Promise.all()</h2><h3 id="promise-all-is-your-friend">Promise.all() is your friend</h3><p>If you're a pro developer, you already know what I'm going to talk about here. If you have multiple promises which are independent of each other, you can resolve all of them concurrently. By default, the Promises are concurrent in nature but If you're <code>await</code>ing them one by one it will take too much time. <code>Promise.all()</code> will save you a lot of waiting time.</p><pre><code class="language-javascript">const { promisify } = require('util');
+const sleep = promisify(setTimeout);
+
+async function f1() {
+  await sleep(1000);
+}
+
+async function f2() {
+  await sleep(2000);
+}
+
+async function f3() {
+  await sleep(3000);
+}
+
+// Running code sequentially
+(async () =&gt; {
+  console.time('sequential');
+  await f1();
+  await f2();
+  await f3();
+  console.timeEnd('sequential'); // Approx 6 seconds
+})();</code></pre><p><strong>This code takes around 6 seconds to execute. Now if we replace the code with <code>Promise.all()</code>, it will take around 3 seconds.</strong></p><pre><code class="language-javascript">(async () =&gt; {
+  console.time('concurrent');
+  await Promise.all([f1(), f2(), f3()]);
+  console.timeEnd('concurrent'); // Approx 3 seconds
+})();</code></pre><h2 id="mistake-5-using-promise-race-without-complete-understanding-">Mistake #5: Using Promise.race() without complete understanding.</h2><h3 id="it-doesn-t-necessarily-make-your-code-faster">It doesn't necessarily make your code faster</h3><p>This might seem a little controversial statement but it's true. I'm not saying that <code>Promise.race()</code> is useless but you must know why you're using this.</p><p>This is useful if you want to run your code immediately after any one of your Promises resolves. But that doesn't mean that it will exit the code immediately after that. It will wait until all the promises get resolved and only after that, it will release the thread. So make decisions wisely.</p><pre><code class="language-javascript">const { promisify } = require('util');
+const sleep = promisify(setTimeout);
+
+async function f1() {
+  await sleep(1000);
+}
+
+async function f2() {
+  await sleep(2000);
+}
+
+async function f3() {
+  await sleep(3000);
+}
+
+(async () =&gt; {
+  console.time('race');
+  await Promise.race([f1(), f2(), f3()]);
+})();
+
+process.on('exit', () =&gt; {
+  console.timeEnd('race'); // Approx 3 seconds
+});
+</code></pre><p><strong>As you can see in the code above, it will take 3 seconds to exit instead of 1 second.</strong></p><h2 id="mistake-6-overuse-of-promises">Mistake #6: Overuse of Promises</h2><h3 id="they-make-your-code-slower-don-t-overuse-them">They make your code slower; don't overuse them</h3><p>We generally see developers using a long chain of <code>.then()</code> just to make their code look elegant. You won't notice any difference until this chain is too long. If you want to see this, run your code with this command and open this link: <a>chrome://tracing/</a> (<em>works only for Chrome</em>)</p><pre><code class="language-bash">node --trace-events-enabled fileName.js</code></pre><p><strong>Code with unnecessary <code>.then()</code> blocks</strong></p><pre><code class="language-javascript">new Promise((resolve) =&gt; {
+  // Some code which returns userData
+  const user = {
+    name: 'John Doe',
+    age: 50,
+  };
+  resolve(user);
+}).then(userObj =&gt; {
+  const { age } = userObj;
+  return age;
+}).then(age =&gt; {
+  if (age &gt; 25) {
+    return true;
+  }
+  throw new Error('Age is less than 25');
+}).then(() =&gt; {
+  console.log('Age is greater than 25');
+}).catch(e =&gt; {
+  console.log(e.message);
+});</code></pre><figure class="kg-card kg-image-card kg-width-full kg-card-hascaption">		<amp-img src="https://i.imgur.com/Y8CwrL9.png" class="kg-image" width="2058" height="688" layout="responsive"></amp-img>
+</figure><p>If you open the log file in chrome's tracing tool, you'll see multiple green blocks labeled as <code>Promise</code>. And if you click any of them, you'll see they all take a few milliseconds to execute. Hence, the more these promises blocks, the more time it will take to execute.</p><p><strong>Code with single <code>.then()</code> containing all the synchronous statements</strong></p><pre><code class="language-javascript">new Promise((resolve, reject) =&gt; {
+  // Some code which returns userData
+  const user = {
+    name: 'John Doe',
+    age: 50,
+  };
+  if (user.age &gt; 25) {
+    resolve();
+  } else {
+    reject('Age is less than 25');
+  }
+}).then(() =&gt; {
+  console.log('Age is greater than 25');
+}).catch(e =&gt; {
+  console.log(e.message);
+});</code></pre><figure class="kg-card kg-image-card kg-width-full kg-card-hascaption">		<amp-img src="https://i.imgur.com/p4XEoaW.png" class="kg-image" width="2060" height="546" layout="responsive"></amp-img>
+</figure><p>Here, there are fewer green <code>Promise</code> blocks. And if you increase the <code>.then()</code> chain, you'll notice a huge difference in time taken by both the codes.</p><p>The solution is, not to resolve multiple promises with synchronous code. Synchronous code should reside in a single block. Only use this multiple times if you want to execute some asynchronous code.</p><hr></hr><h2 id="footnotes">Footnotes</h2><p>If you like this blog and want to see the blogs like this in future, please subscribe to our blog. We hate spam, we'll never spam your inbox. Also, let me know if there is any error or any suggestion in this blog. I would love to learn something new.</p>
+
+            </section>
+
+        </article>
+    </main>
+    <footer class="page-footer">
+            <amp-img class="site-icon" src="https://gosink.in/content/images/2019/08/favicon.png" width="50" height="50" layout="fixed"></amp-img>
+        <h3>Sink In - Tech and Travel</h3>
+            <p>Sink In - Tech and Travel</p>
+        <p><a href="https://gosink.in">Read more posts →</a></p>
+        <a class="powered" href="https://ghost.org" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 156 156"><g fill="none" fill-rule="evenodd"><rect fill="#15212B" width="156" height="156" rx="27"/><g transform="translate(36 36)" fill="#F6F8FA"><path d="M0 71.007A4.004 4.004 0 014 67h26a4 4 0 014 4.007v8.986A4.004 4.004 0 0130 84H4a4 4 0 01-4-4.007v-8.986zM50 71.007A4.004 4.004 0 0154 67h26a4 4 0 014 4.007v8.986A4.004 4.004 0 0180 84H54a4 4 0 01-4-4.007v-8.986z"/><rect y="34" width="84" height="17" rx="4"/><path d="M0 4.007A4.007 4.007 0 014.007 0h41.986A4.003 4.003 0 0150 4.007v8.986A4.007 4.007 0 0145.993 17H4.007A4.003 4.003 0 010 12.993V4.007z"/><rect x="67" width="17" height="17" rx="4"/></g></g></svg> Published with Ghost</a>
+    </footer>
+    
+</body>
+</html>

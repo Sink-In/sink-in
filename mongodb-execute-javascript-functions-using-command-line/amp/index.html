@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html ⚡>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <title>MongoDB: Execute Javascript Functions using Command line</title>
+
+    <meta name="description" content="In this article, we&#x27;ll see how we can execute JavaScript using various methods from our terminal. I&#x27;ll show how we can use eval, a single javascript file, and importing a collection of javascript files to make things modular." />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://gosink.in/mongodb-execute-javascript-functions-using-command-line/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    
+    <meta property="og:site_name" content="Sink In - Tech and Travel" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="MongoDB: Execute Javascript Functions using Command line" />
+    <meta property="og:description" content="In this article, we&#x27;ll see how we can execute JavaScript using various methods from our terminal. I&#x27;ll show how we can use eval, a single javascript file, and importing a collection of javascript files to make things modular." />
+    <meta property="og:url" content="https://gosink.in/mongodb-execute-javascript-functions-using-command-line/" />
+    <meta property="og:image" content="https://gosink.in/content/images/2019/08/mongo-shell.png" />
+    <meta property="article:published_time" content="2019-08-24T13:43:29.000Z" />
+    <meta property="article:modified_time" content="2019-08-24T18:58:00.000Z" />
+    <meta property="article:tag" content="Tech" />
+    <meta property="article:tag" content="database" />
+    <meta property="article:tag" content="MongoDB" />
+    <meta property="article:tag" content="javascript" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/shah.apal" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="MongoDB: Execute Javascript Functions using Command line" />
+    <meta name="twitter:description" content="In this article, we&#x27;ll see how we can execute JavaScript using various methods from our terminal. I&#x27;ll show how we can use eval, a single javascript file, and importing a collection of javascript files to make things modular." />
+    <meta name="twitter:url" content="https://gosink.in/mongodb-execute-javascript-functions-using-command-line/" />
+    <meta name="twitter:image" content="https://gosink.in/content/images/2019/08/mongo-shell.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Apal Shah" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Tech, database, MongoDB, javascript" />
+    <meta name="twitter:site" content="@shah_apal" />
+    <meta property="og:image:width" content="3360" />
+    <meta property="og:image:height" content="1942" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Sink In - Tech and Travel",
+        "url": "https://gosink.in/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://gosink.in/content/images/2019/08/Final-logo.png"
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Apal Shah",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://gosink.in/author/apal/",
+        "sameAs": []
+    },
+    "headline": "MongoDB: Execute Javascript Functions using Command line",
+    "url": "https://gosink.in/mongodb-execute-javascript-functions-using-command-line/",
+    "datePublished": "2019-08-24T13:43:29.000Z",
+    "dateModified": "2019-08-24T18:58:00.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://gosink.in/content/images/2019/08/mongo-shell.png",
+        "width": 3360,
+        "height": 1942
+    },
+    "keywords": "Tech, database, MongoDB, javascript",
+    "description": "In this article, we&#x27;ll see how we can execute JavaScript using various methods from our terminal. I&#x27;ll show how we can use eval, a single javascript file, and importing a collection of javascript files to make things modular.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://gosink.in/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.2" />
+    <link rel="alternate" type="application/rss+xml" title="Sink In - Tech and Travel" href="https://gosink.in/rss/" />
+
+    <style amp-custom>
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    html {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        font-size: 62.5%;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+    body {
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        color: #3a4145;
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+        font-size: 1.7rem;
+        line-height: 1.55em;
+        font-weight: 400;
+        font-style: normal;
+        background: #fff;
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    p,
+    ul,
+    ol,
+    li,
+    dl,
+    dd,
+    hr,
+    pre,
+    form,
+    table,
+    video,
+    figure,
+    figcaption,
+    blockquote {
+        margin: 0;
+        padding: 0;
+    }
+
+    ul[class],
+    ol[class] {
+        padding: 0;
+        list-style: none;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
+    input,
+    button,
+    select,
+    textarea {
+        font: inherit;
+        -webkit-appearance: none;
+    }
+
+    fieldset {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    label {
+        display: block;
+        font-size: 0.9em;
+        font-weight: 700;
+    }
+
+    hr {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid currentcolor;
+        opacity: 0.1;
+    }
+
+    ::selection {
+        text-shadow: none;
+        background: #cbeafb;
+    }
+
+    mark {
+        background-color: #fdffb6;
+    }
+
+    small {
+        font-size: 80%;
+    }
+
+    sub,
+    sup {
+        position: relative;
+        font-size: 75%;
+        line-height: 0;
+        vertical-align: baseline;
+    }
+    sup {
+        top: -0.5em;
+    }
+    sub {
+        bottom: -0.25em;
+    }
+
+    ul li + li {
+        margin-top: 0.6em;
+    }
+
+    a {
+        color: var(--ghost-accent-color, #1292EE);
+        text-decoration-skip-ink: auto;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0;
+        font-weight: 700;
+        color: #121212;
+        line-height: 1.4em;
+    }
+
+    h1 {
+        font-size: 3.4rem;
+        line-height: 1.1em;
+    }
+
+    h2 {
+        font-size: 2.4rem;
+        line-height: 1.2em;
+    }
+
+    h3 {
+        font-size: 1.8rem;
+    }
+
+    h4 {
+        font-size: 1.7rem;
+    }
+
+    h5 {
+        font-size: 1.6rem;
+    }
+
+    h6 {
+        font-size: 1.6rem;
+    }
+
+    amp-img {
+        height: 100%;
+        width: 100%;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    amp-img img {
+        object-fit: cover;
+    }
+
+    .page-header {
+        padding: 50px 5vmin 30px;
+        text-align: center;
+        font-size: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .page-header a {
+        color: #121212;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 1.6rem;
+        letter-spacing: -0.1px;
+    }
+
+    .post {
+        max-width: 680px;
+        margin: 0 auto;
+    }
+
+    .post-header {
+        margin: 0 5vmin 5vmin;
+        text-align: center;
+    }
+
+    .post-meta {
+        margin: 1rem 0 0 0;
+        text-transform: uppercase;
+        color: #738a94;
+        font-weight: 500;
+        font-size: 1.3rem;
+    }
+
+    .post-image {
+        margin: 0 0 5vmin;
+    }
+
+    .post-image img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .post-content {
+        padding: 0 5vmin;
+    }
+
+    .post-content > * + * {
+        margin-top: 1.5em;
+    }
+
+    .post-content [id]:not(:first-child) {
+        margin: 2em 0 0;
+    }
+
+    .post-content > [id] + * {
+        margin-top: 1rem;
+    }
+
+    .post-content [id] + .kg-card,
+    .post-content blockquote + .kg-card {
+        margin-top: 40px;
+    }
+
+    .post-content > ul,
+    .post-content > ol,
+    .post-content > dl {
+        padding-left: 1.9em;
+    }
+
+    .post-content hr {
+        margin-top: 40px;
+    }
+
+    .post .post-content hr + * {
+        margin-top: 40px;
+    }
+
+    .post-content amp-img {
+        background-color: #f8f8f8;
+    }
+
+    .post-content blockquote {
+        position: relative;
+        font-style: italic;
+    }
+
+    .post-content blockquote::before {
+        content: "";
+        position: absolute;
+        left: -1.5em;
+        top: 0;
+        bottom: 0;
+        width: 0.3rem;
+        background: var(--ghost-accent-color, #1292EE);
+    }
+
+    .post-content :not(.kg-card):not([id]) + .kg-card {
+        margin-top: 40px;
+    }
+
+    .post-content .kg-card + :not(.kg-card) {
+        margin-top: 40px;
+    }
+
+    .kg-card figcaption {
+        padding: 1.5rem 1.5rem 0;
+        text-align: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+        line-height: 1.4em;
+        opacity: 0.6;
+    }
+
+    .kg-card figcaption strong {
+        color: rgba(0,0,0,0.8);
+    }
+
+    .post-content :not(pre) code {
+        vertical-align: middle;
+        padding: 0.15em 0.4em 0.15em;
+        border: #e1eaef 1px solid;
+        font-weight: 400;
+        font-size: 0.9em;
+        line-height: 1em;
+        color: #15171a;
+        background: #f0f6f9;
+        border-radius: 0.25em;
+    }
+
+    .post-content > pre {
+        overflow: scroll;
+        padding: 16px 20px;
+        color: #fff;
+        background: #1F2428;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px -2px rgba(0,0,0,.1), 0 0 1px rgba(0,0,0,.4);
+    }
+
+    .kg-embed-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .kg-image-card img {
+        margin: auto;
+    }
+
+    .kg-gallery-card + .kg-gallery-card {
+        margin-top: 0.75em;
+    }
+
+    .kg-gallery-container {
+        position: relative;
+    }
+
+    .kg-gallery-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .kg-gallery-image {
+        width: 100%;
+        height: 100%;
+    }
+
+    .kg-gallery-row:not(:first-of-type) {
+        margin: 0.75em 0 0 0;
+    }
+
+    .kg-gallery-image:not(:first-of-type) {
+        margin: 0 0 0 0.75em;
+    }
+
+    .kg-bookmark-card,
+    .kg-bookmark-publisher {
+        position: relative;
+    }
+
+    .kg-bookmark-container,
+    .kg-bookmark-container:hover {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row-reverse;
+        color: currentColor;
+        background: rgba(255,255,255,0.6);
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+        text-decoration: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+    }
+
+    .kg-bookmark-content {
+        flex-basis: 0;
+        flex-grow: 999;
+        padding: 20px;
+        order: 1;
+    }
+
+    .kg-bookmark-title {
+        font-weight: 600;
+        font-size: 1.5rem;
+        line-height: 1.3em;
+    }
+
+    .kg-bookmark-description {
+        display: -webkit-box;
+        max-height: 45px;
+        margin: 0.5em 0 0 0;
+        font-size: 1.4rem;
+        line-height: 1.55em;
+        overflow: hidden;
+        opacity: 0.8;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .kg-bookmark-metadata {
+        margin-top: 20px;
+    }
+
+    .kg-bookmark-metadata {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+        line-height: 1.3em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .kg-bookmark-description {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    }
+
+    .kg-bookmark-metadata amp-img {
+        width: 18px;
+        height: 18px;
+        max-width: 18px;
+        max-height: 18px;
+        margin-right: 10px;
+    }
+
+    .kg-bookmark-thumbnail {
+        display: flex;
+        flex-basis: 20rem;
+        flex-grow: 1;
+        justify-content: flex-end;
+    }
+
+    .kg-bookmark-thumbnail amp-img {
+        max-height: 200px;
+    }
+
+    .kg-bookmark-author {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .kg-bookmark-publisher::before {
+        content: "•";
+        margin: 0 .5em;
+    }
+
+    .kg-width-full.kg-card-hascaption {
+        display: grid;
+        grid-template-columns: inherit;
+    }
+
+    .post-content table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .post-content th {
+        padding: 0.5em 0.8em;
+        text-align: left;
+        font-size: .75em;
+        text-transform: uppercase;
+    }
+
+    .post-content td {
+        padding: 0.4em 0.7em;
+    }
+
+    .post-content tbody tr:nth-child(2n + 1) {
+        background-color: rgba(0,0,0,0.1);
+        padding: 1px;
+    }
+
+    .post-content tbody tr:nth-child(2n + 2) td:last-child {
+        box-shadow:
+            inset 1px 0 rgba(0,0,0,0.1),
+            inset -1px 0 rgba(0,0,0,0.1);
+    }
+
+    .post-content tbody tr:nth-child(2n + 2) td {
+        box-shadow: inset 1px 0 rgba(0,0,0,0.1);
+    }
+
+    .post-content tbody tr:last-child {
+        border-bottom: 1px solid rgba(0,0,0,.1);
+    }
+
+    .page-footer {
+        padding: 60px 5vmin;
+        margin: 60px auto 0;
+        text-align: center;
+        background-color: #f8f8f8;
+    }
+
+    .page-footer h3 {
+        margin: 0.5rem 0 0 0;
+    }
+
+    .page-footer p {
+        max-width: 500px;
+        margin: 1rem auto 1.5rem;
+        font-size: 1.7rem;
+        line-height: 1.5em;
+        color: rgba(0,0,0,0.6)
+    }
+
+    .powered {
+        display: inline-flex;
+        align-items: center;
+        margin: 30px 0 0;
+        padding: 6px 9px 6px 6px;
+        border: rgba(0,0,0,0.1) 1px solid;
+        font-size: 12px;
+        line-height: 12px;
+        letter-spacing: -0.2px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+        font-weight: 500;
+        color: #222;
+        text-decoration: none;
+        background: #fff;
+        border-radius: 6px;
+    }
+
+    .powered svg {
+        height: 16px;
+        width: 16px;
+        margin: 0 6px 0 0;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            font-size: 1.6rem;
+        }
+        h1 {
+            font-size: 3rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        h1 {
+            font-size: 2.6rem;
+            line-height: 1.15em;
+        }
+        h2 {
+            font-size: 2rem;
+            line-height: 1.2em;
+        }
+        h3 {
+            font-size: 1.7rem;
+        }
+    }
+
+    :root {--ghost-accent-color: #1c1c1c;}
+    </style>
+
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+
+    <script async custom-element="amp-audio" src="https://cdn.ampproject.org/v0/amp-audio-0.1.js"></script>
+
+</head>
+
+<body class="amp-template">
+    <header class="page-header">
+        <a href="https://gosink.in">
+                <amp-img class="site-icon" src="https://gosink.in/content/images/2019/08/favicon.png" width="50" height="50" layout="fixed"></amp-img>
+        </a>
+    </header>
+
+    <main class="content" role="main">
+        <article class="post">
+
+            <header class="post-header">
+                <h1 class="post-title">MongoDB: Execute Javascript Functions using Command line</h1>
+                <section class="post-meta">
+                    Apal Shah -
+                    <time class="post-date" datetime="2019-08-24">24 Aug 2019</time>
+                </section>
+            </header>
+            <figure class="post-image">
+                <amp-img src="https://gosink.in/content/images/2019/08/mongo-shell.png" width="600" height="340" layout="responsive"></amp-img>
+            </figure>
+            <section class="post-content">
+
+                <amp-audio controls>
+	<source src="https://vocaroo.com/media_command.php?media=s1XQTiJK0V62&amp;command=download_mp3" type="audio/mpeg" />
+	<source src="https://vocaroo.com/media_command.php?media=s1XQTiJK0V62&amp;command=download_webm" type="audio/webm" />
+	<p>Your browser does not support in page playback.</p>
+</amp-audio><p>Usually, it is too easy to integrate MongoDB with any language and make queries. But what if we don't want to set this up in a particular language and execute the commands from the command line itself.</p><p>When I moved to MongoDB, I was using it with Node and Mongoose and I was like I could do this with my eyes shut. But, the real problem I faced when I wanted to extract some data (<em>using aggregations</em>) without setting up a Node project (<em>I was too lazy to set that up</em>). I knew the commands so I didn't have to face any problems in creating queries, but writing all the queries in a single command itself was very tiresome, and if we make any mistake, we have to use arrow keys to move into our code (<em>I know you can relate to this</em>). Also, if the queries are too long and you want to change them frequently, it is not a good idea to write everything in a single command. We need to make things modular by splitting the code/logic into separate files. And we're going to do the same in this article.</p><p>In this article, we'll see how we can execute JavaScript using various methods from our terminal. I'll show how we can use <code>eval</code>, a single javascript file, and importing a collection of javascript files to make things modular.</p><hr></hr><h2 id="connecting-to-the-database">Connecting to the database</h2><p>Okay, so first thing first. Let's first connect to the database to make queries. If you just want to connect to your database locally, you don't have to worry about anything. You can simply use this command:</p><pre><code class="language-shell">mongo dbName</code></pre><p>Here, we can also run <code>mongo</code> without passing database name and select that database using <code>use dbName</code> in the Mongo Shell.</p><p>In the command below, we've included the host <code>localhost</code> followed by the port <code>27017</code> and then our database. I guess now you can easily figure out how to connect to the remote MongoDB instance.</p><pre><code>mongo localhost:27017/dbName</code></pre><p>You can also pass <code>--host</code> flag but I like to do it this way. However, the default Mongo setup doesn't allow/accept external connections. (<em>That's why I'm writing this, otherwise I'm too lazy to add this too</em>).</p><p>To allow external devices to connect to our instance,</p><ol><li>We can make changes in the <code>mongod.conf</code> file or</li><li>We can start a daemon process with <code>bind_ip</code> argument</li></ol><h3 id="modifying-the-mongod-conf-file">Modifying the "mongod.conf" file</h3><p><em>In Mac OS</em>, if you've installed this using Homebrew, the default path of the config file is: <code>/usr/local/etc/mongod.conf</code></p><p>In this file, you can see the value of <code>bind_ip</code> is <code>127.0.0.1</code>. So if you want to allow all the incoming connections, change it to <code>0.0.0.0</code> (or your specific IP to restrict the access).</p><p><em>For Ubuntu</em>, it is: <code>/etc/mongod.conf</code></p><p>You can see the <code>bindIp</code> set to <code>127.0.0.1</code>. Make the same changes as I mentioned above.</p><h3 id="start-mongod-by-passing-arguments">Start MongoD by passing arguments</h3><p>If you're willing to start a Mongo instance using <code>mongod</code>, you can pass <code>bind_ip</code> <em>[1]</em> argument to allow other connections.</p><pre><code>mongod --bind_ip=0.0.0.0</code></pre><p><strong>Note</strong>: We can also bind multiple IP addresses in both cases. You can check the references<em>[2]</em> to get more idea. But for now, we're ready to move forward.</p><hr></hr><p>Now we know how to connect to the local and remote Mongo instances. So let's start with the simple example. In this example, we'll create a database and a collection. Then we'll insert some sample data into it and try to fetch all the data from command-line by passing javascript functions and files.</p><h3 id="create-a-database">Create a Database</h3><p>In MongoDB, there is no command to create a database and sometimes it is frustrating because if you have a typo, you'll still be able to use that new database. So, let's create our new database <code>blog</code> after connecting to the Mongo instance using <code>mongo</code> command without any database name. To create our new database, execute this command:</p><pre><code>use blog</code></pre><h3 id="create-a-collection">Create a Collection</h3><p>After switching to our database <code>blog</code>, we need to create a collection. Fortunately, we have a command to create this. We'll create a collection named <code>users</code>. We can also pass some other options in the second argument<em>[3]</em>.</p><pre><code>db.createCollection('users')</code></pre><p>Run this command to check if the collection is created successfully:</p><pre><code>show collections</code></pre><h3 id="insert-data">Insert Data</h3><p>Let's insert some data to run our queries later. We'll add 2 rows containing 2 fields name and email.</p><pre><code>db.users.insertMany([
+  { name: 'Alice', email: 'alice@example.com' },
+  { name: 'Bob', email: 'bob@example.com' }
+])</code></pre><p>Run this command to check whether the data is inserted properly:</p><pre><code>db.users.find()</code></pre><hr></hr><h2 id="execute-queries-using-eval-flag">Execute Queries using --eval Flag</h2><p>At this stage, we're ready to execute CRUD operations on our data. First, let's see how we can do this using <code>--eval</code>. To do this, we'll run the simple query to fetch all the data that we inserted in the steps above. For that, we'll run the following command:</p><pre><code>mongo blog --eval "db.users.find().toArray()"</code></pre><p>After the execution, we can see some information about the different things of the MongoDB, and our data is below that. In our command, there is <code>.toArray()</code> method. Which converts all the data into an array so that we can make use of this data later.</p><hr></hr><h2 id="execute-queries-from-a-javascript-file">Execute Queries from a JavaScript file</h2><p>Now just imagine that you want to make some gigantic queries (<em>let's say stage 3+ aggregations</em>) and you want to change them frequently to do different tasks and you're just using arrow keys to move and don't even know if the brackets are properly closed (<em>Okay enough mental torture!</em>).</p><p>For that, you definitely need a file so that you can clearly see the query and format it using your favorite linters. And it's a wonderful feature of MongoDB that you can actually insert a file to execute the command. Let's see how we can do this. Create any javascript file, I'll name it <code>findByEmail.js</code>. and insert this data into it.</p><amp-img src="https://i.imgur.com/JiApI1Y.png" width="1480" height="780" layout="responsive"></amp-img><p>To execute this file, run the following command:</p><pre><code>mongo blog &lt; findByEmail.js</code></pre><p>We can use our basic linux command's knowledge to store the output in a file.</p><pre><code>// To override previous data
+mongo blog &lt; findByEmail.js &gt; output.json
+
+// To append to the existing data
+mongo blog &lt; findByEmail.js &gt;&gt; output.json</code></pre><hr></hr><h2 id="execute-queries-after-importing-multiple-files">Execute Queries after importing Multiple files</h2><p>You may think that now I'll say what if we have hundreds of files and want to make code modular - which is true. If this is the case, generally I prefer to do this by setting up a proper project in my machine and connect the instance with a well-known connector of that language. But you're not here on this blog to take my wisdom on how to set up a project, and MongoDB also has something more to offer.</p><p>To achieve this modularity, MongoDB supports a function: <code>load()</code><em>[4]</em>. We can pass the path of a file as an argument of this function. Let's see this in action.</p><p>Now, let's create 2 different javascript files: first will feed the data and second will fetch the new data. First, we want to execute the insert operation, so we'll load this file in the second file which has some logic to fetch the data. So, <code>feed.js</code> would look like this:</p><pre><code class="language-javascript">db.users.insert(
+  { email: 'john@example.com', name: 'John' }
+);</code></pre><p>And <code>retrieve.js</code> can look like this:</p><pre><code class="language-javascript">// assuming that feed.js is in the same directory
+load('./feed.js');
+
+db.users.find().toArray();</code></pre><p>Now simply we can execute this <code>retrieve.js</code> file same as above. We'll also store this data in some file to run some other operations later.</p><amp-img src="https://i.imgur.com/jgHvQhb.png" width="1612" height="492" layout="responsive"></amp-img><p>And just in case if you want to delete this database blog, make sure you're inside this database (otherwise you may end up deleting some other database) and run this command.</p><pre><code>db.dropDatabase();</code></pre><hr></hr><h2 id="footnotes">Footnotes</h2><p>I hope you've learned something from this article, and if you think something is wrong or have some suggestions, do let me know. Also, if you've enjoyed this, <em>please subscribe</em> to our newsletter to get the updates. We won't spam you!</p><hr></hr><h2 id="references">References</h2><ol><li><a href="https://docs.mongodb.com/manual/reference/program/mongod/">https://docs.mongodb.com/manual/reference/program/mongod/</a></li><li><a href="https://docs.mongodb.com/manual/core/security-mongodb-configuration/">https://docs.mongodb.com/manual/core/security-mongodb-configuration/</a></li><li><a href="https://docs.mongodb.com/manual/reference/method/db.createCollection/">https://docs.mongodb.com/manual/reference/method/db.createCollection/</a></li><li><a href="https://docs.mongodb.com/manual/reference/method/load/">https://docs.mongodb.com/manual/reference/method/load/</a></li></ol>
+
+            </section>
+
+        </article>
+    </main>
+    <footer class="page-footer">
+            <amp-img class="site-icon" src="https://gosink.in/content/images/2019/08/favicon.png" width="50" height="50" layout="fixed"></amp-img>
+        <h3>Sink In - Tech and Travel</h3>
+            <p>Sink In - Tech and Travel</p>
+        <p><a href="https://gosink.in">Read more posts →</a></p>
+        <a class="powered" href="https://ghost.org" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 156 156"><g fill="none" fill-rule="evenodd"><rect fill="#15212B" width="156" height="156" rx="27"/><g transform="translate(36 36)" fill="#F6F8FA"><path d="M0 71.007A4.004 4.004 0 014 67h26a4 4 0 014 4.007v8.986A4.004 4.004 0 0130 84H4a4 4 0 01-4-4.007v-8.986zM50 71.007A4.004 4.004 0 0154 67h26a4 4 0 014 4.007v8.986A4.004 4.004 0 0180 84H54a4 4 0 01-4-4.007v-8.986z"/><rect y="34" width="84" height="17" rx="4"/><path d="M0 4.007A4.007 4.007 0 014.007 0h41.986A4.003 4.003 0 0150 4.007v8.986A4.007 4.007 0 0145.993 17H4.007A4.003 4.003 0 010 12.993V4.007z"/><rect x="67" width="17" height="17" rx="4"/></g></g></svg> Published with Ghost</a>
+    </footer>
+    
+</body>
+</html>

@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html ⚡>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <title>How do I use JWT Authentication in production?</title>
+
+    <meta name="description" content="I’ve heard people saying that JWT(JSON Web Token) is insecure, try to avoid it and many other things, and they’re not completely wrong. They have fair points against JWT. So, today in this article I’ll show some best practices which I use to make this process much secure." />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://gosink.in/how-do-i-use-jwt-authentication-in-production/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    
+    <meta property="og:site_name" content="Sink In - Tech and Travel" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="How do I use JWT Authentication in production?" />
+    <meta property="og:description" content="I’ve heard people saying that JWT(JSON Web Token) is insecure, try to avoid it and many other things, and they’re not completely wrong. They have fair points against JWT. So, today in this article I’ll show some best practices which I use to make this process much secure." />
+    <meta property="og:url" content="https://gosink.in/how-do-i-use-jwt-authentication-in-production/" />
+    <meta property="og:image" content="https://gosink.in/content/images/2019/08/jwt-locked.jpeg" />
+    <meta property="article:published_time" content="2019-08-06T17:35:23.000Z" />
+    <meta property="article:modified_time" content="2019-08-07T17:02:00.000Z" />
+    <meta property="article:tag" content="Tech" />
+    <meta property="article:tag" content="JWT" />
+    <meta property="article:tag" content="Authentication" />
+    <meta property="article:tag" content="Redis" />
+    <meta property="article:tag" content="Security" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/shah.apal" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="How do I use JWT Authentication in production?" />
+    <meta name="twitter:description" content="I’ve heard people saying that JWT(JSON Web Token) is insecure, try to avoid it and many other things, and they’re not completely wrong. They have fair points against JWT. So, today in this article I’ll show some best practices which I use to make this process much secure." />
+    <meta name="twitter:url" content="https://gosink.in/how-do-i-use-jwt-authentication-in-production/" />
+    <meta name="twitter:image" content="https://gosink.in/content/images/2019/08/jwt-locked.jpeg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Apal Shah" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Tech, JWT, Authentication, Redis, Security" />
+    <meta name="twitter:site" content="@shah_apal" />
+    <meta property="og:image:width" content="2000" />
+    <meta property="og:image:height" content="1125" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Sink In - Tech and Travel",
+        "url": "https://gosink.in/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://gosink.in/content/images/2019/08/Final-logo.png"
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Apal Shah",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://gosink.in/author/apal/",
+        "sameAs": []
+    },
+    "headline": "How do I use JWT Authentication in production?",
+    "url": "https://gosink.in/how-do-i-use-jwt-authentication-in-production/",
+    "datePublished": "2019-08-06T17:35:23.000Z",
+    "dateModified": "2019-08-07T17:02:00.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://gosink.in/content/images/2019/08/jwt-locked.jpeg",
+        "width": 2000,
+        "height": 1125
+    },
+    "keywords": "Tech, JWT, Authentication, Redis, Security",
+    "description": "I’ve heard people saying that JWT(JSON Web Token) is insecure, try to avoid it and many other things, and they’re not completely wrong. They have fair points against JWT. So, today in this article I’ll show some best practices which I use to make this process much secure.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://gosink.in/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.2" />
+    <link rel="alternate" type="application/rss+xml" title="Sink In - Tech and Travel" href="https://gosink.in/rss/" />
+
+    <style amp-custom>
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    html {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        font-size: 62.5%;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+    body {
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        color: #3a4145;
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+        font-size: 1.7rem;
+        line-height: 1.55em;
+        font-weight: 400;
+        font-style: normal;
+        background: #fff;
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    p,
+    ul,
+    ol,
+    li,
+    dl,
+    dd,
+    hr,
+    pre,
+    form,
+    table,
+    video,
+    figure,
+    figcaption,
+    blockquote {
+        margin: 0;
+        padding: 0;
+    }
+
+    ul[class],
+    ol[class] {
+        padding: 0;
+        list-style: none;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
+    input,
+    button,
+    select,
+    textarea {
+        font: inherit;
+        -webkit-appearance: none;
+    }
+
+    fieldset {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    label {
+        display: block;
+        font-size: 0.9em;
+        font-weight: 700;
+    }
+
+    hr {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid currentcolor;
+        opacity: 0.1;
+    }
+
+    ::selection {
+        text-shadow: none;
+        background: #cbeafb;
+    }
+
+    mark {
+        background-color: #fdffb6;
+    }
+
+    small {
+        font-size: 80%;
+    }
+
+    sub,
+    sup {
+        position: relative;
+        font-size: 75%;
+        line-height: 0;
+        vertical-align: baseline;
+    }
+    sup {
+        top: -0.5em;
+    }
+    sub {
+        bottom: -0.25em;
+    }
+
+    ul li + li {
+        margin-top: 0.6em;
+    }
+
+    a {
+        color: var(--ghost-accent-color, #1292EE);
+        text-decoration-skip-ink: auto;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0;
+        font-weight: 700;
+        color: #121212;
+        line-height: 1.4em;
+    }
+
+    h1 {
+        font-size: 3.4rem;
+        line-height: 1.1em;
+    }
+
+    h2 {
+        font-size: 2.4rem;
+        line-height: 1.2em;
+    }
+
+    h3 {
+        font-size: 1.8rem;
+    }
+
+    h4 {
+        font-size: 1.7rem;
+    }
+
+    h5 {
+        font-size: 1.6rem;
+    }
+
+    h6 {
+        font-size: 1.6rem;
+    }
+
+    amp-img {
+        height: 100%;
+        width: 100%;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    amp-img img {
+        object-fit: cover;
+    }
+
+    .page-header {
+        padding: 50px 5vmin 30px;
+        text-align: center;
+        font-size: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .page-header a {
+        color: #121212;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 1.6rem;
+        letter-spacing: -0.1px;
+    }
+
+    .post {
+        max-width: 680px;
+        margin: 0 auto;
+    }
+
+    .post-header {
+        margin: 0 5vmin 5vmin;
+        text-align: center;
+    }
+
+    .post-meta {
+        margin: 1rem 0 0 0;
+        text-transform: uppercase;
+        color: #738a94;
+        font-weight: 500;
+        font-size: 1.3rem;
+    }
+
+    .post-image {
+        margin: 0 0 5vmin;
+    }
+
+    .post-image img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .post-content {
+        padding: 0 5vmin;
+    }
+
+    .post-content > * + * {
+        margin-top: 1.5em;
+    }
+
+    .post-content [id]:not(:first-child) {
+        margin: 2em 0 0;
+    }
+
+    .post-content > [id] + * {
+        margin-top: 1rem;
+    }
+
+    .post-content [id] + .kg-card,
+    .post-content blockquote + .kg-card {
+        margin-top: 40px;
+    }
+
+    .post-content > ul,
+    .post-content > ol,
+    .post-content > dl {
+        padding-left: 1.9em;
+    }
+
+    .post-content hr {
+        margin-top: 40px;
+    }
+
+    .post .post-content hr + * {
+        margin-top: 40px;
+    }
+
+    .post-content amp-img {
+        background-color: #f8f8f8;
+    }
+
+    .post-content blockquote {
+        position: relative;
+        font-style: italic;
+    }
+
+    .post-content blockquote::before {
+        content: "";
+        position: absolute;
+        left: -1.5em;
+        top: 0;
+        bottom: 0;
+        width: 0.3rem;
+        background: var(--ghost-accent-color, #1292EE);
+    }
+
+    .post-content :not(.kg-card):not([id]) + .kg-card {
+        margin-top: 40px;
+    }
+
+    .post-content .kg-card + :not(.kg-card) {
+        margin-top: 40px;
+    }
+
+    .kg-card figcaption {
+        padding: 1.5rem 1.5rem 0;
+        text-align: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+        line-height: 1.4em;
+        opacity: 0.6;
+    }
+
+    .kg-card figcaption strong {
+        color: rgba(0,0,0,0.8);
+    }
+
+    .post-content :not(pre) code {
+        vertical-align: middle;
+        padding: 0.15em 0.4em 0.15em;
+        border: #e1eaef 1px solid;
+        font-weight: 400;
+        font-size: 0.9em;
+        line-height: 1em;
+        color: #15171a;
+        background: #f0f6f9;
+        border-radius: 0.25em;
+    }
+
+    .post-content > pre {
+        overflow: scroll;
+        padding: 16px 20px;
+        color: #fff;
+        background: #1F2428;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px -2px rgba(0,0,0,.1), 0 0 1px rgba(0,0,0,.4);
+    }
+
+    .kg-embed-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .kg-image-card img {
+        margin: auto;
+    }
+
+    .kg-gallery-card + .kg-gallery-card {
+        margin-top: 0.75em;
+    }
+
+    .kg-gallery-container {
+        position: relative;
+    }
+
+    .kg-gallery-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .kg-gallery-image {
+        width: 100%;
+        height: 100%;
+    }
+
+    .kg-gallery-row:not(:first-of-type) {
+        margin: 0.75em 0 0 0;
+    }
+
+    .kg-gallery-image:not(:first-of-type) {
+        margin: 0 0 0 0.75em;
+    }
+
+    .kg-bookmark-card,
+    .kg-bookmark-publisher {
+        position: relative;
+    }
+
+    .kg-bookmark-container,
+    .kg-bookmark-container:hover {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row-reverse;
+        color: currentColor;
+        background: rgba(255,255,255,0.6);
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+        text-decoration: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+    }
+
+    .kg-bookmark-content {
+        flex-basis: 0;
+        flex-grow: 999;
+        padding: 20px;
+        order: 1;
+    }
+
+    .kg-bookmark-title {
+        font-weight: 600;
+        font-size: 1.5rem;
+        line-height: 1.3em;
+    }
+
+    .kg-bookmark-description {
+        display: -webkit-box;
+        max-height: 45px;
+        margin: 0.5em 0 0 0;
+        font-size: 1.4rem;
+        line-height: 1.55em;
+        overflow: hidden;
+        opacity: 0.8;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .kg-bookmark-metadata {
+        margin-top: 20px;
+    }
+
+    .kg-bookmark-metadata {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+        line-height: 1.3em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .kg-bookmark-description {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    }
+
+    .kg-bookmark-metadata amp-img {
+        width: 18px;
+        height: 18px;
+        max-width: 18px;
+        max-height: 18px;
+        margin-right: 10px;
+    }
+
+    .kg-bookmark-thumbnail {
+        display: flex;
+        flex-basis: 20rem;
+        flex-grow: 1;
+        justify-content: flex-end;
+    }
+
+    .kg-bookmark-thumbnail amp-img {
+        max-height: 200px;
+    }
+
+    .kg-bookmark-author {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .kg-bookmark-publisher::before {
+        content: "•";
+        margin: 0 .5em;
+    }
+
+    .kg-width-full.kg-card-hascaption {
+        display: grid;
+        grid-template-columns: inherit;
+    }
+
+    .post-content table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .post-content th {
+        padding: 0.5em 0.8em;
+        text-align: left;
+        font-size: .75em;
+        text-transform: uppercase;
+    }
+
+    .post-content td {
+        padding: 0.4em 0.7em;
+    }
+
+    .post-content tbody tr:nth-child(2n + 1) {
+        background-color: rgba(0,0,0,0.1);
+        padding: 1px;
+    }
+
+    .post-content tbody tr:nth-child(2n + 2) td:last-child {
+        box-shadow:
+            inset 1px 0 rgba(0,0,0,0.1),
+            inset -1px 0 rgba(0,0,0,0.1);
+    }
+
+    .post-content tbody tr:nth-child(2n + 2) td {
+        box-shadow: inset 1px 0 rgba(0,0,0,0.1);
+    }
+
+    .post-content tbody tr:last-child {
+        border-bottom: 1px solid rgba(0,0,0,.1);
+    }
+
+    .page-footer {
+        padding: 60px 5vmin;
+        margin: 60px auto 0;
+        text-align: center;
+        background-color: #f8f8f8;
+    }
+
+    .page-footer h3 {
+        margin: 0.5rem 0 0 0;
+    }
+
+    .page-footer p {
+        max-width: 500px;
+        margin: 1rem auto 1.5rem;
+        font-size: 1.7rem;
+        line-height: 1.5em;
+        color: rgba(0,0,0,0.6)
+    }
+
+    .powered {
+        display: inline-flex;
+        align-items: center;
+        margin: 30px 0 0;
+        padding: 6px 9px 6px 6px;
+        border: rgba(0,0,0,0.1) 1px solid;
+        font-size: 12px;
+        line-height: 12px;
+        letter-spacing: -0.2px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+        font-weight: 500;
+        color: #222;
+        text-decoration: none;
+        background: #fff;
+        border-radius: 6px;
+    }
+
+    .powered svg {
+        height: 16px;
+        width: 16px;
+        margin: 0 6px 0 0;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            font-size: 1.6rem;
+        }
+        h1 {
+            font-size: 3rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        h1 {
+            font-size: 2.6rem;
+            line-height: 1.15em;
+        }
+        h2 {
+            font-size: 2rem;
+            line-height: 1.2em;
+        }
+        h3 {
+            font-size: 1.7rem;
+        }
+    }
+
+    :root {--ghost-accent-color: #1c1c1c;}
+    </style>
+
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+
+    <script async custom-element="amp-anim" src="https://cdn.ampproject.org/v0/amp-anim-0.1.js"></script>
+
+</head>
+
+<body class="amp-template">
+    <header class="page-header">
+        <a href="https://gosink.in">
+                <amp-img class="site-icon" src="https://gosink.in/content/images/2019/08/favicon.png" width="50" height="50" layout="fixed"></amp-img>
+        </a>
+    </header>
+
+    <main class="content" role="main">
+        <article class="post">
+
+            <header class="post-header">
+                <h1 class="post-title">How do I use JWT Authentication in production?</h1>
+                <section class="post-meta">
+                    Apal Shah -
+                    <time class="post-date" datetime="2019-08-06">06 Aug 2019</time>
+                </section>
+            </header>
+            <figure class="post-image">
+                <amp-img src="https://gosink.in/content/images/2019/08/jwt-locked.jpeg" width="600" height="340" layout="responsive"></amp-img>
+            </figure>
+            <section class="post-content">
+
+                <p>I’ve heard people saying that JWT(<em><em>JSON Web Token</em></em>) is insecure, try to avoid it and many other things, and they’re not completely wrong. They have fair points against JWT. So, today in this article I’ll show some best practices which I use to make this process much secure.</p><p>If you don’t know what JWT is, how it is structured or how it encodes/decodes data, please read <a href="https://jwt.io/introduction/"><em><em>this introduction</em></em></a> first.</p><hr></hr><h1 id="what-are-the-drawbacks">What are the drawbacks?</h1><p>It is important to make the list of drawbacks first so that we can understand why there are many people not using JWT tokens for authentication.</p><ul><li>Anyone can read the <code>payload</code> of a JWT token. If you don’t know this and want to verify, paste your JWT token <a href="https://jwt.io/"><em><em>here</em></em></a> and see the output.</li><li>By default, JWT uses <code><strong><strong>HS256</strong></strong></code>algorithm, which works on the private key encryption. If you’re <strong><strong>not</strong></strong> the only developer (<em><em>which is obvious in the production</em></em>) and have no control over who uses the private key, it can easily be leaked and anyone can generate the token and get the access.</li><li>I’ve also read some blogs that it is possible to <strong><strong><em><em>brute force</em></em></strong></strong> HS256.</li><li>If you use <code><strong><strong>RS256</strong></strong></code> algorithm, which uses public key encryption, you don’t have to worry about any key. But, there are very well knows attacks on these algorithms (e.g. attacks on <em><em>RSA with PKCS #1v1.5 Padding</em></em>, <em><em>RSA with OAEP Padding, Elliptic Curve Diffie-Hellman</em></em> etc).</li><li>If you generate any token without including <code>exp</code> in the payload, that token becomes <em><em>valid</em></em> forever.</li><li>Some people append tokens in the URL and even after logging out of the browsers, that URL gets cached and sometimes, other users who use the same browser can access the cached page.</li><li>Sometimes, there is only a single JWT Authentication server for multiple apps and if it is not properly configured, people can access other apps seamlessly.</li><li>While developing the system, developers store the JWT token somewhere else and also add a <em><em>second layer</em></em> to authenticate it. This approach seems quite good but it exposes all the token to the developers and they can misuse the token.</li></ul><p><em><em>Please educate me if you know some other potential drawbacks of JWT Authentication.</em></em></p><hr></hr><div>
+  <amp-anim src="https://i.imgur.com/hkdHFeO.gif" width="329" height="313" layout="responsive"></amp-anim>
+</div><p>You might be wondering that why one should use JWT for authentication if it has so many drawbacks. But if you’ve read the introduction link given at the beginning, you’ll agree that it is one of the simplest ways of authentication, and we can easily overcome these security threats(<em><em>because if we can’t, there is no point of writing this blog</em></em>).</p><hr></hr><h1 id="solution-and-some-best-practices-which-i-use-">Solution and some best practices which I use!</h1><h2 id="how-to-secure-a-token-so-that-no-one-can-see-the-token-itself-">How to secure a token so that no one can see the token itself.</h2><p>Always prefer <code><strong><strong>HTTPS</strong></strong></code> over <em><em>HTTP</em></em> to transmit JWT tokens, so that no one can get the original token in between. It reduces the chances that someone extracts the JWT in between and read the payload or reuse the token.</p><h2 id="but-what-if-someone-found-out-stole-the-token">But what if someone found out/stole the token?</h2><p>But it is still possible that if someone has the physical access to the client’s PC or the client runs any malicious script, the attacker can see the token. So never include any sensitive data inside the payload of any token. If possible, try to generate the primary key using <code>UUID</code> and only append it with the payload.</p><h2 id="how-not-to-make-any-token-valid-forever">How not to make any token valid forever?</h2><p>As I said, if you don’t add <code>exp</code> (<em><em>expiration time</em></em>), a token becomes valid forever. So always add <code>exp</code> in your token. Also, try to make JWT token’s expiration time as small as possible. Because if some unauthorized person gets the token, he/she can’t misuse it for long. <strong><strong>But,</strong></strong> only adding it doesn’t make JWT any secure. You must include <code>iat</code> (<em><em>issued at</em></em>), inside the token. It makes the token somewhat unique. But if you want to be sure that the token is unique and also monitor which token is used to do which type of task, add unique <code>jti</code> (<em><em>JWT Token ID</em></em>).</p><h2 id="what-if-you-re-using-a-single-server-to-authenticate-multiple-apps">What if you’re using a single server to authenticate multiple apps?</h2><p>To prevent the users of some app to access your other apps, include <code>iss</code> (<em><em>issuer of the token</em></em>) in the payload. If you want some users to access only some paths of your app, either add those paths in your token or validate them explicitly in the backend using a unique <code>jti</code>.</p><h2 id="if-you-re-appending-the-token-in-a-url-probably-a-get-request-">If you’re appending the token in a URL (Probably a GET Request)</h2><p>First, try to avoid this. Don’t append your tokens in a URL. It makes the token visible to everyone. But still, if you don’t have any choice and want to add the token in a URL, make sure you don’t let browsers cache your page by adding some meta tags, middlewares or whatever it takes. Because that’s not your users’ fault. They had properly logged out, it is you who didn’t properly architect/code your URLs or the whole app. It makes you and your app less credible.</p><h2 id="but-what-if-your-private-key-gets-leaked">But what if your private key gets leaked?</h2><p>I guess this is the biggest issue for a developer or a team as you don’t know who leaked the key or sometimes you don’t know whether your key is leaked until it’s too late. For that, I suggest using some other layer for validating the token.</p><p>If your app is not handling much traffic, it doesn’t really matter whether you choose <code>Redis</code>, <code>MongoDB</code> or any other way to store your data. But if there is heavy traffic or you want to scale your product later, you can use <code>Redis</code>. Also Google for the Redis’ benchmarking.</p><h2 id="okay-but-how-to-use-another-layer-to-validate-your-data">Okay, but how to use another layer to validate your data?</h2><p>Ideally, you generate and send a JWT token in the response, after a successful login. At that time, before sending the response(<em><em>before — because if it throws an error, your token becomes invalid in this approach</em></em>), store this token in <code>Redis</code> with some expiration time. Setting the expiration time is important because if you don't, your token will be there forever (<em>theoretically</em>) and you have to setup a cron-job to remove those tokens.</p><p>Now if a user makes a new request with a token, first, search for that token in Redis. If you can’t find it there, send the response saying that the user is unauthorized, otherwise let them proceed. But don't forget to remove this token on logout.</p><h2 id="that-s-cool-but-what-about-developers-there-is-a-chance-some-of-them-can-misuse-your-token-">That’s cool but what about developers? There is a chance, some of them can misuse your token.</h2><p>A simple solution to this problem is, just make the hash of your JWT token and then store it in Redis. Same goes for the validation — first hash, then search.</p><div>
+  <amp-img src="https://i.imgur.com/1O7EUtZ.png" width="602" height="339" layout="responsive"></amp-img>
+</div><hr></hr><h1 id="some-other-precautions">Some other precautions</h1><h2 id="there-are-3-different-types-of-claims-in-a-token-">There are 3 different types of <a href="https://tools.ietf.org/html/rfc7519#section-4.1">claims</a> in a token.</h2><ol><li><strong><strong>Registered Claims</strong></strong><br /><code>sub</code> (<em><em>subject</em></em>), <code>aud</code> (<em><em>audience</em></em>) and <code>nbf</code> (<em><em>not before</em></em>) are some other registered claims.</li><li><strong><strong>Public Claims</strong></strong><br />Which you add on your own. (e.g. <em><em>user id</em></em>)</li><li><strong><strong>Private Claims</strong></strong><br />Custom claims between parties that agree on using them to share the information.</li></ol><h2 id="tl-dr">TL;DR</h2><p>Explanation of all the claims are given in <a href="https://jwt.io/introduction/"><strong><strong><em><em>this link</em></em></strong></strong></a> in the payload section and details of each element of these claims are described <a href="https://tools.ietf.org/html/rfc7519#section-4.1"><strong><strong><em><em>here</em></em></strong></strong></a>. As a developer, you must know what are these claims and prevent the collision between these claims.</p><hr></hr><h1 id="conclusion">Conclusion</h1><p>I personally believe that using JWT authentication <strong><strong><em><em>alone</em></em></strong></strong> is not a good idea in a production environment. For the beginners, the setup which I showed might sound a little bit extreme but it makes your product much secure.</p><p>It doesn’t matter what you use for the authentication. If you <strong><strong><em><em>don’t</em></em></strong><em> </em></strong>implement the whole system properly, you can never make a secure system.</p><hr></hr><h1 id="footnotes">Footnotes</h1><p>If you are thinking that still there is a chance that we end up compromising the whole authentication system, please let me know. We can discuss and probably we can help to make the internet more secure.</p>
+
+            </section>
+
+        </article>
+    </main>
+    <footer class="page-footer">
+            <amp-img class="site-icon" src="https://gosink.in/content/images/2019/08/favicon.png" width="50" height="50" layout="fixed"></amp-img>
+        <h3>Sink In - Tech and Travel</h3>
+            <p>Sink In - Tech and Travel</p>
+        <p><a href="https://gosink.in">Read more posts →</a></p>
+        <a class="powered" href="https://ghost.org" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 156 156"><g fill="none" fill-rule="evenodd"><rect fill="#15212B" width="156" height="156" rx="27"/><g transform="translate(36 36)" fill="#F6F8FA"><path d="M0 71.007A4.004 4.004 0 014 67h26a4 4 0 014 4.007v8.986A4.004 4.004 0 0130 84H4a4 4 0 01-4-4.007v-8.986zM50 71.007A4.004 4.004 0 0154 67h26a4 4 0 014 4.007v8.986A4.004 4.004 0 0180 84H54a4 4 0 01-4-4.007v-8.986z"/><rect y="34" width="84" height="17" rx="4"/><path d="M0 4.007A4.007 4.007 0 014.007 0h41.986A4.003 4.003 0 0150 4.007v8.986A4.007 4.007 0 0145.993 17H4.007A4.003 4.003 0 010 12.993V4.007z"/><rect x="67" width="17" height="17" rx="4"/></g></g></svg> Published with Ghost</a>
+    </footer>
+    
+</body>
+</html>

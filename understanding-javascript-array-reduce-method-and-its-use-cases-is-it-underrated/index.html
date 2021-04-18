@@ -1,40 +1,580 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+
+    <title>Understanding Javascript Array&#x27;s .reduce() method and its use-cases</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Sink In - Tech and Travel</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=8d817c4a26" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=2408e2b2b9" />
+
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://gosink.in/understanding-javascript-array-reduce-method-and-its-use-cases-is-it-underrated/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="https://gosink.in/understanding-javascript-array-reduce-method-and-its-use-cases-is-it-underrated/amp/" />
+    
+    <meta property="og:site_name" content="Sink In - Tech and Travel" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Understanding Javascript Array&#x27;s .reduce() method and its use-cases" />
+    <meta property="og:description" content="After reading various tweets and blogs, I decided to write a detailed article on what exactly reduce method is and what can be some of its use cases." />
+    <meta property="og:url" content="https://gosink.in/understanding-javascript-array-reduce-method-and-its-use-cases-is-it-underrated/" />
+    <meta property="og:image" content="https://gosink.in/content/images/2020/07/Array.reduce.jpg" />
+    <meta property="article:published_time" content="2020-07-03T21:33:10.000Z" />
+    <meta property="article:modified_time" content="2020-07-03T21:33:10.000Z" />
+    <meta property="article:tag" content="Tech" />
+    <meta property="article:tag" content="javascript" />
+    <meta property="article:tag" content="Node.js" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/shah.apal" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Understanding Javascript Array&#x27;s .reduce() method and its use-cases" />
+    <meta name="twitter:description" content="After reading various tweets and blogs, I decided to write a detailed article on what exactly reduce method is and what can be some of its use cases." />
+    <meta name="twitter:url" content="https://gosink.in/understanding-javascript-array-reduce-method-and-its-use-cases-is-it-underrated/" />
+    <meta name="twitter:image" content="https://gosink.in/content/images/2020/07/Array.reduce.jpg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Apal Shah" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Tech, javascript, Node.js" />
+    <meta name="twitter:site" content="@shah_apal" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="720" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Sink In - Tech and Travel",
+        "url": "https://gosink.in/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://gosink.in/content/images/2019/08/Final-logo.png"
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Apal Shah",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://gosink.in/author/apal/",
+        "sameAs": []
+    },
+    "headline": "Understanding Javascript Array&#x27;s .reduce() method and its use-cases",
+    "url": "https://gosink.in/understanding-javascript-array-reduce-method-and-its-use-cases-is-it-underrated/",
+    "datePublished": "2020-07-03T21:33:10.000Z",
+    "dateModified": "2020-07-03T21:33:10.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://gosink.in/content/images/2020/07/Array.reduce.jpg",
+        "width": 1280,
+        "height": 720
+    },
+    "keywords": "Tech, javascript, Node.js",
+    "description": "After reading various tweets and blogs, I decided to write a detailed article on what exactly reduce method is and what can be some of its use cases.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://gosink.in/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.2" />
+    <link rel="alternate" type="application/rss+xml" title="Sink In - Tech and Travel" href="https://gosink.in/rss/" />
+    <script defer src="https://unpkg.com/@tryghost/portal@~1.1.0/umd/portal.min.js" data-ghost="https://gosink.in/"></script><style> .gh-post-upgrade-cta-content,
+.gh-post-upgrade-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.gh-post-upgrade-cta-content {
+    border-radius: 8px;
+    padding: 40px 4vw;
+}
+
+.gh-post-upgrade-cta h2 {
+    color: #ffffff;
+    font-size: 28px;
+    letter-spacing: -0.2px;
+    margin: 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta p {
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta small {
+    font-size: 16px;
+    letter-spacing: -0.2px;
+}
+
+.gh-post-upgrade-cta a {
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a:hover {
+    color: #ffffff;
+    opacity: 0.8;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a.gh-btn {
+    display: block;
+    background: #ffffff;
+    text-decoration: none;
+    margin: 28px 0 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gh-post-upgrade-cta a.gh-btn:hover {
+    opacity: 0.92;
+}</style>
+    <link rel="stylesheet"
+      href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/night-owl.min.css">
+<!-- Fix Gist -->
+<style>
+    .gist {
+    	width: 100%;
+    }
+    .post-full-content pre {
+        box-shadow: 0 20px 25px -20px rgba(0,0,0,0.7);
+        word-wrap: normal;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        -webkit-hyphens: none;
+        hyphens: none;
+        font-size: 0.9em;
+        line-height: 1.3em;
+        border: rbg(1, 22, 39, 0.9);
+        background: rgba(1, 22, 39, 0.9);
+    }
+    .post-full-content pre code, .post-full-content pre tt {
+        white-space: pre;
+    }
+</style>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-63344841-6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-63344841-6');
+</script>
+
+<!-- Google Adsense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-7909119592155313",
+          enable_page_level_ads: true
+     });
+</script>
+<style>:root {--ghost-accent-color: #1c1c1c;}</style>
+
 </head>
-<body>
-    <div class="site-wrapper">
+<body class="post-template tag-tech tag-javascript tag-node-js">
+<div class="viewport">
 
-        <header class="site-header no-image">
-            <div class="site-nav-main outer">
-                <div class="inner">
-                    <nav class="site-nav-center">
-                        <a class="site-nav-logo" href="https://gosink.in"><img src="/content/images/size/w100/2019/08/Final-logo.png"
-                                alt="Sink In - Tech and Travel" /></a>
-                    </nav>
+    <header id="gh-head" class="gh-head has-cover">
+        <nav class="gh-head-inner inner gh-container">
+
+            <div class="gh-head-brand">
+                <a class="gh-head-logo" href="https://gosink.in">
+                        <img src="https://gosink.in/content/images/2019/08/Final-logo.png" alt="Sink In - Tech and Travel" />
+                </a>
+                <a class="gh-burger" role="button">
+                    <div class="gh-burger-box">
+                        <div class="gh-burger-inner"></div>
+                    </div>
+                </a>
+            </div>
+            <div class="gh-head-menu">
+                <ul class="nav">
+    <li class="nav-home"><a href="https://gosink.in/">Home</a></li>
+    <li class="nav-tech"><a href="https://gosink.in/tag/tech/">Tech</a></li>
+    <li class="nav-design"><a href="https://gosink.in/tag/design/">Design</a></li>
+    <li class="nav-travel"><a href="https://gosink.in/tag/travel/">Travel</a></li>
+    <li class="nav-entrepreneurship"><a href="https://gosink.in/tag/entrepreneurship/">Entrepreneurship</a></li>
+</ul>
+
+            </div>
+            <div class="gh-head-actions">
+                <div class="gh-social">
+                        <a class="gh-social-facebook" href="https://www.facebook.com/shah.apal" title="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16 0c8.837 0 16 7.163 16 16s-7.163 16-16 16S0 24.837 0 16 7.163 0 16 0zm5.204 4.911h-3.546c-2.103 0-4.443.885-4.443 3.934.01 1.062 0 2.08 0 3.225h-2.433v3.872h2.509v11.147h4.61v-11.22h3.042l.275-3.81h-3.397s.007-1.695 0-2.187c0-1.205 1.253-1.136 1.329-1.136h2.054V4.911z" /></svg></a>
+                        <a class="gh-social-twitter" href="https://twitter.com/shah_apal" title="Twitter" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+</a>
                 </div>
-            </div>
-        </header>
-
-        <main class="outer error-content">
-            <div class="inner">
-
-                <section class="error-message">
-                    <h1 class="error-code">400</h1>
-                    <p class="error-description">[post.hbs] post doesn&#x27;t match unless - 7:3</p>
-                    <a class="error-link" href="https://gosink.in">Go to the front page →</a>
-                </section>
-
 
             </div>
-        </main>
+        </nav>
+    </header>
+
+    <main>
+        
+
+
+
+<article class="article post tag-tech tag-javascript tag-node-js">
+
+    <header class="article-header gh-canvas">
+
+        <section class="article-tag">
+            <a href="https://gosink.in/tag/tech/">Tech</a>
+        </section>
+
+        <h1 class="article-title">Understanding Javascript Array&#x27;s .reduce() method and its use-cases</h1>
+
+        <p class="article-excerpt">After reading various tweets and blogs, I decided to write a detailed article on what exactly reduce method is and what can be some of its use cases.</p>
+
+        <div class="article-byline">
+            <section class="article-byline-content">
+                <ul class="author-list">
+                    <li class="author-list-item">
+                        <a href="/author/apal/" class="author-avatar">
+                            <img class="author-profile-image" src="//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x" alt="Apal Shah" />
+                        </a>
+                    </li>
+                </ul>
+                <div class="article-byline-meta">
+                    <h4 class="author-name"><a href="/author/apal/">Apal Shah</a></h4>
+                    <div class="byline-meta-content">
+                        <time class="byline-meta-date" datetime="2020-07-03">Jul 3, 2020</time>
+                        <span class="byline-reading-time"><span class="bull">&bull;</span> 7 min read</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <figure class="article-image">
+            <img
+                srcset="/content/images/size/w300/2020/07/Array.reduce.jpg 300w,
+                        /content/images/size/w600/2020/07/Array.reduce.jpg 600w,
+                        /content/images/size/w1000/2020/07/Array.reduce.jpg 1000w,
+                        /content/images/size/w2000/2020/07/Array.reduce.jpg 2000w"
+                sizes="(min-width: 1400px) 1400px, 92vw"
+                src="/content/images/size/w2000/2020/07/Array.reduce.jpg"
+                alt="Understanding Javascript Array&#x27;s .reduce() method and its use-cases"
+            />
+        </figure>
+    </header>
+
+    <section class="gh-content gh-canvas">
+        <p>The <code>.reduce()</code> method was also there in ES5, but I'd never used or seen someone using it in production at that time. Even today, I see people not aware of this method. I've also seen people only giving the same <code>shopping cart example</code> while explaining this method and, that's why I think people don't completely understand it. I feel this is the reason this method is underrated though it is powerful.</p><p>When I encountered this for the first time, I was happy with the regular for loop for doing the shopping cart calculation. I didn't feel like using it for such tasks. But after digging deep into this method, I realized I could do many more things.</p><p>After reading various tweets and blogs, I decided to write a detailed article on what exactly reduce method is and what can be some of its use cases. We won't be talking about the speed of regular for loop and .reduce() because the for loop is way faster than any other Array methods, be it <code>reduce</code>, <code>map</code>, <code>filter</code>, <code>sort</code>, <code>forEach</code>, etc.</p><blockquote><em><strong>If you have any real-world use cases on your mind, do let me know. I'll add those examples in this article with the attribution.</strong></em></blockquote><hr><h2 id="understanding-reduce-">Understanding .reduce()</h2><p>We can use <code>.reduce()</code> on an array and it executes a reducer function <em>(a callback function)</em> on each element and, we can define the logic of this reducer function. This .reduce() also accepts a second argument: <code>initialValue</code>.</p><pre><code class="language-javascript">arr.reduce((accumulator, currentElement, currentIndex, array) =&gt; {
+  // your logic goes here...
+}, initialValue);</code></pre><h3 id="this-reducer-function-callback-takes-4-arguments-">This reducer function (callback) takes 4 arguments:</h3><ol><li><code><strong>accumulator</strong></code>: It accumulates all the values returned by the callback function. That means, at the end of the callback function, whatever value you return, it becomes the value of the accumulator for the next iteration. If you pass the <code>initialValue</code>, it becomes the value of the accumulator for the first iteration. Else, it takes the first value of the array in its first iteration.</li><li><code><strong>currentElement</strong></code>: It holds the value of the current element of the array that is being processed in the current iteration. If we don't pass the <code>initialValue</code> it starts with the 2nd element of the array because the accumulator takes the 1st element.</li><li><code><strong>currentIndex</strong></code>: It holds the index (<em>position</em>) of the <code>currentElement</code> in the array. <em>If there is no <code>initialValue</code>, it starts with index 1,</em> because that's the position of the currentElement in this case.</li><li><code><strong>array</strong></code>: This contains the original array on which we're executing the reduce method. You might need this array in some cases where you're importing the callback function from a different file and that file doesn't have any reference/context of the original array.</li></ol><p></p><blockquote><em><strong>Note: </strong>If we don't return any value at the end of the function, in the next iteration, the value of the accumulator becomes <code>undefined</code>.</em></blockquote><p></p><p>As per the documentation, the first 2 arguments (<em>accumulator and currentElement</em>) are required but we can execute this function without passing any arguments (<em>which is useless</em>). All the other arguments are optional.</p><h3 id="let-s-take-a-simple-example-to-understand-this-in-detail">Let's take a simple example to understand this in detail</h3><pre><code class="language-javascript">const array = [1, 2, 3, 4, 5];
+const value = array.reduce((acc, curr, i, arr) =&gt; {
+    acc += curr;
+    // Here curr = arr[i];
+    return acc;
+    // If we don't return any value,
+    // The accumulator becomes undefined in the next iteration
+}, 0);
+
+console.log(value); // 15</code></pre><p>In this example, we've passed the initial value: <code>0</code>, of the accumulator. That's why in the first iteration:</p><ol><li>The value of the accumulator becomes <code>0</code>.</li><li>CurrentElement holds the value <code>1</code>. (The first element of the array)</li><li>Because the current element holds the first value, its index becomes <code>0</code>.</li></ol><p>If we remove the initial value, the accumulator will hold the first element of the array: <code>1</code>, the current element will hold the second element: <code>2</code> and the index will start from <code>1</code>.</p><hr><h3 id="but-what-about-es5-there-are-no-arrow-functions-">But what about ES5? There are no arrow functions...</h3><p>In ES5, we can replace the fat arrow function with the <code>function</code> keyword and, everything else stays the same.</p><pre><code class="language-javascript">array.reduce(function(acc, curr, i, arr) {
+  // Your Logic
+}, initialValue);</code></pre><hr><h2 id="now-let-s-see-some-of-its-use-cases">Now let's see some of its use-cases</h2><p>Here, in this section, we'll see how and where we can use <code>.reduce()</code>. The intention of this section is not to provide the optimal solution but to explore new use-cases.</p><p>If you're concerned about the execution speed, DO NOT use <code>reduce</code>, <code>map</code>, <code>forEach</code>, etc. because they all are way slower than the original <code>for loop</code>.</p><h3 id="replicating-map-using-reduce-">Replicating .map() using .reduce()</h3><pre><code class="language-javascript">const array = [1, 2, 3, 4, 5];
+
+const data = array.reduce((acc, curr) =&gt; {
+  // Your logic on `curr`
+  acc.push(curr);
+  return acc;
+}, []);
+
+console.log(data); // [1, 2, 3, 4, 5]</code></pre><p>In this example, after getting the value of <code>curr</code>, we can do any operation on it and push the old/new value in the accumulator and return it.</p><h3 id="replicating-filter-using-reduce-">Replicating .filter() using .reduce()</h3><p>Now, let's try to filter an array of numbers and get all the numbers greater than <code>0</code> using reduce.</p><pre><code class="language-javascript">const array = [-3, -2, -1, 0, 1, 2, 3];
+
+const filtered = array.reduce((acc, curr) =&gt; {
+    if (curr &gt; 0) {
+        acc.push(curr);
+    }
+    return acc;
+}, []);
+
+console.log(filtered); // [1, 2, 3]</code></pre><h3 id="removing-duplicate-entries-from-the-array">Removing duplicate entries from the array</h3><p>It's extremely easy to remove duplicate entries from an array using <code>.reduce()</code>. The main advantage of using this method is that it'd work even in ES5, unlike <code>Set</code> or some other ES6+ specific ways.</p><pre><code class="language-javascript">const array = [1, 2, 1, 2, 3, 1, 4, 5, 4];
+
+const unique = array.reduce((acc, curr) =&gt; {
+    if (acc.indexOf(curr) === -1) {
+        acc.push(curr);
+    }
+    return acc;
+}, []);
+
+console.log(unique); // [1, 2, 3, 4, 5]</code></pre><h3 id="flattening-all-the-items-from-an-array">Flattening all the items from an array</h3><p>If we have an array that contains let's say numbers and the array of numbers, and we want all the values from the array, we can easily flatten an array using <code>.reduce()</code>.</p><p>I've faced this while calling some APIs that if there's only 1 element, it returns a string. Otherwise, it returns an array of strings.</p><pre><code class="language-javascript">const array = [[1, 2, 3], 4, 5, [6, 7]];
+
+const flatten = array.reduce((acc, curr) =&gt; {
+    if (Array.isArray(curr)) {
+        acc.push(...curr);
+    } else {
+        acc.push(curr)
+    }
+    return acc;
+}, []);
+
+console.log(flatten); // [1, 2, 3, 4, 5, 6, 7]</code></pre><p>We can also write this callback function in 1 line using the ternary operator, but for the sake of understanding, I've kept the if/else condition.</p><h3 id="converting-an-array-into-an-object-and-counting-the-occurrences">Converting an Array into an Object and counting the occurrences</h3><p>This is a very common use case, and most of the time, I see people using "<a href="https://lodash.com/"><em>lodash</em></a>" or similar libraries to perform such small tasks. I don't like to bloat my project with a lot of libraries that I barely use once or twice, and can easily be replaced by a few lines of Vanilla JS code.</p><p>This can be one of the simplest example of counting the number of occurrences of each item in your array:</p><pre><code class="language-javascript">const array = ['🍎', '🍌', '🍌', '🍎', '🍇', '🍌'];
+
+const obj = array.reduce((acc, curr) =&gt; {
+    if (acc[curr]) {
+        acc[curr] += 1;
+    } else {
+    	acc[curr] = 1;
+    }
+    return acc;
+}, {});
+
+console.log(obj); // {🍎: 2, 🍌: 3, 🍇: 1}</code></pre><h3 id="chaining-reduce-with-map-">Chaining .reduce() with .map()</h3><p>Is it possible that we talk about <code>.reduce()</code> and not mention everyone's favorite <code>shopping cart</code> example?</p><p>But here, let's try something new. Now after understanding all these examples, everyone knows that in the example given below, we can pass <code>0</code> as the initial value of the accumulator and return <code>acc + curr.price</code>.</p><p>But did you know, you can also chain map and reduce? I'm sure after looking at the example, you would think that this is obvious, but at least we tried something new! Also, this degrades the performance even more. 🤷🏻</p><pre><code class="language-javascript">const items = [
+  {
+    item: '🍎',
+    price: 10,
+  },
+  {
+    item: '🍌',
+    price: 20,
+  },
+  {
+    item: '🍇',
+    price: 15,
+  },
+];
+
+const total = items
+	.map(item =&gt; item.price)
+	.reduce((acc, curr) =&gt; acc + curr);
+
+console.log(total); // Output: 45</code></pre><h3 id="converting-an-array-of-objects-to-hash-map">Converting an Array of Objects to hash map</h3><p>Wait a second, I'm not talking about the new ES6 feature: <code>Map</code>. Although we can achieve the same thing using <code>Map</code> but there are certain advantages and disadvantages of using <code>Map</code> over an <code>Object</code>.</p><p>Now, let's say you have an array of objects like this:</p><pre><code class="language-javascript">const arr = [
+    { key: 'Tom', value: 'Jerry' },
+    { key: 'Mario', value: 'Luigi' },
+    { key: 'SpongeBob', value: 'Patrick' },
+];</code></pre><p>And, you want a key pair like this:</p><pre><code class="language-json">{
+  "Tom": "Jerry",
+  "Mario": "Luigi",
+  "SpongeBob": "Patrick",
+}</code></pre><p>You can simply achieve this using <code>.reduce()</code> like in the example given below. Isn't it extremely simple and straightforward?</p><pre><code class="language-javascript">const keyPair = arr.reduce((acc, curr) =&gt; {
+  acc[curr.key] = curr.value;
+  return acc;
+}, {});</code></pre><p>Okay, now that we discussed about <code>Map</code>, let's not leave the discussion there. Let's see how we can achieve the same thing in ES6's: <code>Map</code>. Here, we are not discussing which one is better because it depends on the use-case. We may discuss this in a separate blog. But for now let's enjoy this example.</p><p>Here, we'll use <code>.map()</code> to create a <code>Map</code>!!!</p><pre><code class="language-javascript">const keyPair = new Map(arr.map(
+    item =&gt; [item.key, item.value]
+));
+
+console.log(keyPair); // {"Tom" =&gt; "Jerry", "Mario" =&gt; "Luigi", "SpongeBob" =&gt; "Patrick"}</code></pre><hr><h2 id="conclusion">Conclusion</h2><p>In this article, our main focus was to understand and explore the different use-cases of <code>.reduce()</code>. Of course, it is slower than regular <code>for loop</code> but for relatively smaller objects/arrays, you won't even feel the difference (it also depends on the task you're performing on each element).</p><p>For the same reason, you can choose to use <code>reduce</code>, <code>map</code>, <code>forEach</code> etc. in the frontend because the browser has to run this code for only 1 client. But I would not recommend this in the backend because there are limited machines and they've to handle a lot of requests. Even if you can save <code>10 ms</code> for a large object, it may make a huge difference while handling a lot of requests simultaneously. In such cases, you should go for the regular for loop. Even after optimizing your code from every corner you feel that the code is still slow, it's time to switch the language! (C/C++ maybe!)</p><p>Do let me know on <a href="https://twitter.com/shah_apal">Twitter</a> (<em>and follow if possible</em> 🙈) if you have any other use-cases on your mind which you use in production or you might've thought something out of the box. I would love to address them and include them in this article.</p><hr><h3 id="credits">Credits</h3><p>Cover Image: https://morioh.com/</p>
+    </section>
+
+
+</article>
+
     </div>
+</section> --}}
+
+
+<aside class="read-more-wrap">
+    <div class="read-more inner">
+
+
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="/non-design-lessons-learned-while-designing-interfaces-2/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2021/01/Illustration.png 300w,
+                    /content/images/size/w600/2021/01/Illustration.png 600w,
+                    /content/images/size/w1000/2021/01/Illustration.png 1000w,
+                    /content/images/size/w2000/2021/01/Illustration.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="/content/images/size/w600/2021/01/Illustration.png"
+            alt="Non-Design lessons learned while designing interfaces"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/non-design-lessons-learned-while-designing-interfaces-2/">
+            <header class="post-card-header">
+                <h2 class="post-card-title">Non-Design lessons learned while designing interfaces</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>During my time at NextUX Design Agency, apart from designing screens and experience, I have learned so many non-design lessons that I would like to share.</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="/author/aman/" class="static-avatar">
+                        <img class="author-profile-image" src="/content/images/size/w100/2019/08/DNC-XEROX---784-1.jpg" alt="Aman Gupta" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/aman/">Aman Gupta</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-01-24">Jan 24, 2021</time> <span class="bull">&bull;</span> 8 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="/css-what-is-currentcolor-keyword/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2020/11/css-current-color.jpg 300w,
+                    /content/images/size/w600/2020/11/css-current-color.jpg 600w,
+                    /content/images/size/w1000/2020/11/css-current-color.jpg 1000w,
+                    /content/images/size/w2000/2020/11/css-current-color.jpg 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="/content/images/size/w600/2020/11/css-current-color.jpg"
+            alt="CSS — What is currentColor keyword?"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/css-what-is-currentcolor-keyword/">
+            <header class="post-card-header">
+                <h2 class="post-card-title">CSS — What is currentColor keyword?</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Did you know in CSS you can specify the color property once and use that value without specifying it again using the currentColor keyword?</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="/author/apal/" class="static-avatar">
+                        <img class="author-profile-image" src="//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x" alt="Apal Shah" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/apal/">Apal Shah</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-11-27">Nov 27, 2020</time> <span class="bull">&bull;</span> 2 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="/webrtc-switch-cameras-using-javascript-getusermedia/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2020/08/webrtc-video-call.jpeg 300w,
+                    /content/images/size/w600/2020/08/webrtc-video-call.jpeg 600w,
+                    /content/images/size/w1000/2020/08/webrtc-video-call.jpeg 1000w,
+                    /content/images/size/w2000/2020/08/webrtc-video-call.jpeg 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="/content/images/size/w600/2020/08/webrtc-video-call.jpeg"
+            alt="WebRTC — Switch Cameras using Javascript getUserMedia"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/webrtc-switch-cameras-using-javascript-getusermedia/">
+            <header class="post-card-header">
+                <h2 class="post-card-title">WebRTC — Switch Cameras using Javascript getUserMedia</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>To fetch or toggle between the front-facing camera and the back camera, we can simply use the "facingMode" which is widely supported in the majority of the browsers.</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="/author/apal/" class="static-avatar">
+                        <img class="author-profile-image" src="//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x" alt="Apal Shah" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/apal/">Apal Shah</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-08-30">Aug 30, 2020</time> <span class="bull">&bull;</span> 3 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
+    </div>
+</aside>
+
+
+    </main>
+
+    <footer class="site-footer outer">
+        <div class="inner">
+            <section class="copyright"><a href="https://gosink.in">Sink In - Tech and Travel</a> &copy; 2021</section>
+            <nav class="site-footer-nav">
+                
+            </nav>
+        </div>
+    </footer>
+
+</div>
+
+
+<script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous">
+</script>
+<script src="/assets/built/casper.js?v=2408e2b2b9"></script>
+<script>
+$(document).ready(function () {
+    // Mobile Menu Trigger
+    $('.gh-burger').click(function () {
+        $('body').toggleClass('gh-head-open');
+    });
+    // FitVids - Makes video embeds responsive
+    $(".gh-content").fitVids();
+});
+</script>
+
+<!-- Add noopener and noreferrer for security -->
+<script>
+    window.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll('a').forEach(link => {
+        if (
+          link.getAttribute('href').includes('http://') ||
+          link.getAttribute('href').includes('https://')
+        ) {
+          link.setAttribute('rel', 'noopener noreferrer nofollow');
+        }
+      });
+    }, false);
+</script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 </body>
 </html>

@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html ⚡>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <title>Node.js — Serve Private Content using AWS CloudFront</title>
+
+    <meta name="description" content="As I told you in one of my previous article that I ended up using CloudFront to serve my content, I thought to write a separate blog on CloudFront because I also struggled a lot to put things in right place because of very poor documentation for Node.js/JavaScript." />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://gosink.in/node-js-serve-private-content-using-aws-cloudfront/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    
+    <meta property="og:site_name" content="Sink In - Tech and Travel" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Node.js — Serve Private Content using AWS CloudFront" />
+    <meta property="og:description" content="As I told you in one of my previous article that I ended up using CloudFront to serve my content, I thought to write a separate blog on CloudFront because I also struggled a lot to put things in right place because of very poor documentation for Node.js/JavaScript." />
+    <meta property="og:url" content="https://gosink.in/node-js-serve-private-content-using-aws-cloudfront/" />
+    <meta property="og:image" content="https://gosink.in/content/images/2019/08/cloudfront.jpeg" />
+    <meta property="article:published_time" content="2019-08-23T09:20:56.000Z" />
+    <meta property="article:modified_time" content="2019-08-23T09:22:59.000Z" />
+    <meta property="article:tag" content="Tech" />
+    <meta property="article:tag" content="AWS" />
+    <meta property="article:tag" content="Cloud" />
+    <meta property="article:tag" content="Node.js" />
+    <meta property="article:tag" content="javascript" />
+    <meta property="article:tag" content="Security" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/shah.apal" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Node.js — Serve Private Content using AWS CloudFront" />
+    <meta name="twitter:description" content="As I told you in one of my previous article that I ended up using CloudFront to serve my content, I thought to write a separate blog on CloudFront because I also struggled a lot to put things in right place because of very poor documentation for Node.js/JavaScript." />
+    <meta name="twitter:url" content="https://gosink.in/node-js-serve-private-content-using-aws-cloudfront/" />
+    <meta name="twitter:image" content="https://gosink.in/content/images/2019/08/cloudfront.jpeg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Apal Shah" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Tech, AWS, Cloud, Node.js, javascript, Security" />
+    <meta name="twitter:site" content="@shah_apal" />
+    <meta property="og:image:width" content="2000" />
+    <meta property="og:image:height" content="1132" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Sink In - Tech and Travel",
+        "url": "https://gosink.in/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://gosink.in/content/images/2019/08/Final-logo.png"
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Apal Shah",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://gosink.in/author/apal/",
+        "sameAs": []
+    },
+    "headline": "Node.js — Serve Private Content using AWS CloudFront",
+    "url": "https://gosink.in/node-js-serve-private-content-using-aws-cloudfront/",
+    "datePublished": "2019-08-23T09:20:56.000Z",
+    "dateModified": "2019-08-23T09:22:59.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://gosink.in/content/images/2019/08/cloudfront.jpeg",
+        "width": 2000,
+        "height": 1132
+    },
+    "keywords": "Tech, AWS, Cloud, Node.js, javascript, Security",
+    "description": "As I told you in one of my previous article that I ended up using CloudFront to serve my content, I thought to write a separate blog on CloudFront because I also struggled a lot to put things in right place because of very poor documentation for Node.js/JavaScript.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://gosink.in/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.2" />
+    <link rel="alternate" type="application/rss+xml" title="Sink In - Tech and Travel" href="https://gosink.in/rss/" />
+
+    <style amp-custom>
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    html {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        font-size: 62.5%;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+    body {
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        color: #3a4145;
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+        font-size: 1.7rem;
+        line-height: 1.55em;
+        font-weight: 400;
+        font-style: normal;
+        background: #fff;
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    p,
+    ul,
+    ol,
+    li,
+    dl,
+    dd,
+    hr,
+    pre,
+    form,
+    table,
+    video,
+    figure,
+    figcaption,
+    blockquote {
+        margin: 0;
+        padding: 0;
+    }
+
+    ul[class],
+    ol[class] {
+        padding: 0;
+        list-style: none;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
+    input,
+    button,
+    select,
+    textarea {
+        font: inherit;
+        -webkit-appearance: none;
+    }
+
+    fieldset {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    label {
+        display: block;
+        font-size: 0.9em;
+        font-weight: 700;
+    }
+
+    hr {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid currentcolor;
+        opacity: 0.1;
+    }
+
+    ::selection {
+        text-shadow: none;
+        background: #cbeafb;
+    }
+
+    mark {
+        background-color: #fdffb6;
+    }
+
+    small {
+        font-size: 80%;
+    }
+
+    sub,
+    sup {
+        position: relative;
+        font-size: 75%;
+        line-height: 0;
+        vertical-align: baseline;
+    }
+    sup {
+        top: -0.5em;
+    }
+    sub {
+        bottom: -0.25em;
+    }
+
+    ul li + li {
+        margin-top: 0.6em;
+    }
+
+    a {
+        color: var(--ghost-accent-color, #1292EE);
+        text-decoration-skip-ink: auto;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0;
+        font-weight: 700;
+        color: #121212;
+        line-height: 1.4em;
+    }
+
+    h1 {
+        font-size: 3.4rem;
+        line-height: 1.1em;
+    }
+
+    h2 {
+        font-size: 2.4rem;
+        line-height: 1.2em;
+    }
+
+    h3 {
+        font-size: 1.8rem;
+    }
+
+    h4 {
+        font-size: 1.7rem;
+    }
+
+    h5 {
+        font-size: 1.6rem;
+    }
+
+    h6 {
+        font-size: 1.6rem;
+    }
+
+    amp-img {
+        height: 100%;
+        width: 100%;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    amp-img img {
+        object-fit: cover;
+    }
+
+    .page-header {
+        padding: 50px 5vmin 30px;
+        text-align: center;
+        font-size: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .page-header a {
+        color: #121212;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 1.6rem;
+        letter-spacing: -0.1px;
+    }
+
+    .post {
+        max-width: 680px;
+        margin: 0 auto;
+    }
+
+    .post-header {
+        margin: 0 5vmin 5vmin;
+        text-align: center;
+    }
+
+    .post-meta {
+        margin: 1rem 0 0 0;
+        text-transform: uppercase;
+        color: #738a94;
+        font-weight: 500;
+        font-size: 1.3rem;
+    }
+
+    .post-image {
+        margin: 0 0 5vmin;
+    }
+
+    .post-image img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .post-content {
+        padding: 0 5vmin;
+    }
+
+    .post-content > * + * {
+        margin-top: 1.5em;
+    }
+
+    .post-content [id]:not(:first-child) {
+        margin: 2em 0 0;
+    }
+
+    .post-content > [id] + * {
+        margin-top: 1rem;
+    }
+
+    .post-content [id] + .kg-card,
+    .post-content blockquote + .kg-card {
+        margin-top: 40px;
+    }
+
+    .post-content > ul,
+    .post-content > ol,
+    .post-content > dl {
+        padding-left: 1.9em;
+    }
+
+    .post-content hr {
+        margin-top: 40px;
+    }
+
+    .post .post-content hr + * {
+        margin-top: 40px;
+    }
+
+    .post-content amp-img {
+        background-color: #f8f8f8;
+    }
+
+    .post-content blockquote {
+        position: relative;
+        font-style: italic;
+    }
+
+    .post-content blockquote::before {
+        content: "";
+        position: absolute;
+        left: -1.5em;
+        top: 0;
+        bottom: 0;
+        width: 0.3rem;
+        background: var(--ghost-accent-color, #1292EE);
+    }
+
+    .post-content :not(.kg-card):not([id]) + .kg-card {
+        margin-top: 40px;
+    }
+
+    .post-content .kg-card + :not(.kg-card) {
+        margin-top: 40px;
+    }
+
+    .kg-card figcaption {
+        padding: 1.5rem 1.5rem 0;
+        text-align: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+        line-height: 1.4em;
+        opacity: 0.6;
+    }
+
+    .kg-card figcaption strong {
+        color: rgba(0,0,0,0.8);
+    }
+
+    .post-content :not(pre) code {
+        vertical-align: middle;
+        padding: 0.15em 0.4em 0.15em;
+        border: #e1eaef 1px solid;
+        font-weight: 400;
+        font-size: 0.9em;
+        line-height: 1em;
+        color: #15171a;
+        background: #f0f6f9;
+        border-radius: 0.25em;
+    }
+
+    .post-content > pre {
+        overflow: scroll;
+        padding: 16px 20px;
+        color: #fff;
+        background: #1F2428;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px -2px rgba(0,0,0,.1), 0 0 1px rgba(0,0,0,.4);
+    }
+
+    .kg-embed-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .kg-image-card img {
+        margin: auto;
+    }
+
+    .kg-gallery-card + .kg-gallery-card {
+        margin-top: 0.75em;
+    }
+
+    .kg-gallery-container {
+        position: relative;
+    }
+
+    .kg-gallery-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .kg-gallery-image {
+        width: 100%;
+        height: 100%;
+    }
+
+    .kg-gallery-row:not(:first-of-type) {
+        margin: 0.75em 0 0 0;
+    }
+
+    .kg-gallery-image:not(:first-of-type) {
+        margin: 0 0 0 0.75em;
+    }
+
+    .kg-bookmark-card,
+    .kg-bookmark-publisher {
+        position: relative;
+    }
+
+    .kg-bookmark-container,
+    .kg-bookmark-container:hover {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row-reverse;
+        color: currentColor;
+        background: rgba(255,255,255,0.6);
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+        text-decoration: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+    }
+
+    .kg-bookmark-content {
+        flex-basis: 0;
+        flex-grow: 999;
+        padding: 20px;
+        order: 1;
+    }
+
+    .kg-bookmark-title {
+        font-weight: 600;
+        font-size: 1.5rem;
+        line-height: 1.3em;
+    }
+
+    .kg-bookmark-description {
+        display: -webkit-box;
+        max-height: 45px;
+        margin: 0.5em 0 0 0;
+        font-size: 1.4rem;
+        line-height: 1.55em;
+        overflow: hidden;
+        opacity: 0.8;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .kg-bookmark-metadata {
+        margin-top: 20px;
+    }
+
+    .kg-bookmark-metadata {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+        line-height: 1.3em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .kg-bookmark-description {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    }
+
+    .kg-bookmark-metadata amp-img {
+        width: 18px;
+        height: 18px;
+        max-width: 18px;
+        max-height: 18px;
+        margin-right: 10px;
+    }
+
+    .kg-bookmark-thumbnail {
+        display: flex;
+        flex-basis: 20rem;
+        flex-grow: 1;
+        justify-content: flex-end;
+    }
+
+    .kg-bookmark-thumbnail amp-img {
+        max-height: 200px;
+    }
+
+    .kg-bookmark-author {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .kg-bookmark-publisher::before {
+        content: "•";
+        margin: 0 .5em;
+    }
+
+    .kg-width-full.kg-card-hascaption {
+        display: grid;
+        grid-template-columns: inherit;
+    }
+
+    .post-content table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .post-content th {
+        padding: 0.5em 0.8em;
+        text-align: left;
+        font-size: .75em;
+        text-transform: uppercase;
+    }
+
+    .post-content td {
+        padding: 0.4em 0.7em;
+    }
+
+    .post-content tbody tr:nth-child(2n + 1) {
+        background-color: rgba(0,0,0,0.1);
+        padding: 1px;
+    }
+
+    .post-content tbody tr:nth-child(2n + 2) td:last-child {
+        box-shadow:
+            inset 1px 0 rgba(0,0,0,0.1),
+            inset -1px 0 rgba(0,0,0,0.1);
+    }
+
+    .post-content tbody tr:nth-child(2n + 2) td {
+        box-shadow: inset 1px 0 rgba(0,0,0,0.1);
+    }
+
+    .post-content tbody tr:last-child {
+        border-bottom: 1px solid rgba(0,0,0,.1);
+    }
+
+    .page-footer {
+        padding: 60px 5vmin;
+        margin: 60px auto 0;
+        text-align: center;
+        background-color: #f8f8f8;
+    }
+
+    .page-footer h3 {
+        margin: 0.5rem 0 0 0;
+    }
+
+    .page-footer p {
+        max-width: 500px;
+        margin: 1rem auto 1.5rem;
+        font-size: 1.7rem;
+        line-height: 1.5em;
+        color: rgba(0,0,0,0.6)
+    }
+
+    .powered {
+        display: inline-flex;
+        align-items: center;
+        margin: 30px 0 0;
+        padding: 6px 9px 6px 6px;
+        border: rgba(0,0,0,0.1) 1px solid;
+        font-size: 12px;
+        line-height: 12px;
+        letter-spacing: -0.2px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+        font-weight: 500;
+        color: #222;
+        text-decoration: none;
+        background: #fff;
+        border-radius: 6px;
+    }
+
+    .powered svg {
+        height: 16px;
+        width: 16px;
+        margin: 0 6px 0 0;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            font-size: 1.6rem;
+        }
+        h1 {
+            font-size: 3rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        h1 {
+            font-size: 2.6rem;
+            line-height: 1.15em;
+        }
+        h2 {
+            font-size: 2rem;
+            line-height: 1.2em;
+        }
+        h3 {
+            font-size: 1.7rem;
+        }
+    }
+
+    :root {--ghost-accent-color: #1c1c1c;}
+    </style>
+
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+
+    
+
+</head>
+
+<body class="amp-template">
+    <header class="page-header">
+        <a href="https://gosink.in">
+                <amp-img class="site-icon" src="https://gosink.in/content/images/2019/08/favicon.png" width="50" height="50" layout="fixed"></amp-img>
+        </a>
+    </header>
+
+    <main class="content" role="main">
+        <article class="post">
+
+            <header class="post-header">
+                <h1 class="post-title">Node.js — Serve Private Content using AWS CloudFront</h1>
+                <section class="post-meta">
+                    Apal Shah -
+                    <time class="post-date" datetime="2019-08-23">23 Aug 2019</time>
+                </section>
+            </header>
+            <figure class="post-image">
+                <amp-img src="https://gosink.in/content/images/2019/08/cloudfront.jpeg" width="600" height="340" layout="responsive"></amp-img>
+            </figure>
+            <section class="post-content">
+
+                <p>As I told you in one of my <a href="https://gosink.in/how-to-handle-and-serve-data-from-aws-s3-s-private-bucket-with-aws-sts-in-node-js/">previous article</a> that I ended up using CloudFront to serve my content, I thought to write a separate blog on CloudFront because I also struggled a lot to put things in right place because of very poor documentation for Node.js/JavaScript.</p><hr></hr><p>In my previous article, I was directly serving my private content from S3 bucket. But it was too slow for my project. Also if I use <code>getObject</code> in S3, I wasn’t able to cache the data. So I finally decided to shift to CloudFront.</p><p>But I found one good thing which S3 provides but CloudFront doesn’t, which is the support for <strong><strong>AWS STS</strong></strong> (<em><em>read my previous article for all the details</em></em>). In CloudFront, there is no support for STS till now, and also we have to generate the keys separately for CloudFront and the maximum limit for generating these keys is <em><em>100 per account</em></em>. So let’s begin.</p><hr></hr><h1 id="what-we-ll-do">What we’ll do</h1><ul><li>See what CloudFront is</li><li>Setup CloudFront keys</li><li>Setup S3 bucket with CloudFront</li><li>Write Code for <strong><strong>Signed URLs</strong></strong><br />* Using <em><em>Canned</em></em> Policy<br />* Using <em><em>Custom</em></em> Policy</li><li>Write Code for <strong><strong>Signed Cookies</strong></strong><br />* Using <em><em>Canned</em></em> Policy<br />* Using <em><em>Custom</em></em> Policy</li><li>Setup Frontend<br />* Setup <code>Axios</code> and <code>fetch</code> API.</li><li>Some configurations to save the cost</li></ul><hr></hr><h1 id="cloudfront-overview">CloudFront Overview</h1><p>As per the CloudFront webpage,</p><blockquote><em><em>Amazon CloudFront is a fast content delivery network (CDN) service that securely delivers data, videos, applications, and APIs to customers globally with low latency, high transfer speeds.</em></em></blockquote><p>Also, you can use CloudFront to serve your React, Vue or any other app which uses static content. If you use CloudFront to serve your app, you don’t have to worry about the scaling issues. You only have to pay for the per request charges. Yes, CloudFront alone is not special. Any CDN does this task but it is good to know other use cases.</p><p>This section is just to give you a basic idea on what CloudFront service really is if you don’t already know. If you want to know more you can simply Google for CDNs or CloudFront.</p><hr></hr><h1 id="generate-cloudfront-keys">Generate CloudFront keys</h1><ul><li>Go to your AWS console and go to <strong><strong><em><em>Security Credentials</em></em></strong></strong><em><em>.</em></em></li></ul><amp-img src="https://i.imgur.com/aI9Cono.png" width="944" height="492" layout="responsive"></amp-img><ul><li>If you have admin or some similar rights, you’ll see the options for <strong><strong><em><em>CloudFront key pairs</em></em></strong></strong>.</li><li>Click on <strong><strong><em><em>Create New Key Pair </em></em></strong></strong>and download the private and public keys. Also, note the public access key.</li></ul><hr></hr><h1 id="setup-s3-bucket-with-cloudfront">Setup S3 bucket with CloudFront</h1><ul><li>Go to the CloudFront console and create a new distribution.</li><li>Select Web or RTMP as per your requirements. I was serving my content over Web so I chose Web.</li></ul><amp-img src="https://i.imgur.com/QTEj5UI.png" width="1988" height="536" layout="responsive"></amp-img><ul><li>In Origin settings, select your S3 bucket and it’ll automatically set the Origin ID.</li><li>If you want to serve the whole S3 bucket over CloudFront, leave the Origin Path field blank. Else you can specify the path to the folder which you want to serve over CloudFront.</li><li>Also, if you want to protect your content by allowing only those requests which include some particular headers, you can specify those headers in Origin Custom Headers option.</li><li>The most important thing in <strong><strong><em><em>Default Cache Behavior Settings</em></em></strong></strong> is to set <strong><strong>Restrict Viewer Access</strong></strong> to “Yes”. This will allow us to make requests using Signed URLs or Signed Cookies.</li><li>Set the other options according to your requirements.</li></ul><hr></hr><h3 id="before-jumping-into-signed-urls-or-signed-cookies-let-s-see-how-cloudfront-differentiates-it-">Before Jumping into Signed URLs or Signed Cookies let’s see how CloudFront differentiates it.</h3><p>As per their documentation,</p><blockquote><em><em>If you use both signed URLs and signed cookies to control access to the same files and a viewer uses a signed URL to request a file, CloudFront determines whether to return the file to the viewer based only on the signed URL.</em></em></blockquote><p>Which means if you provide Signed URL params to your content’s URL, it won’t include cookies in its request and it’ll treat the URL based on <strong><strong>Signed URL</strong></strong> params.</p><p>You should also check out <a href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-choosing-signed-urls-cookies.html">this page</a> if you don’t know what to choose and you’re confused between these two options.</p><hr></hr><h1 id="generate-signed-urls-in-node-js">Generate Signed URLs in Node.js</h1><p>Let’s assume that you’ve left the Origin Path in Origin settings blank while creating a CloudFront distribution, and there is a folder named <code>test</code> and it contains 3 files <code>a.txt</code>, <code>b.txt</code>, <code>c.txt</code>.</p><h3 id="using-canned-policy">Using Canned Policy</h3><p>In Canned Policy, you have to assign a full path of your file to generate signed URLs. You can’t assign <code>https://abcdefg.cloudfront.net/test/*</code> to the <code>url</code> key in getSignedUrl.</p><p>This policy is very straightforward and it requires less effort to implement it but it is not as powerful/flexible as the Custom Policy. You can add as many parameters as you want in Custom Policy. You can find those in the CloudFront’s documentation.</p><h3 id="using-custom-policy">Using Custom Policy</h3><p>As you can see in the gist that we have only specified our policy and not the <code>url</code> or <code>expires</code> key because they’re already included in the custom policy.</p><p>But if you want to apply this policy for all the objects in CloudFront, simply change the <code>Resource</code> to:</p><pre><code>https://abcdefghijklmn.cloudfront.net/*</code></pre><p>Or, for only the test folder:</p><pre><code>https://abcdefghijklmn.cloudfront.net/test/*</code></pre><p><strong><strong><em><em>But this time you have to specify the </em></em></strong></strong><code>url</code><strong><strong><em><em> key inside </em></em></strong></strong><code>getSignedUrl</code></p><p>Same for the <code>expires</code>. It is your choice to pass expiry time inside the policy or assign it explicitly inside getSignedUrl.</p><p>You can also explore different conditions for your custom policy in CloudFront’s documentation.</p><h1 id="generate-signed-cookies-in-node-js">Generate Signed Cookies in Node.js</h1><p>In this section, to set signed cookies, we’ll use <code>Express.js</code>.</p><p>When I started using Signed Cookies for the first time, I found that many browsers do <strong><strong>not</strong></strong> support setting cookies on <code>*.cloudfront.net</code>. So I just assigned a custom subdomain to the CloudFront URL. To do so, simply add a CNAME record of your subdomain pointing to your CloudFront URL. If you want to assign SSL to your custom domain/subdomain, read <a href="https://deliciousbrains.com/wp-offload-media/doc/custom-domain-https-cloudfront/"><em><em>this blog</em></em></a>.</p><h3 id="for-separate-frontends-like-react-vue-angular-etc-">For Separate frontends like React/Vue/Angular etc.</h3><p>If you’re planning to set cookies for the frontend which isn’t being rendered by Express or any other backend, you have to configure your CORS like this:</p><pre><code>app.use(cors({ origin: 'your-domain.com', credentials: true }));</code></pre><p>Here, <code>origin</code> key takes the domain name which is going to be used by your frontend, or in other words, it will take the input from which it expects to receive the request from to frontend to set the cookies.</p><p>If you don’t want to set this <code>credentials: true</code> in all the routes, you can also set it on some specific routes. Check the CORS documentation for different backends.</p><h3 id="using-canned-policy-1">Using Canned Policy</h3><p>In Canned Policy, it will generate a JSON object having 3 keys</p><ul><li>CloudFront-Key-Pair-Id</li><li>CloudFront-Signature</li><li>CloudFront-Expires</li></ul><p>We can simply set the cookies by <code>res.cookie</code> in Express.js</p><h3 id="using-custom-policy-1">Using Custom Policy</h3><p>In my case, I generally want to generate cookies from which I can access all the content of the CloudFront distribution, or at least I can access a folder/folders. I don’t want to set cookies for each and every file. So the Custom Policy is the best option so far for me to implement in my app.</p><p>This also generates a JSON object which contains 3 keys but instead of <code>CloudFront-Expires</code> it generates <code>CloudFront-Policy</code>.</p><p>Unlike the Custom Policies in Signed URLs, you don’t need to specify a URL if you want to contain all the matches in <code>Resource</code> key. (e.g. <em><em>http*://cdn.your-domain.com/*</em></em>)</p><h1 id="setup-frontend-to-set-cookies">Setup Frontend to set Cookies</h1><p>This part is optional for those who are using React/Vue/Angular or any other frontend framework (<em><em>even if not using any frameworks</em></em>) and want to fetch the cookies using <strong><strong><em><em>HTTP</em></em></strong></strong> or <strong><strong><em><em>REST APIs</em></em></strong></strong> using <code>fetch</code> or <code>Axios</code>.</p><h3 id="using-fetch-api">Using Fetch API</h3><p>In <code>fetch</code> you have to add <code>credentials: 'include'</code> or <code>credentials: 'same-origin'</code> as per your requirements in its options parameter.</p><p>You can explore more about that in its <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#Sending_a_request_with_credentials_included"><strong><strong><em><em>documentation</em></em></strong></strong></a>.</p><amp-img src="https://i.imgur.com/DksJDqO.png" width="2172" height="780" layout="responsive"></amp-img><h3 id="using-axios">Using Axios</h3><p>There are several methods to add this credentials flag in Axios’s options which you can find in its <a href="https://github.com/axios/axios#request-config"><strong><strong><em><em>documentation</em></em></strong></strong></a>. I’ll show an example to achieve that.</p><amp-img src="https://i.imgur.com/v6AzyRt.png" width="2136" height="924" layout="responsive"></amp-img><h3 id="some-configurations-to-save-the-costs">Some Configurations to Save the Costs</h3><p>As I mentioned above, we’ve to pay the charges per request. By default, CloudFront doesn’t let your browser cache the content of your requests in neither Signed URLs or Signed Cookies because of course, they are here to earn money. But they’re not preventing us to set the cache headers to let the browsers cache our content.</p><p>Go to your S3 bucket and select the folder/folders which you want to be cached inside the browsers and in Actions, select <code>Change metadata</code>.</p><p>Select <code>Cache-Control</code> option and set the <code>max-age</code> (in seconds).</p><p>E.g.: If you want the content to be cached for 7 days, set the Cache-Control to <code>max-age=604800</code> (<em><em>60 seconds * 60 minutes * 24 hours * 7 days</em></em>)</p><p>For some more details to save the costs see <a href="https://medium.com/devopslinks/this-is-how-i-reduced-my-cloudfront-bills-by-80-a7b0dfb24128">this article</a></p><h1 id="footnotes">Footnotes</h1><p>Though everything is there in the JavaScript <code>aws-sdk</code>, we’ve to struggle a lot to implement these things because of the poor documentation. Let me know if you find any bug or error in my code or there is anything you don’t understand. Also, you can ask me to write a blog on some other Services of any platforms like GCloud or Azure.</p><h1 id="references">References</h1><ul><li><a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CloudFront/Signer.html">https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CloudFront/Signer.html</a></li><li><a href="https://github.com/axios/axios#request-config">https://github.com/axios/axios#request-config</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#Sending_a_request_with_credentials_included">https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#Sending_a_request_with_credentials_included</a></li><li><a href="https://github.com/expressjs/cors#configuration-options">https://github.com/expressjs/cors#configuration-options</a></li></ul>
+
+            </section>
+
+        </article>
+    </main>
+    <footer class="page-footer">
+            <amp-img class="site-icon" src="https://gosink.in/content/images/2019/08/favicon.png" width="50" height="50" layout="fixed"></amp-img>
+        <h3>Sink In - Tech and Travel</h3>
+            <p>Sink In - Tech and Travel</p>
+        <p><a href="https://gosink.in">Read more posts →</a></p>
+        <a class="powered" href="https://ghost.org" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 156 156"><g fill="none" fill-rule="evenodd"><rect fill="#15212B" width="156" height="156" rx="27"/><g transform="translate(36 36)" fill="#F6F8FA"><path d="M0 71.007A4.004 4.004 0 014 67h26a4 4 0 014 4.007v8.986A4.004 4.004 0 0130 84H4a4 4 0 01-4-4.007v-8.986zM50 71.007A4.004 4.004 0 0154 67h26a4 4 0 014 4.007v8.986A4.004 4.004 0 0180 84H54a4 4 0 01-4-4.007v-8.986z"/><rect y="34" width="84" height="17" rx="4"/><path d="M0 4.007A4.007 4.007 0 014.007 0h41.986A4.003 4.003 0 0150 4.007v8.986A4.007 4.007 0 0145.993 17H4.007A4.003 4.003 0 010 12.993V4.007z"/><rect x="67" width="17" height="17" rx="4"/></g></g></svg> Published with Ghost</a>
+    </footer>
+    
+</body>
+</html>

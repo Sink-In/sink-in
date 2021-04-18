@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html ⚡>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <title>Understanding Javascript Array&#x27;s .reduce() method and its use-cases</title>
+
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://gosink.in/understanding-javascript-array-reduce-method-and-its-use-cases-is-it-underrated/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    
+    <meta property="og:site_name" content="Sink In - Tech and Travel" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Understanding Javascript Array&#x27;s .reduce() method and its use-cases" />
+    <meta property="og:description" content="After reading various tweets and blogs, I decided to write a detailed article on what exactly reduce method is and what can be some of its use cases." />
+    <meta property="og:url" content="https://gosink.in/understanding-javascript-array-reduce-method-and-its-use-cases-is-it-underrated/" />
+    <meta property="og:image" content="https://gosink.in/content/images/2020/07/Array.reduce.jpg" />
+    <meta property="article:published_time" content="2020-07-03T21:33:10.000Z" />
+    <meta property="article:modified_time" content="2020-07-03T21:33:10.000Z" />
+    <meta property="article:tag" content="Tech" />
+    <meta property="article:tag" content="javascript" />
+    <meta property="article:tag" content="Node.js" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/shah.apal" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Understanding Javascript Array&#x27;s .reduce() method and its use-cases" />
+    <meta name="twitter:description" content="After reading various tweets and blogs, I decided to write a detailed article on what exactly reduce method is and what can be some of its use cases." />
+    <meta name="twitter:url" content="https://gosink.in/understanding-javascript-array-reduce-method-and-its-use-cases-is-it-underrated/" />
+    <meta name="twitter:image" content="https://gosink.in/content/images/2020/07/Array.reduce.jpg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Apal Shah" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Tech, javascript, Node.js" />
+    <meta name="twitter:site" content="@shah_apal" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="720" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Sink In - Tech and Travel",
+        "url": "https://gosink.in/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://gosink.in/content/images/2019/08/Final-logo.png"
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Apal Shah",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://gosink.in/author/apal/",
+        "sameAs": []
+    },
+    "headline": "Understanding Javascript Array&#x27;s .reduce() method and its use-cases",
+    "url": "https://gosink.in/understanding-javascript-array-reduce-method-and-its-use-cases-is-it-underrated/",
+    "datePublished": "2020-07-03T21:33:10.000Z",
+    "dateModified": "2020-07-03T21:33:10.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://gosink.in/content/images/2020/07/Array.reduce.jpg",
+        "width": 1280,
+        "height": 720
+    },
+    "keywords": "Tech, javascript, Node.js",
+    "description": "After reading various tweets and blogs, I decided to write a detailed article on what exactly reduce method is and what can be some of its use cases.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://gosink.in/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.2" />
+    <link rel="alternate" type="application/rss+xml" title="Sink In - Tech and Travel" href="https://gosink.in/rss/" />
+
+    <style amp-custom>
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    html {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        font-size: 62.5%;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+    body {
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        color: #3a4145;
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+        font-size: 1.7rem;
+        line-height: 1.55em;
+        font-weight: 400;
+        font-style: normal;
+        background: #fff;
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    p,
+    ul,
+    ol,
+    li,
+    dl,
+    dd,
+    hr,
+    pre,
+    form,
+    table,
+    video,
+    figure,
+    figcaption,
+    blockquote {
+        margin: 0;
+        padding: 0;
+    }
+
+    ul[class],
+    ol[class] {
+        padding: 0;
+        list-style: none;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
+    input,
+    button,
+    select,
+    textarea {
+        font: inherit;
+        -webkit-appearance: none;
+    }
+
+    fieldset {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    label {
+        display: block;
+        font-size: 0.9em;
+        font-weight: 700;
+    }
+
+    hr {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid currentcolor;
+        opacity: 0.1;
+    }
+
+    ::selection {
+        text-shadow: none;
+        background: #cbeafb;
+    }
+
+    mark {
+        background-color: #fdffb6;
+    }
+
+    small {
+        font-size: 80%;
+    }
+
+    sub,
+    sup {
+        position: relative;
+        font-size: 75%;
+        line-height: 0;
+        vertical-align: baseline;
+    }
+    sup {
+        top: -0.5em;
+    }
+    sub {
+        bottom: -0.25em;
+    }
+
+    ul li + li {
+        margin-top: 0.6em;
+    }
+
+    a {
+        color: var(--ghost-accent-color, #1292EE);
+        text-decoration-skip-ink: auto;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0;
+        font-weight: 700;
+        color: #121212;
+        line-height: 1.4em;
+    }
+
+    h1 {
+        font-size: 3.4rem;
+        line-height: 1.1em;
+    }
+
+    h2 {
+        font-size: 2.4rem;
+        line-height: 1.2em;
+    }
+
+    h3 {
+        font-size: 1.8rem;
+    }
+
+    h4 {
+        font-size: 1.7rem;
+    }
+
+    h5 {
+        font-size: 1.6rem;
+    }
+
+    h6 {
+        font-size: 1.6rem;
+    }
+
+    amp-img {
+        height: 100%;
+        width: 100%;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    amp-img img {
+        object-fit: cover;
+    }
+
+    .page-header {
+        padding: 50px 5vmin 30px;
+        text-align: center;
+        font-size: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .page-header a {
+        color: #121212;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 1.6rem;
+        letter-spacing: -0.1px;
+    }
+
+    .post {
+        max-width: 680px;
+        margin: 0 auto;
+    }
+
+    .post-header {
+        margin: 0 5vmin 5vmin;
+        text-align: center;
+    }
+
+    .post-meta {
+        margin: 1rem 0 0 0;
+        text-transform: uppercase;
+        color: #738a94;
+        font-weight: 500;
+        font-size: 1.3rem;
+    }
+
+    .post-image {
+        margin: 0 0 5vmin;
+    }
+
+    .post-image img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .post-content {
+        padding: 0 5vmin;
+    }
+
+    .post-content > * + * {
+        margin-top: 1.5em;
+    }
+
+    .post-content [id]:not(:first-child) {
+        margin: 2em 0 0;
+    }
+
+    .post-content > [id] + * {
+        margin-top: 1rem;
+    }
+
+    .post-content [id] + .kg-card,
+    .post-content blockquote + .kg-card {
+        margin-top: 40px;
+    }
+
+    .post-content > ul,
+    .post-content > ol,
+    .post-content > dl {
+        padding-left: 1.9em;
+    }
+
+    .post-content hr {
+        margin-top: 40px;
+    }
+
+    .post .post-content hr + * {
+        margin-top: 40px;
+    }
+
+    .post-content amp-img {
+        background-color: #f8f8f8;
+    }
+
+    .post-content blockquote {
+        position: relative;
+        font-style: italic;
+    }
+
+    .post-content blockquote::before {
+        content: "";
+        position: absolute;
+        left: -1.5em;
+        top: 0;
+        bottom: 0;
+        width: 0.3rem;
+        background: var(--ghost-accent-color, #1292EE);
+    }
+
+    .post-content :not(.kg-card):not([id]) + .kg-card {
+        margin-top: 40px;
+    }
+
+    .post-content .kg-card + :not(.kg-card) {
+        margin-top: 40px;
+    }
+
+    .kg-card figcaption {
+        padding: 1.5rem 1.5rem 0;
+        text-align: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+        line-height: 1.4em;
+        opacity: 0.6;
+    }
+
+    .kg-card figcaption strong {
+        color: rgba(0,0,0,0.8);
+    }
+
+    .post-content :not(pre) code {
+        vertical-align: middle;
+        padding: 0.15em 0.4em 0.15em;
+        border: #e1eaef 1px solid;
+        font-weight: 400;
+        font-size: 0.9em;
+        line-height: 1em;
+        color: #15171a;
+        background: #f0f6f9;
+        border-radius: 0.25em;
+    }
+
+    .post-content > pre {
+        overflow: scroll;
+        padding: 16px 20px;
+        color: #fff;
+        background: #1F2428;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px -2px rgba(0,0,0,.1), 0 0 1px rgba(0,0,0,.4);
+    }
+
+    .kg-embed-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .kg-image-card img {
+        margin: auto;
+    }
+
+    .kg-gallery-card + .kg-gallery-card {
+        margin-top: 0.75em;
+    }
+
+    .kg-gallery-container {
+        position: relative;
+    }
+
+    .kg-gallery-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .kg-gallery-image {
+        width: 100%;
+        height: 100%;
+    }
+
+    .kg-gallery-row:not(:first-of-type) {
+        margin: 0.75em 0 0 0;
+    }
+
+    .kg-gallery-image:not(:first-of-type) {
+        margin: 0 0 0 0.75em;
+    }
+
+    .kg-bookmark-card,
+    .kg-bookmark-publisher {
+        position: relative;
+    }
+
+    .kg-bookmark-container,
+    .kg-bookmark-container:hover {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row-reverse;
+        color: currentColor;
+        background: rgba(255,255,255,0.6);
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+        text-decoration: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+    }
+
+    .kg-bookmark-content {
+        flex-basis: 0;
+        flex-grow: 999;
+        padding: 20px;
+        order: 1;
+    }
+
+    .kg-bookmark-title {
+        font-weight: 600;
+        font-size: 1.5rem;
+        line-height: 1.3em;
+    }
+
+    .kg-bookmark-description {
+        display: -webkit-box;
+        max-height: 45px;
+        margin: 0.5em 0 0 0;
+        font-size: 1.4rem;
+        line-height: 1.55em;
+        overflow: hidden;
+        opacity: 0.8;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .kg-bookmark-metadata {
+        margin-top: 20px;
+    }
+
+    .kg-bookmark-metadata {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+        line-height: 1.3em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .kg-bookmark-description {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    }
+
+    .kg-bookmark-metadata amp-img {
+        width: 18px;
+        height: 18px;
+        max-width: 18px;
+        max-height: 18px;
+        margin-right: 10px;
+    }
+
+    .kg-bookmark-thumbnail {
+        display: flex;
+        flex-basis: 20rem;
+        flex-grow: 1;
+        justify-content: flex-end;
+    }
+
+    .kg-bookmark-thumbnail amp-img {
+        max-height: 200px;
+    }
+
+    .kg-bookmark-author {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .kg-bookmark-publisher::before {
+        content: "•";
+        margin: 0 .5em;
+    }
+
+    .kg-width-full.kg-card-hascaption {
+        display: grid;
+        grid-template-columns: inherit;
+    }
+
+    .post-content table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .post-content th {
+        padding: 0.5em 0.8em;
+        text-align: left;
+        font-size: .75em;
+        text-transform: uppercase;
+    }
+
+    .post-content td {
+        padding: 0.4em 0.7em;
+    }
+
+    .post-content tbody tr:nth-child(2n + 1) {
+        background-color: rgba(0,0,0,0.1);
+        padding: 1px;
+    }
+
+    .post-content tbody tr:nth-child(2n + 2) td:last-child {
+        box-shadow:
+            inset 1px 0 rgba(0,0,0,0.1),
+            inset -1px 0 rgba(0,0,0,0.1);
+    }
+
+    .post-content tbody tr:nth-child(2n + 2) td {
+        box-shadow: inset 1px 0 rgba(0,0,0,0.1);
+    }
+
+    .post-content tbody tr:last-child {
+        border-bottom: 1px solid rgba(0,0,0,.1);
+    }
+
+    .page-footer {
+        padding: 60px 5vmin;
+        margin: 60px auto 0;
+        text-align: center;
+        background-color: #f8f8f8;
+    }
+
+    .page-footer h3 {
+        margin: 0.5rem 0 0 0;
+    }
+
+    .page-footer p {
+        max-width: 500px;
+        margin: 1rem auto 1.5rem;
+        font-size: 1.7rem;
+        line-height: 1.5em;
+        color: rgba(0,0,0,0.6)
+    }
+
+    .powered {
+        display: inline-flex;
+        align-items: center;
+        margin: 30px 0 0;
+        padding: 6px 9px 6px 6px;
+        border: rgba(0,0,0,0.1) 1px solid;
+        font-size: 12px;
+        line-height: 12px;
+        letter-spacing: -0.2px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+        font-weight: 500;
+        color: #222;
+        text-decoration: none;
+        background: #fff;
+        border-radius: 6px;
+    }
+
+    .powered svg {
+        height: 16px;
+        width: 16px;
+        margin: 0 6px 0 0;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            font-size: 1.6rem;
+        }
+        h1 {
+            font-size: 3rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        h1 {
+            font-size: 2.6rem;
+            line-height: 1.15em;
+        }
+        h2 {
+            font-size: 2rem;
+            line-height: 1.2em;
+        }
+        h3 {
+            font-size: 1.7rem;
+        }
+    }
+
+    :root {--ghost-accent-color: #1c1c1c;}
+    </style>
+
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+
+    
+
+</head>
+
+<body class="amp-template">
+    <header class="page-header">
+        <a href="https://gosink.in">
+                <amp-img class="site-icon" src="https://gosink.in/content/images/2019/08/favicon.png" width="50" height="50" layout="fixed"></amp-img>
+        </a>
+    </header>
+
+    <main class="content" role="main">
+        <article class="post">
+
+            <header class="post-header">
+                <h1 class="post-title">Understanding Javascript Array&#x27;s .reduce() method and its use-cases</h1>
+                <section class="post-meta">
+                    Apal Shah -
+                    <time class="post-date" datetime="2020-07-03">03 Jul 2020</time>
+                </section>
+            </header>
+            <figure class="post-image">
+                <amp-img src="https://gosink.in/content/images/2020/07/Array.reduce.jpg" width="600" height="340" layout="responsive"></amp-img>
+            </figure>
+            <section class="post-content">
+
+                <p>The <code>.reduce()</code> method was also there in ES5, but I'd never used or seen someone using it in production at that time. Even today, I see people not aware of this method. I've also seen people only giving the same <code>shopping cart example</code> while explaining this method and, that's why I think people don't completely understand it. I feel this is the reason this method is underrated though it is powerful.</p><p>When I encountered this for the first time, I was happy with the regular for loop for doing the shopping cart calculation. I didn't feel like using it for such tasks. But after digging deep into this method, I realized I could do many more things.</p><p>After reading various tweets and blogs, I decided to write a detailed article on what exactly reduce method is and what can be some of its use cases. We won't be talking about the speed of regular for loop and .reduce() because the for loop is way faster than any other Array methods, be it <code>reduce</code>, <code>map</code>, <code>filter</code>, <code>sort</code>, <code>forEach</code>, etc.</p><blockquote><em><strong>If you have any real-world use cases on your mind, do let me know. I'll add those examples in this article with the attribution.</strong></em></blockquote><hr></hr><h2 id="understanding-reduce-">Understanding .reduce()</h2><p>We can use <code>.reduce()</code> on an array and it executes a reducer function <em>(a callback function)</em> on each element and, we can define the logic of this reducer function. This .reduce() also accepts a second argument: <code>initialValue</code>.</p><pre><code class="language-javascript">arr.reduce((accumulator, currentElement, currentIndex, array) =&gt; {
+  // your logic goes here...
+}, initialValue);</code></pre><h3 id="this-reducer-function-callback-takes-4-arguments-">This reducer function (callback) takes 4 arguments:</h3><ol><li><code><strong>accumulator</strong></code>: It accumulates all the values returned by the callback function. That means, at the end of the callback function, whatever value you return, it becomes the value of the accumulator for the next iteration. If you pass the <code>initialValue</code>, it becomes the value of the accumulator for the first iteration. Else, it takes the first value of the array in its first iteration.</li><li><code><strong>currentElement</strong></code>: It holds the value of the current element of the array that is being processed in the current iteration. If we don't pass the <code>initialValue</code> it starts with the 2nd element of the array because the accumulator takes the 1st element.</li><li><code><strong>currentIndex</strong></code>: It holds the index (<em>position</em>) of the <code>currentElement</code> in the array. <em>If there is no <code>initialValue</code>, it starts with index 1,</em> because that's the position of the currentElement in this case.</li><li><code><strong>array</strong></code>: This contains the original array on which we're executing the reduce method. You might need this array in some cases where you're importing the callback function from a different file and that file doesn't have any reference/context of the original array.</li></ol><p></p><blockquote><em><strong>Note: </strong>If we don't return any value at the end of the function, in the next iteration, the value of the accumulator becomes <code>undefined</code>.</em></blockquote><p></p><p>As per the documentation, the first 2 arguments (<em>accumulator and currentElement</em>) are required but we can execute this function without passing any arguments (<em>which is useless</em>). All the other arguments are optional.</p><h3 id="let-s-take-a-simple-example-to-understand-this-in-detail">Let's take a simple example to understand this in detail</h3><pre><code class="language-javascript">const array = [1, 2, 3, 4, 5];
+const value = array.reduce((acc, curr, i, arr) =&gt; {
+    acc += curr;
+    // Here curr = arr[i];
+    return acc;
+    // If we don't return any value,
+    // The accumulator becomes undefined in the next iteration
+}, 0);
+
+console.log(value); // 15</code></pre><p>In this example, we've passed the initial value: <code>0</code>, of the accumulator. That's why in the first iteration:</p><ol><li>The value of the accumulator becomes <code>0</code>.</li><li>CurrentElement holds the value <code>1</code>. (The first element of the array)</li><li>Because the current element holds the first value, its index becomes <code>0</code>.</li></ol><p>If we remove the initial value, the accumulator will hold the first element of the array: <code>1</code>, the current element will hold the second element: <code>2</code> and the index will start from <code>1</code>.</p><hr></hr><h3 id="but-what-about-es5-there-are-no-arrow-functions-">But what about ES5? There are no arrow functions...</h3><p>In ES5, we can replace the fat arrow function with the <code>function</code> keyword and, everything else stays the same.</p><pre><code class="language-javascript">array.reduce(function(acc, curr, i, arr) {
+  // Your Logic
+}, initialValue);</code></pre><hr></hr><h2 id="now-let-s-see-some-of-its-use-cases">Now let's see some of its use-cases</h2><p>Here, in this section, we'll see how and where we can use <code>.reduce()</code>. The intention of this section is not to provide the optimal solution but to explore new use-cases.</p><p>If you're concerned about the execution speed, DO NOT use <code>reduce</code>, <code>map</code>, <code>forEach</code>, etc. because they all are way slower than the original <code>for loop</code>.</p><h3 id="replicating-map-using-reduce-">Replicating .map() using .reduce()</h3><pre><code class="language-javascript">const array = [1, 2, 3, 4, 5];
+
+const data = array.reduce((acc, curr) =&gt; {
+  // Your logic on `curr`
+  acc.push(curr);
+  return acc;
+}, []);
+
+console.log(data); // [1, 2, 3, 4, 5]</code></pre><p>In this example, after getting the value of <code>curr</code>, we can do any operation on it and push the old/new value in the accumulator and return it.</p><h3 id="replicating-filter-using-reduce-">Replicating .filter() using .reduce()</h3><p>Now, let's try to filter an array of numbers and get all the numbers greater than <code>0</code> using reduce.</p><pre><code class="language-javascript">const array = [-3, -2, -1, 0, 1, 2, 3];
+
+const filtered = array.reduce((acc, curr) =&gt; {
+    if (curr &gt; 0) {
+        acc.push(curr);
+    }
+    return acc;
+}, []);
+
+console.log(filtered); // [1, 2, 3]</code></pre><h3 id="removing-duplicate-entries-from-the-array">Removing duplicate entries from the array</h3><p>It's extremely easy to remove duplicate entries from an array using <code>.reduce()</code>. The main advantage of using this method is that it'd work even in ES5, unlike <code>Set</code> or some other ES6+ specific ways.</p><pre><code class="language-javascript">const array = [1, 2, 1, 2, 3, 1, 4, 5, 4];
+
+const unique = array.reduce((acc, curr) =&gt; {
+    if (acc.indexOf(curr) === -1) {
+        acc.push(curr);
+    }
+    return acc;
+}, []);
+
+console.log(unique); // [1, 2, 3, 4, 5]</code></pre><h3 id="flattening-all-the-items-from-an-array">Flattening all the items from an array</h3><p>If we have an array that contains let's say numbers and the array of numbers, and we want all the values from the array, we can easily flatten an array using <code>.reduce()</code>.</p><p>I've faced this while calling some APIs that if there's only 1 element, it returns a string. Otherwise, it returns an array of strings.</p><pre><code class="language-javascript">const array = [[1, 2, 3], 4, 5, [6, 7]];
+
+const flatten = array.reduce((acc, curr) =&gt; {
+    if (Array.isArray(curr)) {
+        acc.push(...curr);
+    } else {
+        acc.push(curr)
+    }
+    return acc;
+}, []);
+
+console.log(flatten); // [1, 2, 3, 4, 5, 6, 7]</code></pre><p>We can also write this callback function in 1 line using the ternary operator, but for the sake of understanding, I've kept the if/else condition.</p><h3 id="converting-an-array-into-an-object-and-counting-the-occurrences">Converting an Array into an Object and counting the occurrences</h3><p>This is a very common use case, and most of the time, I see people using "<a href="https://lodash.com/"><em>lodash</em></a>" or similar libraries to perform such small tasks. I don't like to bloat my project with a lot of libraries that I barely use once or twice, and can easily be replaced by a few lines of Vanilla JS code.</p><p>This can be one of the simplest example of counting the number of occurrences of each item in your array:</p><pre><code class="language-javascript">const array = ['🍎', '🍌', '🍌', '🍎', '🍇', '🍌'];
+
+const obj = array.reduce((acc, curr) =&gt; {
+    if (acc[curr]) {
+        acc[curr] += 1;
+    } else {
+    	acc[curr] = 1;
+    }
+    return acc;
+}, {});
+
+console.log(obj); // {🍎: 2, 🍌: 3, 🍇: 1}</code></pre><h3 id="chaining-reduce-with-map-">Chaining .reduce() with .map()</h3><p>Is it possible that we talk about <code>.reduce()</code> and not mention everyone's favorite <code>shopping cart</code> example?</p><p>But here, let's try something new. Now after understanding all these examples, everyone knows that in the example given below, we can pass <code>0</code> as the initial value of the accumulator and return <code>acc + curr.price</code>.</p><p>But did you know, you can also chain map and reduce? I'm sure after looking at the example, you would think that this is obvious, but at least we tried something new! Also, this degrades the performance even more. 🤷🏻</p><pre><code class="language-javascript">const items = [
+  {
+    item: '🍎',
+    price: 10,
+  },
+  {
+    item: '🍌',
+    price: 20,
+  },
+  {
+    item: '🍇',
+    price: 15,
+  },
+];
+
+const total = items
+	.map(item =&gt; item.price)
+	.reduce((acc, curr) =&gt; acc + curr);
+
+console.log(total); // Output: 45</code></pre><h3 id="converting-an-array-of-objects-to-hash-map">Converting an Array of Objects to hash map</h3><p>Wait a second, I'm not talking about the new ES6 feature: <code>Map</code>. Although we can achieve the same thing using <code>Map</code> but there are certain advantages and disadvantages of using <code>Map</code> over an <code>Object</code>.</p><p>Now, let's say you have an array of objects like this:</p><pre><code class="language-javascript">const arr = [
+    { key: 'Tom', value: 'Jerry' },
+    { key: 'Mario', value: 'Luigi' },
+    { key: 'SpongeBob', value: 'Patrick' },
+];</code></pre><p>And, you want a key pair like this:</p><pre><code class="language-json">{
+  "Tom": "Jerry",
+  "Mario": "Luigi",
+  "SpongeBob": "Patrick",
+}</code></pre><p>You can simply achieve this using <code>.reduce()</code> like in the example given below. Isn't it extremely simple and straightforward?</p><pre><code class="language-javascript">const keyPair = arr.reduce((acc, curr) =&gt; {
+  acc[curr.key] = curr.value;
+  return acc;
+}, {});</code></pre><p>Okay, now that we discussed about <code>Map</code>, let's not leave the discussion there. Let's see how we can achieve the same thing in ES6's: <code>Map</code>. Here, we are not discussing which one is better because it depends on the use-case. We may discuss this in a separate blog. But for now let's enjoy this example.</p><p>Here, we'll use <code>.map()</code> to create a <code>Map</code>!!!</p><pre><code class="language-javascript">const keyPair = new Map(arr.map(
+    item =&gt; [item.key, item.value]
+));
+
+console.log(keyPair); // {"Tom" =&gt; "Jerry", "Mario" =&gt; "Luigi", "SpongeBob" =&gt; "Patrick"}</code></pre><hr></hr><h2 id="conclusion">Conclusion</h2><p>In this article, our main focus was to understand and explore the different use-cases of <code>.reduce()</code>. Of course, it is slower than regular <code>for loop</code> but for relatively smaller objects/arrays, you won't even feel the difference (it also depends on the task you're performing on each element).</p><p>For the same reason, you can choose to use <code>reduce</code>, <code>map</code>, <code>forEach</code> etc. in the frontend because the browser has to run this code for only 1 client. But I would not recommend this in the backend because there are limited machines and they've to handle a lot of requests. Even if you can save <code>10 ms</code> for a large object, it may make a huge difference while handling a lot of requests simultaneously. In such cases, you should go for the regular for loop. Even after optimizing your code from every corner you feel that the code is still slow, it's time to switch the language! (C/C++ maybe!)</p><p>Do let me know on <a href="https://twitter.com/shah_apal">Twitter</a> (<em>and follow if possible</em> 🙈) if you have any other use-cases on your mind which you use in production or you might've thought something out of the box. I would love to address them and include them in this article.</p><hr></hr><h3 id="credits">Credits</h3><p>Cover Image: https://morioh.com/</p>
+
+            </section>
+
+        </article>
+    </main>
+    <footer class="page-footer">
+            <amp-img class="site-icon" src="https://gosink.in/content/images/2019/08/favicon.png" width="50" height="50" layout="fixed"></amp-img>
+        <h3>Sink In - Tech and Travel</h3>
+            <p>Sink In - Tech and Travel</p>
+        <p><a href="https://gosink.in">Read more posts →</a></p>
+        <a class="powered" href="https://ghost.org" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 156 156"><g fill="none" fill-rule="evenodd"><rect fill="#15212B" width="156" height="156" rx="27"/><g transform="translate(36 36)" fill="#F6F8FA"><path d="M0 71.007A4.004 4.004 0 014 67h26a4 4 0 014 4.007v8.986A4.004 4.004 0 0130 84H4a4 4 0 01-4-4.007v-8.986zM50 71.007A4.004 4.004 0 0154 67h26a4 4 0 014 4.007v8.986A4.004 4.004 0 0180 84H54a4 4 0 01-4-4.007v-8.986z"/><rect y="34" width="84" height="17" rx="4"/><path d="M0 4.007A4.007 4.007 0 014.007 0h41.986A4.003 4.003 0 0150 4.007v8.986A4.007 4.007 0 0145.993 17H4.007A4.003 4.003 0 010 12.993V4.007z"/><rect x="67" width="17" height="17" rx="4"/></g></g></svg> Published with Ghost</a>
+    </footer>
+    
+</body>
+</html>

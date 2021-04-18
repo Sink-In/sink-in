@@ -1,40 +1,505 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+
+    <title>Next.js — Make your own Progress bar indicator component easily!!!</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Sink In - Tech and Travel</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=8d817c4a26" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=2408e2b2b9" />
+
+    <meta name="description" content="npm i nextjs-progressbar.
+In this article, we’ll make a Next.js component which can easily be modified for all kinds of usage using NProgress package, and use it inside our Next.js app." />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://gosink.in/next-js-make-your-own-progress-bar-indicator-component-easily/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="https://gosink.in/next-js-make-your-own-progress-bar-indicator-component-easily/amp/" />
+    
+    <meta property="og:site_name" content="Sink In - Tech and Travel" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Next.js — Make your own Progress bar indicator component easily!!!" />
+    <meta property="og:description" content="In this article, we’ll make a Next.js component which can easily be modified for all kinds of usage using NProgress package, and use it inside our Next.js app." />
+    <meta property="og:url" content="https://gosink.in/next-js-make-your-own-progress-bar-indicator-component-easily/" />
+    <meta property="og:image" content="https://gosink.in/content/images/2019/08/next-progress.jpeg" />
+    <meta property="article:published_time" content="2019-08-06T18:44:06.000Z" />
+    <meta property="article:modified_time" content="2019-08-07T18:02:47.000Z" />
+    <meta property="article:tag" content="Tech" />
+    <meta property="article:tag" content="Node.js" />
+    <meta property="article:tag" content="Next.js" />
+    <meta property="article:tag" content="React.js" />
+    <meta property="article:tag" content="javascript" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/shah.apal" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Next.js — Make your own Progress bar indicator component easily!!!" />
+    <meta name="twitter:description" content="In this article, we’ll make a Next.js component which can easily be modified for all kinds of usage using NProgress package, and use it inside our Next.js app." />
+    <meta name="twitter:url" content="https://gosink.in/next-js-make-your-own-progress-bar-indicator-component-easily/" />
+    <meta name="twitter:image" content="https://gosink.in/content/images/2019/08/next-progress.jpeg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Apal Shah" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Tech, Node.js, Next.js, React.js, javascript" />
+    <meta name="twitter:site" content="@shah_apal" />
+    <meta property="og:image:width" content="2000" />
+    <meta property="og:image:height" content="1333" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Sink In - Tech and Travel",
+        "url": "https://gosink.in/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://gosink.in/content/images/2019/08/Final-logo.png"
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Apal Shah",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://gosink.in/author/apal/",
+        "sameAs": []
+    },
+    "headline": "Next.js — Make your own Progress bar indicator component easily!!!",
+    "url": "https://gosink.in/next-js-make-your-own-progress-bar-indicator-component-easily/",
+    "datePublished": "2019-08-06T18:44:06.000Z",
+    "dateModified": "2019-08-07T18:02:47.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://gosink.in/content/images/2019/08/next-progress.jpeg",
+        "width": 2000,
+        "height": 1333
+    },
+    "keywords": "Tech, Node.js, Next.js, React.js, javascript",
+    "description": "In this article, we’ll make a Next.js component which can easily be modified for all kinds of usage using NProgress package, and use it inside our Next.js app.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://gosink.in/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.2" />
+    <link rel="alternate" type="application/rss+xml" title="Sink In - Tech and Travel" href="https://gosink.in/rss/" />
+    <script defer src="https://unpkg.com/@tryghost/portal@~1.1.0/umd/portal.min.js" data-ghost="https://gosink.in/"></script><style> .gh-post-upgrade-cta-content,
+.gh-post-upgrade-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.gh-post-upgrade-cta-content {
+    border-radius: 8px;
+    padding: 40px 4vw;
+}
+
+.gh-post-upgrade-cta h2 {
+    color: #ffffff;
+    font-size: 28px;
+    letter-spacing: -0.2px;
+    margin: 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta p {
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta small {
+    font-size: 16px;
+    letter-spacing: -0.2px;
+}
+
+.gh-post-upgrade-cta a {
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a:hover {
+    color: #ffffff;
+    opacity: 0.8;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a.gh-btn {
+    display: block;
+    background: #ffffff;
+    text-decoration: none;
+    margin: 28px 0 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gh-post-upgrade-cta a.gh-btn:hover {
+    opacity: 0.92;
+}</style>
+    <link rel="stylesheet"
+      href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/night-owl.min.css">
+<!-- Fix Gist -->
+<style>
+    .gist {
+    	width: 100%;
+    }
+    .post-full-content pre {
+        box-shadow: 0 20px 25px -20px rgba(0,0,0,0.7);
+        word-wrap: normal;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        -webkit-hyphens: none;
+        hyphens: none;
+        font-size: 0.9em;
+        line-height: 1.3em;
+        border: rbg(1, 22, 39, 0.9);
+        background: rgba(1, 22, 39, 0.9);
+    }
+    .post-full-content pre code, .post-full-content pre tt {
+        white-space: pre;
+    }
+</style>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-63344841-6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-63344841-6');
+</script>
+
+<!-- Google Adsense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-7909119592155313",
+          enable_page_level_ads: true
+     });
+</script>
+<style>:root {--ghost-accent-color: #1c1c1c;}</style>
+    <link rel="canonical" href="https://medium.com/@apalshah/next-js-how-to-make-your-own-progress-bar-indicator-component-easily-445e58777473" />
+
 </head>
-<body>
-    <div class="site-wrapper">
+<body class="post-template tag-tech tag-node-js tag-next-js tag-react-js tag-javascript">
+<div class="viewport">
 
-        <header class="site-header no-image">
-            <div class="site-nav-main outer">
-                <div class="inner">
-                    <nav class="site-nav-center">
-                        <a class="site-nav-logo" href="https://gosink.in"><img src="/content/images/size/w100/2019/08/Final-logo.png"
-                                alt="Sink In - Tech and Travel" /></a>
-                    </nav>
+    <header id="gh-head" class="gh-head has-cover">
+        <nav class="gh-head-inner inner gh-container">
+
+            <div class="gh-head-brand">
+                <a class="gh-head-logo" href="https://gosink.in">
+                        <img src="https://gosink.in/content/images/2019/08/Final-logo.png" alt="Sink In - Tech and Travel" />
+                </a>
+                <a class="gh-burger" role="button">
+                    <div class="gh-burger-box">
+                        <div class="gh-burger-inner"></div>
+                    </div>
+                </a>
+            </div>
+            <div class="gh-head-menu">
+                <ul class="nav">
+    <li class="nav-home"><a href="https://gosink.in/">Home</a></li>
+    <li class="nav-tech"><a href="https://gosink.in/tag/tech/">Tech</a></li>
+    <li class="nav-design"><a href="https://gosink.in/tag/design/">Design</a></li>
+    <li class="nav-travel"><a href="https://gosink.in/tag/travel/">Travel</a></li>
+    <li class="nav-entrepreneurship"><a href="https://gosink.in/tag/entrepreneurship/">Entrepreneurship</a></li>
+</ul>
+
+            </div>
+            <div class="gh-head-actions">
+                <div class="gh-social">
+                        <a class="gh-social-facebook" href="https://www.facebook.com/shah.apal" title="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16 0c8.837 0 16 7.163 16 16s-7.163 16-16 16S0 24.837 0 16 7.163 0 16 0zm5.204 4.911h-3.546c-2.103 0-4.443.885-4.443 3.934.01 1.062 0 2.08 0 3.225h-2.433v3.872h2.509v11.147h4.61v-11.22h3.042l.275-3.81h-3.397s.007-1.695 0-2.187c0-1.205 1.253-1.136 1.329-1.136h2.054V4.911z" /></svg></a>
+                        <a class="gh-social-twitter" href="https://twitter.com/shah_apal" title="Twitter" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+</a>
                 </div>
-            </div>
-        </header>
-
-        <main class="outer error-content">
-            <div class="inner">
-
-                <section class="error-message">
-                    <h1 class="error-code">400</h1>
-                    <p class="error-description">[post.hbs] post doesn&#x27;t match unless - 7:3</p>
-                    <a class="error-link" href="https://gosink.in">Go to the front page →</a>
-                </section>
-
 
             </div>
-        </main>
+        </nav>
+    </header>
+
+    <main>
+        
+
+
+
+<article class="article post tag-tech tag-node-js tag-next-js tag-react-js tag-javascript">
+
+    <header class="article-header gh-canvas">
+
+        <section class="article-tag">
+            <a href="https://gosink.in/tag/tech/">Tech</a>
+        </section>
+
+        <h1 class="article-title">Next.js — Make your own Progress bar indicator component easily!!!</h1>
+
+        <p class="article-excerpt">In this article, we’ll make a Next.js component which can easily be modified for all kinds of usage using NProgress package, and use it inside our Next.js app.</p>
+
+        <div class="article-byline">
+            <section class="article-byline-content">
+                <ul class="author-list">
+                    <li class="author-list-item">
+                        <a href="/author/apal/" class="author-avatar">
+                            <img class="author-profile-image" src="//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x" alt="Apal Shah" />
+                        </a>
+                    </li>
+                </ul>
+                <div class="article-byline-meta">
+                    <h4 class="author-name"><a href="/author/apal/">Apal Shah</a></h4>
+                    <div class="byline-meta-content">
+                        <time class="byline-meta-date" datetime="2019-08-06">Aug 6, 2019</time>
+                        <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <figure class="article-image">
+            <img
+                srcset="/content/images/size/w300/2019/08/next-progress.jpeg 300w,
+                        /content/images/size/w600/2019/08/next-progress.jpeg 600w,
+                        /content/images/size/w1000/2019/08/next-progress.jpeg 1000w,
+                        /content/images/size/w2000/2019/08/next-progress.jpeg 2000w"
+                sizes="(min-width: 1400px) 1400px, 92vw"
+                src="/content/images/size/w2000/2019/08/next-progress.jpeg"
+                alt="Next.js — Make your own Progress bar indicator component easily!!!"
+            />
+        </figure>
+    </header>
+
+    <section class="gh-content gh-canvas">
+        <h3 id="in-this-article-we-ll-make-a-next-js-component-which-can-easily-be-modified-for-all-kinds-of-usage-using-nprogress-package-and-use-it-inside-our-next-js-app-">In this article, we’ll make a Next.js component which can easily be modified for all kinds of usage using NProgress package, and use it inside our Next.js app.</h3><p>If you are building a Next.js application or any Server Side Rendering (SSR) app, it looks cool if there is a progress bar which shows the progress while loading a new page. I am currently(<em><em>Jan 2019</em></em>) building a Next.js boilerplate for my new apps and I wanted to add a progress bar component because if I don’t make a component which can be modified easily by passing the props, it would be useless because I have to re-do all the work for my all the new apps. So I ended up creating an <a href="https://www.npmjs.com/package/nextjs-progressbar"><strong><strong><em><em>NPM package</em></em></strong></strong></a>.</p><p>If you don’t want any hassle, just import this package and see the <a href="https://github.com/apal21/nextjs-progressbar/#readme"><strong><strong><em><em>description</em></em></strong></strong> </a>for the usage.</p><pre><code>npm i nextjs-progressbar</code></pre><!--kg-card-begin: html--><img src="https://i.imgur.com/1AZsVjX.png" style="width: 100%" /><!--kg-card-end: html--><h2 id="what-you-should-know-before-making-this-component">What you should know before making this component</h2><p><em><em>I expect you to know what is Next.js, React.js, Server Side Rendering (SSR) and how to make a <code><a href="https://nextjs.org/docs/#custom-app"><strong><strong><em>custom &lt;App&gt;</em></strong></strong></a></code><strong><strong><em> </em></strong></strong>in Next.js.</em></em></p><h1 id="installing-the-packages">Installing the packages</h1><p>For making this progress bar, we’ll use <a href="http://ricostacruz.com/nprogress/"><em><em>NProgress</em></em></a>.</p><pre><code>npm i nprogress</code></pre><!--kg-card-begin: html--><img src="https://i.imgur.com/zL1yWtD.png" style="width: 100%" /><!--kg-card-end: html--><h1 id="code">Code</h1><!--kg-card-begin: html--><script src="https://gist.github.com/apal21/f950b6943eef82e9dca855fa32563d81.js"></script><!--kg-card-end: html--><h1 id="splitting-the-code">Splitting the Code</h1><h2 id="importing-the-packages">Importing the packages</h2><p>Create an <code>index.js</code> file and import:</p><ul><li><code>React</code>: For creating components</li><li><code>NProgress</code>: For displaying the progress bar</li><li><code>Next Router</code>: For handling all the changes in routes/router.</li><li><code>PropTypes</code>: For validating the props. (<em><em>optional</em></em>)</li></ul><h2 id="creating-a-component">Creating a Component</h2><p>First, we have to include the <a href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.css"><em><em>CSS</em></em></a> of the NProgress package. We can use CDNs but we want to make this component reusable. So, I just copied the CSS and added it inside the <code>render</code> method. As you already know it is too simple to add CSS in render method in Next.js.</p><h2 id="setting-the-default-props">Setting the Default Props</h2><!--kg-card-begin: html--><img src="https://i.imgur.com/EqZdviI.png" style="width: 100%" /><!--kg-card-end: html--><ul><li><code>color</code>: To set the color of the progress bar. (Can take HEX, RGB or RGBA input)</li><li><code>startPosition</code>: To set the starting position of the progress bar. (<em><em>0.3=30%</em></em>)</li><li><code>stopDelayMs</code>: After changing the route(<em><em>or if there is an error in the router</em></em>), It removes the progress bar after this delay in ms.</li><li><code>height</code>: To change the height of the progress bar. (height in px)</li></ul><h2 id="configuring-nprogress-and-adding-router-events-routechangestart-routechangecomplete-routechangeerror">Configuring NProgress and Adding Router events — routeChangeStart, routeChangeComplete &amp; routeChangeError</h2><ul><li><code>routesChangeStart</code>: This method sets the starting position of the progress bar and it starts increasing the length of the progress bar according to the options provided to it.</li><li><code>routesChangeComplete</code> &amp; <code>routesChangeError</code>: For these events, we first clear all the existing timers we set previously(<em><em>it matters a lot if you set a large value for the timer</em></em>) and set a new timer which removes the progress bar after the specified time period.</li></ul><p>We set all these <code>Router Events</code> and other <code>options</code> (<em><em>which are passed using props</em></em>) in <code>componentDidMount</code> method (<em><em>You must know the reason behind this</em></em>).</p><h2 id="setting-the-proptypes-optional-">Setting the PropTypes (optional)</h2><pre><code class="language-javascript">NextNProgress.propTypes = {
+  color: PropTypes.string,
+  startPosition: PropTypes.number,
+  stopDelayMs: PropTypes.number,
+  options: PropTypes.object,
+};</code></pre><p>As you can see it is quite simple and straightforward. You add a new property to your class and specify the expected data types of the props you receive. It is not mandatory but it is a good practice if you’re planning to push your code in production.</p><h1 id="adding-our-component-in-a-next-js-app">Adding our Component in a Next.js app</h1><p>For adding this component for all the pages in your Next app, you should include it inside your <code>_app.js</code> file in <code>pages</code> folder. I guess that the render method of your <code>_app.js</code> file would look something like this:</p><pre><code class="language-javascript">&lt;Container&gt;
+  // other custom logic
+  &lt;Component {...pageProps} /&gt;
+&lt;/Container&gt;</code></pre><p>Now import your custom component in this file.</p><!--kg-card-begin: html--><img src="https://i.imgur.com/EpZfPbZ.png" style="width: 100%" /><!--kg-card-end: html--><p><strong><strong>And… that’s it.</strong></strong></p><h1 id="change-the-configurations">Change the configurations</h1><p>As we discussed that we are making a component that can easily be modified and probably, you do know how to change these configurations by passing the props to this component. These are the default configurations:</p><pre><code class="language-javascript">&lt;NextNProgress
+  color="#29D"
+  startPosition="0.3"
+  stopDelayMs="200"
+  height="3"
+/&gt;</code></pre><p>If you want to add/change some more configurations, see <a href="https://github.com/rstacruz/nprogress#configuration"><em><em>this link</em></em></a>, it has all the other configurations which NProgress provides itself. Example to add these configurations:</p><pre><code class="language-javascript">&lt;NextNProgress
+  options={{ easing: 'ease', speed: 500 }}
+/&gt;</code></pre><h1 id="footnotes">Footnotes</h1><p>Let me know if you have some better ideas to make a progress bar or you want to add/remove any feature or anything. All the suggestions are appreciated.</p>
+    </section>
+
+
+</article>
+
     </div>
+</section> --}}
+
+
+<aside class="read-more-wrap">
+    <div class="read-more inner">
+
+
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="/non-design-lessons-learned-while-designing-interfaces-2/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2021/01/Illustration.png 300w,
+                    /content/images/size/w600/2021/01/Illustration.png 600w,
+                    /content/images/size/w1000/2021/01/Illustration.png 1000w,
+                    /content/images/size/w2000/2021/01/Illustration.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="/content/images/size/w600/2021/01/Illustration.png"
+            alt="Non-Design lessons learned while designing interfaces"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/non-design-lessons-learned-while-designing-interfaces-2/">
+            <header class="post-card-header">
+                <h2 class="post-card-title">Non-Design lessons learned while designing interfaces</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>During my time at NextUX Design Agency, apart from designing screens and experience, I have learned so many non-design lessons that I would like to share.</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="/author/aman/" class="static-avatar">
+                        <img class="author-profile-image" src="/content/images/size/w100/2019/08/DNC-XEROX---784-1.jpg" alt="Aman Gupta" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/aman/">Aman Gupta</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-01-24">Jan 24, 2021</time> <span class="bull">&bull;</span> 8 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="/css-what-is-currentcolor-keyword/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2020/11/css-current-color.jpg 300w,
+                    /content/images/size/w600/2020/11/css-current-color.jpg 600w,
+                    /content/images/size/w1000/2020/11/css-current-color.jpg 1000w,
+                    /content/images/size/w2000/2020/11/css-current-color.jpg 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="/content/images/size/w600/2020/11/css-current-color.jpg"
+            alt="CSS — What is currentColor keyword?"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/css-what-is-currentcolor-keyword/">
+            <header class="post-card-header">
+                <h2 class="post-card-title">CSS — What is currentColor keyword?</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Did you know in CSS you can specify the color property once and use that value without specifying it again using the currentColor keyword?</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="/author/apal/" class="static-avatar">
+                        <img class="author-profile-image" src="//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x" alt="Apal Shah" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/apal/">Apal Shah</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-11-27">Nov 27, 2020</time> <span class="bull">&bull;</span> 2 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="/webrtc-switch-cameras-using-javascript-getusermedia/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2020/08/webrtc-video-call.jpeg 300w,
+                    /content/images/size/w600/2020/08/webrtc-video-call.jpeg 600w,
+                    /content/images/size/w1000/2020/08/webrtc-video-call.jpeg 1000w,
+                    /content/images/size/w2000/2020/08/webrtc-video-call.jpeg 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="/content/images/size/w600/2020/08/webrtc-video-call.jpeg"
+            alt="WebRTC — Switch Cameras using Javascript getUserMedia"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/webrtc-switch-cameras-using-javascript-getusermedia/">
+            <header class="post-card-header">
+                <h2 class="post-card-title">WebRTC — Switch Cameras using Javascript getUserMedia</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>To fetch or toggle between the front-facing camera and the back camera, we can simply use the "facingMode" which is widely supported in the majority of the browsers.</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="/author/apal/" class="static-avatar">
+                        <img class="author-profile-image" src="//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x" alt="Apal Shah" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/apal/">Apal Shah</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-08-30">Aug 30, 2020</time> <span class="bull">&bull;</span> 3 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
+    </div>
+</aside>
+
+
+    </main>
+
+    <footer class="site-footer outer">
+        <div class="inner">
+            <section class="copyright"><a href="https://gosink.in">Sink In - Tech and Travel</a> &copy; 2021</section>
+            <nav class="site-footer-nav">
+                
+            </nav>
+        </div>
+    </footer>
+
+</div>
+
+
+<script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous">
+</script>
+<script src="/assets/built/casper.js?v=2408e2b2b9"></script>
+<script>
+$(document).ready(function () {
+    // Mobile Menu Trigger
+    $('.gh-burger').click(function () {
+        $('body').toggleClass('gh-head-open');
+    });
+    // FitVids - Makes video embeds responsive
+    $(".gh-content").fitVids();
+});
+</script>
+
+<!-- Add noopener and noreferrer for security -->
+<script>
+    window.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll('a').forEach(link => {
+        if (
+          link.getAttribute('href').includes('http://') ||
+          link.getAttribute('href').includes('https://')
+        ) {
+          link.setAttribute('rel', 'noopener noreferrer nofollow');
+        }
+      });
+    }, false);
+</script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 </body>
 </html>

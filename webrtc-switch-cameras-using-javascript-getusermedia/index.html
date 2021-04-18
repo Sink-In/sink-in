@@ -1,40 +1,511 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+
+    <title>WebRTC — Switch Cameras using Javascript getUserMedia</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Sink In - Tech and Travel</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=8d817c4a26" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css?v=2408e2b2b9" />
+
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://gosink.in/webrtc-switch-cameras-using-javascript-getusermedia/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="https://gosink.in/webrtc-switch-cameras-using-javascript-getusermedia/amp/" />
+    
+    <meta property="og:site_name" content="Sink In - Tech and Travel" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="WebRTC — Switch Cameras using Javascript getUserMedia" />
+    <meta property="og:description" content="To fetch or toggle between the front-facing camera and the back camera, we can simply use the &quot;facingMode&quot; which is widely supported in the majority of the browsers." />
+    <meta property="og:url" content="https://gosink.in/webrtc-switch-cameras-using-javascript-getusermedia/" />
+    <meta property="og:image" content="https://gosink.in/content/images/2020/08/webrtc-video-call.jpeg" />
+    <meta property="article:published_time" content="2020-08-30T11:22:26.000Z" />
+    <meta property="article:modified_time" content="2020-08-30T11:26:13.000Z" />
+    <meta property="article:tag" content="Tech" />
+    <meta property="article:tag" content="javascript" />
+    <meta property="article:tag" content="WebRTC" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/shah.apal" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="WebRTC — Switch Cameras using Javascript getUserMedia" />
+    <meta name="twitter:description" content="To fetch or toggle between the front-facing camera and the back camera, we can simply use the &quot;facingMode&quot; which is widely supported in the majority of the browsers." />
+    <meta name="twitter:url" content="https://gosink.in/webrtc-switch-cameras-using-javascript-getusermedia/" />
+    <meta name="twitter:image" content="https://gosink.in/content/images/2020/08/webrtc-video-call.jpeg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Apal Shah" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Tech, javascript, WebRTC" />
+    <meta name="twitter:site" content="@shah_apal" />
+    <meta property="og:image:width" content="2000" />
+    <meta property="og:image:height" content="1333" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Sink In - Tech and Travel",
+        "url": "https://gosink.in/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://gosink.in/content/images/2019/08/Final-logo.png"
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Apal Shah",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://gosink.in/author/apal/",
+        "sameAs": []
+    },
+    "headline": "WebRTC — Switch Cameras using Javascript getUserMedia",
+    "url": "https://gosink.in/webrtc-switch-cameras-using-javascript-getusermedia/",
+    "datePublished": "2020-08-30T11:22:26.000Z",
+    "dateModified": "2020-08-30T11:26:13.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://gosink.in/content/images/2020/08/webrtc-video-call.jpeg",
+        "width": 2000,
+        "height": 1333
+    },
+    "keywords": "Tech, javascript, WebRTC",
+    "description": "To fetch or toggle between the front-facing camera and the back camera, we can simply use the &quot;facingMode&quot; which is widely supported in the majority of the browsers.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://gosink.in/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.2" />
+    <link rel="alternate" type="application/rss+xml" title="Sink In - Tech and Travel" href="https://gosink.in/rss/" />
+    <script defer src="https://unpkg.com/@tryghost/portal@~1.1.0/umd/portal.min.js" data-ghost="https://gosink.in/"></script><style> .gh-post-upgrade-cta-content,
+.gh-post-upgrade-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.gh-post-upgrade-cta-content {
+    border-radius: 8px;
+    padding: 40px 4vw;
+}
+
+.gh-post-upgrade-cta h2 {
+    color: #ffffff;
+    font-size: 28px;
+    letter-spacing: -0.2px;
+    margin: 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta p {
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta small {
+    font-size: 16px;
+    letter-spacing: -0.2px;
+}
+
+.gh-post-upgrade-cta a {
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a:hover {
+    color: #ffffff;
+    opacity: 0.8;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a.gh-btn {
+    display: block;
+    background: #ffffff;
+    text-decoration: none;
+    margin: 28px 0 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gh-post-upgrade-cta a.gh-btn:hover {
+    opacity: 0.92;
+}</style>
+    <link rel="stylesheet"
+      href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/night-owl.min.css">
+<!-- Fix Gist -->
+<style>
+    .gist {
+    	width: 100%;
+    }
+    .post-full-content pre {
+        box-shadow: 0 20px 25px -20px rgba(0,0,0,0.7);
+        word-wrap: normal;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        -webkit-hyphens: none;
+        hyphens: none;
+        font-size: 0.9em;
+        line-height: 1.3em;
+        border: rbg(1, 22, 39, 0.9);
+        background: rgba(1, 22, 39, 0.9);
+    }
+    .post-full-content pre code, .post-full-content pre tt {
+        white-space: pre;
+    }
+</style>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-63344841-6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-63344841-6');
+</script>
+
+<!-- Google Adsense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-7909119592155313",
+          enable_page_level_ads: true
+     });
+</script>
+<style>:root {--ghost-accent-color: #1c1c1c;}</style>
+
 </head>
-<body>
-    <div class="site-wrapper">
+<body class="post-template tag-tech tag-javascript tag-webrtc">
+<div class="viewport">
 
-        <header class="site-header no-image">
-            <div class="site-nav-main outer">
-                <div class="inner">
-                    <nav class="site-nav-center">
-                        <a class="site-nav-logo" href="https://gosink.in"><img src="/content/images/size/w100/2019/08/Final-logo.png"
-                                alt="Sink In - Tech and Travel" /></a>
-                    </nav>
+    <header id="gh-head" class="gh-head has-cover">
+        <nav class="gh-head-inner inner gh-container">
+
+            <div class="gh-head-brand">
+                <a class="gh-head-logo" href="https://gosink.in">
+                        <img src="https://gosink.in/content/images/2019/08/Final-logo.png" alt="Sink In - Tech and Travel" />
+                </a>
+                <a class="gh-burger" role="button">
+                    <div class="gh-burger-box">
+                        <div class="gh-burger-inner"></div>
+                    </div>
+                </a>
+            </div>
+            <div class="gh-head-menu">
+                <ul class="nav">
+    <li class="nav-home"><a href="https://gosink.in/">Home</a></li>
+    <li class="nav-tech"><a href="https://gosink.in/tag/tech/">Tech</a></li>
+    <li class="nav-design"><a href="https://gosink.in/tag/design/">Design</a></li>
+    <li class="nav-travel"><a href="https://gosink.in/tag/travel/">Travel</a></li>
+    <li class="nav-entrepreneurship"><a href="https://gosink.in/tag/entrepreneurship/">Entrepreneurship</a></li>
+</ul>
+
+            </div>
+            <div class="gh-head-actions">
+                <div class="gh-social">
+                        <a class="gh-social-facebook" href="https://www.facebook.com/shah.apal" title="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16 0c8.837 0 16 7.163 16 16s-7.163 16-16 16S0 24.837 0 16 7.163 0 16 0zm5.204 4.911h-3.546c-2.103 0-4.443.885-4.443 3.934.01 1.062 0 2.08 0 3.225h-2.433v3.872h2.509v11.147h4.61v-11.22h3.042l.275-3.81h-3.397s.007-1.695 0-2.187c0-1.205 1.253-1.136 1.329-1.136h2.054V4.911z" /></svg></a>
+                        <a class="gh-social-twitter" href="https://twitter.com/shah_apal" title="Twitter" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+</a>
                 </div>
-            </div>
-        </header>
-
-        <main class="outer error-content">
-            <div class="inner">
-
-                <section class="error-message">
-                    <h1 class="error-code">400</h1>
-                    <p class="error-description">[post.hbs] post doesn&#x27;t match unless - 7:3</p>
-                    <a class="error-link" href="https://gosink.in">Go to the front page →</a>
-                </section>
-
 
             </div>
-        </main>
+        </nav>
+    </header>
+
+    <main>
+        
+
+
+
+<article class="article post tag-tech tag-javascript tag-webrtc">
+
+    <header class="article-header gh-canvas">
+
+        <section class="article-tag">
+            <a href="https://gosink.in/tag/tech/">Tech</a>
+        </section>
+
+        <h1 class="article-title">WebRTC — Switch Cameras using Javascript getUserMedia</h1>
+
+        <p class="article-excerpt">To fetch or toggle between the front-facing camera and the back camera, we can simply use the &quot;facingMode&quot; which is widely supported in the majority of the browsers.</p>
+
+        <div class="article-byline">
+            <section class="article-byline-content">
+                <ul class="author-list">
+                    <li class="author-list-item">
+                        <a href="/author/apal/" class="author-avatar">
+                            <img class="author-profile-image" src="//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x" alt="Apal Shah" />
+                        </a>
+                    </li>
+                </ul>
+                <div class="article-byline-meta">
+                    <h4 class="author-name"><a href="/author/apal/">Apal Shah</a></h4>
+                    <div class="byline-meta-content">
+                        <time class="byline-meta-date" datetime="2020-08-30">Aug 30, 2020</time>
+                        <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <figure class="article-image">
+            <img
+                srcset="/content/images/size/w300/2020/08/webrtc-video-call.jpeg 300w,
+                        /content/images/size/w600/2020/08/webrtc-video-call.jpeg 600w,
+                        /content/images/size/w1000/2020/08/webrtc-video-call.jpeg 1000w,
+                        /content/images/size/w2000/2020/08/webrtc-video-call.jpeg 2000w"
+                sizes="(min-width: 1400px) 1400px, 92vw"
+                src="/content/images/size/w2000/2020/08/webrtc-video-call.jpeg"
+                alt="WebRTC — Switch Cameras using Javascript getUserMedia"
+            />
+        </figure>
+    </header>
+
+    <section class="gh-content gh-canvas">
+        <figure class="kg-card kg-embed-card"><blockquote class="twitter-tweet"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/WebRTC?src=hash&amp;ref_src=twsrc%5Etfw">#WebRTC</a> <a href="https://twitter.com/hashtag/javascript?src=hash&amp;ref_src=twsrc%5Etfw">#javascript</a> <br>To fetch or toggle between the front-facing camera and the back camera, we can simply use the &quot;facingMode&quot; which is widely supported in the majority of the browsers.<br><br>You can also explore the other &quot;facingMode&quot; options for getUserMedia<a href="https://twitter.com/hashtag/100DaysOfCode?src=hash&amp;ref_src=twsrc%5Etfw">#100DaysOfCode</a> <a href="https://twitter.com/hashtag/Coding?src=hash&amp;ref_src=twsrc%5Etfw">#Coding</a> <a href="https://t.co/bWNNZCEOrL">pic.twitter.com/bWNNZCEOrL</a></p>&mdash; Apal Shah (@shah_apal) <a href="https://twitter.com/shah_apal/status/1299794575846862848?ref_src=twsrc%5Etfw">August 29, 2020</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</figure><h2 id="what-is-facing-mode">What is Facing Mode?</h2><p>We can provide a lot of different audio and video constrains to capture the desired media from the device. 'facingMode' is one of the video constraints responsible for fetching a video stream from different cameras.</p><p>As per the <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints/facingMode">documentation</a>, the permitted values for the facing mode are:</p><blockquote><strong><code>"user"</code>:</strong><br>The video source is facing toward the user; this includes, for example, the front-facing camera on a smartphone.<br><br><strong><code>"environment"</code>:</strong><br>The video source is facing away from the user, thereby viewing their environment. This is the back camera on a smartphone.<br><br><strong><code>"left"</code>:</strong><br>The video source is facing toward the user but to their left, such as a camera aimed toward the user but over their left shoulder.<br><br><strong><code>"right"</code>:</strong><br>The video source is facing toward the user but to their right, such as a camera aimed toward the user but over their right shoulder.</blockquote><h2 id="why-facing-mode">Why Facing Mode?</h2><p>You may ask that what is the need of the facing mode if we can get the list of all the devices (<code><em>enumerateDevices()</em></code>) and select a specific device rather than relying on the browser to provide us the camera?</p><p>Possible answers could be:</p><ul><li>This option is straight forward and easy to use.</li><li>Facing mode is widely supported in the majority of the browsers.</li><li>No worries about what camera to select (<em>if you have multiple cameras on both the sides</em>).</li></ul><p>Even though today we have multiple back and front cameras, honestly, I've never seen any application which requires a specific front or a back camera. If your application has such requirements, you need to look for alternate methods (<em>eg. <code>enumerateDevices()</code></em>).</p><h2 id="let-s-jump-to-the-code">Let's jump to the code</h2><p>Now we have the basic understanding of the facing mode to start writing the code.</p><h3 id="check-whether-facing-mode-is-supported-by-the-browser-">Check whether facing mode is supported by the browser!</h3><p>Quite obvious, isn't it? I'm sure you don't want to run into some weird error and spend hours finding the solution and end up realizing this constraint is not supported in a very old browser.</p><pre><code class="language-javascript">const supports = navigator.mediaDevices.getSupportedConstraints();
+if (!supports['facingMode']) {
+    alert('This browser does not support facingMode!');
+}</code></pre><h3 id="adding-the-facing-mode-constraint">Adding the facing mode constraint</h3><p>While specifying the getUserMedia options, you need to add this video constraint like this:</p><pre><code class="language-javascript">const options = {
+    audio: false,
+    video: {
+        facingMode: 'user', // Or 'environment'
+    },
+};
+
+const stream = await navigator.mediaDevices.getUserMedia(options);</code></pre><h3 id="you-may-ask-this-question-">You may ask this question:</h3><p></p><blockquote><em>Why are we not using <code>exact</code> keyword?</em><br><em>eg. <code>facingMode: { exact: 'user' }</code>?</em></blockquote><p>If you use <code>exact</code> it usually throws <code>OverconstrainedError</code> error on the desktops as they don't always have multiple cameras. </p><h2 id="but-how-to-switch-between-the-cameras">But how to switch between the cameras?</h2><p>If you simply put the code mentioned above inside a function and try to toggle between <code>user</code> and <code>environment</code>, it's highly likely that you'll see this error:</p><blockquote><em>NotReadableError: Could not start video source</em></blockquote><h3 id="why-this-error">Why this error?</h3><p>This error usually occurs when either your camera is being used by some other application or you try to stream from a different camera before closing the existing camera stream.</p><h3 id="let-s-fix-this-error-by-stopping-the-existing-stream">Let's fix this error by stopping the existing stream</h3><pre><code class="language-javascript">// Stop the tracks
+const tracks = stream.getTracks();
+tracks.forEach(track =&gt; track.stop());
+
+// Provide new options
+stream = await navigator.mediaDevices.getUserMedia(options);
+
+// Add this stream to the video object
+videoElm.srcObject = null;
+videoElm.srcObject = stream;
+videoElm.play();</code></pre><p>You can also optimize this by adding a filter to stop only the video stream. Each track contains their own kind <em>(video or audio</em>) and you can access this using <code>track.kind</code> inside the loop.</p><h2 id="how-to-get-the-deviceid">How to get the deviceId?</h2><p>I've seen most of the people use some services like <code>Twilio</code>. Those libraries mostly require us to provide the <code>deviceId</code>. It is quite simple to fetch the deviceId from the track.</p><pre><code class="language-javascript">const tracks = stream.getTracks();
+
+tracks.forEach(track =&gt; {
+  console.log(track.getSettings().deviceId);
+});</code></pre><h2 id="it-s-demo-time-">It's demo time!</h2><p>Let's put everything together and see the things working together.</p><p>The demo will throw <code>NotAllowedError: Permission denied</code> error because it is trying to access camera from some other domain. You can open this on CodePen.io and try.</p><figure class="kg-card kg-embed-card"><iframe id="cp_embed_XWdgPEw" src="https://codepen.io/apalshah/embed/preview/XWdgPEw?height=300&amp;slug-hash=XWdgPEw&amp;default-tabs=js,result&amp;host=https://codepen.io" title="WebRTC — Switch Cameras - Facing Mode" scrolling="no" frameborder="0" height="300" allowtransparency="true" class="cp_embed_iframe" style="width: 100%; overflow: hidden;"></iframe></figure><hr><h2 id="footnotes">Footnotes</h2><p>If you have any doubts or you're facing any problems, you can follow or ping me on <a href="https://twitter.com/shah_apal">Twitter</a>. I would love to know your experience or any other feedback.</p>
+    </section>
+
+
+</article>
+
     </div>
+</section> --}}
+
+
+<aside class="read-more-wrap">
+    <div class="read-more inner">
+
+
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="/non-design-lessons-learned-while-designing-interfaces-2/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2021/01/Illustration.png 300w,
+                    /content/images/size/w600/2021/01/Illustration.png 600w,
+                    /content/images/size/w1000/2021/01/Illustration.png 1000w,
+                    /content/images/size/w2000/2021/01/Illustration.png 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="/content/images/size/w600/2021/01/Illustration.png"
+            alt="Non-Design lessons learned while designing interfaces"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/non-design-lessons-learned-while-designing-interfaces-2/">
+            <header class="post-card-header">
+                <h2 class="post-card-title">Non-Design lessons learned while designing interfaces</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>During my time at NextUX Design Agency, apart from designing screens and experience, I have learned so many non-design lessons that I would like to share.</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="/author/aman/" class="static-avatar">
+                        <img class="author-profile-image" src="/content/images/size/w100/2019/08/DNC-XEROX---784-1.jpg" alt="Aman Gupta" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/aman/">Aman Gupta</a></span>
+                <span class="post-card-byline-date"><time datetime="2021-01-24">Jan 24, 2021</time> <span class="bull">&bull;</span> 8 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="/css-what-is-currentcolor-keyword/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2020/11/css-current-color.jpg 300w,
+                    /content/images/size/w600/2020/11/css-current-color.jpg 600w,
+                    /content/images/size/w1000/2020/11/css-current-color.jpg 1000w,
+                    /content/images/size/w2000/2020/11/css-current-color.jpg 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="/content/images/size/w600/2020/11/css-current-color.jpg"
+            alt="CSS — What is currentColor keyword?"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/css-what-is-currentcolor-keyword/">
+            <header class="post-card-header">
+                <h2 class="post-card-title">CSS — What is currentColor keyword?</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>Did you know in CSS you can specify the color property once and use that value without specifying it again using the currentColor keyword?</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="/author/apal/" class="static-avatar">
+                        <img class="author-profile-image" src="//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x" alt="Apal Shah" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/apal/">Apal Shah</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-11-27">Nov 27, 2020</time> <span class="bull">&bull;</span> 2 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+                    
+<article class="post-card post ">
+
+    <a class="post-card-image-link" href="/understanding-javascript-array-reduce-method-and-its-use-cases-is-it-underrated/">
+        <img class="post-card-image"
+            srcset="/content/images/size/w300/2020/07/Array.reduce.jpg 300w,
+                    /content/images/size/w600/2020/07/Array.reduce.jpg 600w,
+                    /content/images/size/w1000/2020/07/Array.reduce.jpg 1000w,
+                    /content/images/size/w2000/2020/07/Array.reduce.jpg 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="/content/images/size/w600/2020/07/Array.reduce.jpg"
+            alt="Understanding Javascript Array&#x27;s .reduce() method and its use-cases"
+            loading="lazy"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="/understanding-javascript-array-reduce-method-and-its-use-cases-is-it-underrated/">
+            <header class="post-card-header">
+                <h2 class="post-card-title">Understanding Javascript Array&#x27;s .reduce() method and its use-cases</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>After reading various tweets and blogs, I decided to write a detailed article on what exactly reduce method is and what can be some of its use cases.</p>
+            </section>
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="/author/apal/" class="static-avatar">
+                        <img class="author-profile-image" src="//www.gravatar.com/avatar/fd29a9dce2da5d0631e635d01107669d?s&#x3D;250&amp;d&#x3D;mm&amp;r&#x3D;x" alt="Apal Shah" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="/author/apal/">Apal Shah</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-07-03">Jul 3, 2020</time> <span class="bull">&bull;</span> 7 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
+    </div>
+</aside>
+
+
+    </main>
+
+    <footer class="site-footer outer">
+        <div class="inner">
+            <section class="copyright"><a href="https://gosink.in">Sink In - Tech and Travel</a> &copy; 2021</section>
+            <nav class="site-footer-nav">
+                
+            </nav>
+        </div>
+    </footer>
+
+</div>
+
+
+<script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous">
+</script>
+<script src="/assets/built/casper.js?v=2408e2b2b9"></script>
+<script>
+$(document).ready(function () {
+    // Mobile Menu Trigger
+    $('.gh-burger').click(function () {
+        $('body').toggleClass('gh-head-open');
+    });
+    // FitVids - Makes video embeds responsive
+    $(".gh-content").fitVids();
+});
+</script>
+
+<!-- Add noopener and noreferrer for security -->
+<script>
+    window.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll('a').forEach(link => {
+        if (
+          link.getAttribute('href').includes('http://') ||
+          link.getAttribute('href').includes('https://')
+        ) {
+          link.setAttribute('rel', 'noopener noreferrer nofollow');
+        }
+      });
+    }, false);
+</script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 </body>
 </html>

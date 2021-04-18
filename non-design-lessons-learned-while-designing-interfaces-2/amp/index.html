@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html ⚡>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <title>Non-Design lessons learned while designing interfaces</title>
+
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://gosink.in/non-design-lessons-learned-while-designing-interfaces-2/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    
+    <meta property="og:site_name" content="Sink In - Tech and Travel" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Non-Design lessons learned while designing interfaces" />
+    <meta property="og:description" content="During my time at NextUX Design Agency, apart from designing screens and experience, I have learned so many non-design lessons that I would like to share." />
+    <meta property="og:url" content="https://gosink.in/non-design-lessons-learned-while-designing-interfaces-2/" />
+    <meta property="og:image" content="https://gosink.in/content/images/2021/01/Illustration.png" />
+    <meta property="article:published_time" content="2021-01-24T15:04:24.000Z" />
+    <meta property="article:modified_time" content="2021-01-24T15:04:24.000Z" />
+    <meta property="article:tag" content="design lessons" />
+    <meta property="article:tag" content="Design" />
+    <meta property="article:tag" content="UI/UX" />
+    <meta property="article:tag" content="UI Design" />
+    <meta property="article:tag" content="Design Career" />
+    <meta property="article:tag" content="Career Growth" />
+    <meta property="article:tag" content="UX Design" />
+    <meta property="article:tag" content="Product Designers" />
+    <meta property="article:tag" content="Lessons" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/shah.apal" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Non-Design lessons learned while designing interfaces" />
+    <meta name="twitter:description" content="During my time at NextUX Design Agency, apart from designing screens and experience, I have learned so many non-design lessons that I would like to share." />
+    <meta name="twitter:url" content="https://gosink.in/non-design-lessons-learned-while-designing-interfaces-2/" />
+    <meta name="twitter:image" content="https://gosink.in/content/images/2021/01/Illustration.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Aman Gupta" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="design lessons, Design, UI/UX, UI Design, Design Career, Career Growth, UX Design, Product Designers, Lessons" />
+    <meta name="twitter:site" content="@shah_apal" />
+    <meta name="twitter:creator" content="@iAmanguptaa" />
+    <meta property="og:image:width" content="2000" />
+    <meta property="og:image:height" content="1291" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Sink In - Tech and Travel",
+        "url": "https://gosink.in/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://gosink.in/content/images/2019/08/Final-logo.png"
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Aman Gupta",
+        "image": {
+            "@type": "ImageObject",
+            "url": "https://gosink.in/content/images/2019/08/DNC-XEROX---784-1.jpg",
+            "width": 445,
+            "height": 600
+        },
+        "url": "https://gosink.in/author/aman/",
+        "sameAs": [
+            "https://twitter.com/iAmanguptaa"
+        ]
+    },
+    "headline": "Non-Design lessons learned while designing interfaces",
+    "url": "https://gosink.in/non-design-lessons-learned-while-designing-interfaces-2/",
+    "datePublished": "2021-01-24T15:04:24.000Z",
+    "dateModified": "2021-01-24T15:04:24.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://gosink.in/content/images/2021/01/Illustration.png",
+        "width": 2000,
+        "height": 1291
+    },
+    "keywords": "design lessons, Design, UI/UX, UI Design, Design Career, Career Growth, UX Design, Product Designers, Lessons",
+    "description": "During my time at NextUX Design Agency, apart from designing screens and experience, I have learned so many non-design lessons that I would like to share.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://gosink.in/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.2" />
+    <link rel="alternate" type="application/rss+xml" title="Sink In - Tech and Travel" href="https://gosink.in/rss/" />
+
+    <style amp-custom>
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    html {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        font-size: 62.5%;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+    body {
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        color: #3a4145;
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+        font-size: 1.7rem;
+        line-height: 1.55em;
+        font-weight: 400;
+        font-style: normal;
+        background: #fff;
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    p,
+    ul,
+    ol,
+    li,
+    dl,
+    dd,
+    hr,
+    pre,
+    form,
+    table,
+    video,
+    figure,
+    figcaption,
+    blockquote {
+        margin: 0;
+        padding: 0;
+    }
+
+    ul[class],
+    ol[class] {
+        padding: 0;
+        list-style: none;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
+    input,
+    button,
+    select,
+    textarea {
+        font: inherit;
+        -webkit-appearance: none;
+    }
+
+    fieldset {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    label {
+        display: block;
+        font-size: 0.9em;
+        font-weight: 700;
+    }
+
+    hr {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid currentcolor;
+        opacity: 0.1;
+    }
+
+    ::selection {
+        text-shadow: none;
+        background: #cbeafb;
+    }
+
+    mark {
+        background-color: #fdffb6;
+    }
+
+    small {
+        font-size: 80%;
+    }
+
+    sub,
+    sup {
+        position: relative;
+        font-size: 75%;
+        line-height: 0;
+        vertical-align: baseline;
+    }
+    sup {
+        top: -0.5em;
+    }
+    sub {
+        bottom: -0.25em;
+    }
+
+    ul li + li {
+        margin-top: 0.6em;
+    }
+
+    a {
+        color: var(--ghost-accent-color, #1292EE);
+        text-decoration-skip-ink: auto;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0;
+        font-weight: 700;
+        color: #121212;
+        line-height: 1.4em;
+    }
+
+    h1 {
+        font-size: 3.4rem;
+        line-height: 1.1em;
+    }
+
+    h2 {
+        font-size: 2.4rem;
+        line-height: 1.2em;
+    }
+
+    h3 {
+        font-size: 1.8rem;
+    }
+
+    h4 {
+        font-size: 1.7rem;
+    }
+
+    h5 {
+        font-size: 1.6rem;
+    }
+
+    h6 {
+        font-size: 1.6rem;
+    }
+
+    amp-img {
+        height: 100%;
+        width: 100%;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    amp-img img {
+        object-fit: cover;
+    }
+
+    .page-header {
+        padding: 50px 5vmin 30px;
+        text-align: center;
+        font-size: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .page-header a {
+        color: #121212;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 1.6rem;
+        letter-spacing: -0.1px;
+    }
+
+    .post {
+        max-width: 680px;
+        margin: 0 auto;
+    }
+
+    .post-header {
+        margin: 0 5vmin 5vmin;
+        text-align: center;
+    }
+
+    .post-meta {
+        margin: 1rem 0 0 0;
+        text-transform: uppercase;
+        color: #738a94;
+        font-weight: 500;
+        font-size: 1.3rem;
+    }
+
+    .post-image {
+        margin: 0 0 5vmin;
+    }
+
+    .post-image img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .post-content {
+        padding: 0 5vmin;
+    }
+
+    .post-content > * + * {
+        margin-top: 1.5em;
+    }
+
+    .post-content [id]:not(:first-child) {
+        margin: 2em 0 0;
+    }
+
+    .post-content > [id] + * {
+        margin-top: 1rem;
+    }
+
+    .post-content [id] + .kg-card,
+    .post-content blockquote + .kg-card {
+        margin-top: 40px;
+    }
+
+    .post-content > ul,
+    .post-content > ol,
+    .post-content > dl {
+        padding-left: 1.9em;
+    }
+
+    .post-content hr {
+        margin-top: 40px;
+    }
+
+    .post .post-content hr + * {
+        margin-top: 40px;
+    }
+
+    .post-content amp-img {
+        background-color: #f8f8f8;
+    }
+
+    .post-content blockquote {
+        position: relative;
+        font-style: italic;
+    }
+
+    .post-content blockquote::before {
+        content: "";
+        position: absolute;
+        left: -1.5em;
+        top: 0;
+        bottom: 0;
+        width: 0.3rem;
+        background: var(--ghost-accent-color, #1292EE);
+    }
+
+    .post-content :not(.kg-card):not([id]) + .kg-card {
+        margin-top: 40px;
+    }
+
+    .post-content .kg-card + :not(.kg-card) {
+        margin-top: 40px;
+    }
+
+    .kg-card figcaption {
+        padding: 1.5rem 1.5rem 0;
+        text-align: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+        line-height: 1.4em;
+        opacity: 0.6;
+    }
+
+    .kg-card figcaption strong {
+        color: rgba(0,0,0,0.8);
+    }
+
+    .post-content :not(pre) code {
+        vertical-align: middle;
+        padding: 0.15em 0.4em 0.15em;
+        border: #e1eaef 1px solid;
+        font-weight: 400;
+        font-size: 0.9em;
+        line-height: 1em;
+        color: #15171a;
+        background: #f0f6f9;
+        border-radius: 0.25em;
+    }
+
+    .post-content > pre {
+        overflow: scroll;
+        padding: 16px 20px;
+        color: #fff;
+        background: #1F2428;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px -2px rgba(0,0,0,.1), 0 0 1px rgba(0,0,0,.4);
+    }
+
+    .kg-embed-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .kg-image-card img {
+        margin: auto;
+    }
+
+    .kg-gallery-card + .kg-gallery-card {
+        margin-top: 0.75em;
+    }
+
+    .kg-gallery-container {
+        position: relative;
+    }
+
+    .kg-gallery-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .kg-gallery-image {
+        width: 100%;
+        height: 100%;
+    }
+
+    .kg-gallery-row:not(:first-of-type) {
+        margin: 0.75em 0 0 0;
+    }
+
+    .kg-gallery-image:not(:first-of-type) {
+        margin: 0 0 0 0.75em;
+    }
+
+    .kg-bookmark-card,
+    .kg-bookmark-publisher {
+        position: relative;
+    }
+
+    .kg-bookmark-container,
+    .kg-bookmark-container:hover {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row-reverse;
+        color: currentColor;
+        background: rgba(255,255,255,0.6);
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif;
+        text-decoration: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+    }
+
+    .kg-bookmark-content {
+        flex-basis: 0;
+        flex-grow: 999;
+        padding: 20px;
+        order: 1;
+    }
+
+    .kg-bookmark-title {
+        font-weight: 600;
+        font-size: 1.5rem;
+        line-height: 1.3em;
+    }
+
+    .kg-bookmark-description {
+        display: -webkit-box;
+        max-height: 45px;
+        margin: 0.5em 0 0 0;
+        font-size: 1.4rem;
+        line-height: 1.55em;
+        overflow: hidden;
+        opacity: 0.8;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .kg-bookmark-metadata {
+        margin-top: 20px;
+    }
+
+    .kg-bookmark-metadata {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        font-size: 1.3rem;
+        line-height: 1.3em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .kg-bookmark-description {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    }
+
+    .kg-bookmark-metadata amp-img {
+        width: 18px;
+        height: 18px;
+        max-width: 18px;
+        max-height: 18px;
+        margin-right: 10px;
+    }
+
+    .kg-bookmark-thumbnail {
+        display: flex;
+        flex-basis: 20rem;
+        flex-grow: 1;
+        justify-content: flex-end;
+    }
+
+    .kg-bookmark-thumbnail amp-img {
+        max-height: 200px;
+    }
+
+    .kg-bookmark-author {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .kg-bookmark-publisher::before {
+        content: "•";
+        margin: 0 .5em;
+    }
+
+    .kg-width-full.kg-card-hascaption {
+        display: grid;
+        grid-template-columns: inherit;
+    }
+
+    .post-content table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .post-content th {
+        padding: 0.5em 0.8em;
+        text-align: left;
+        font-size: .75em;
+        text-transform: uppercase;
+    }
+
+    .post-content td {
+        padding: 0.4em 0.7em;
+    }
+
+    .post-content tbody tr:nth-child(2n + 1) {
+        background-color: rgba(0,0,0,0.1);
+        padding: 1px;
+    }
+
+    .post-content tbody tr:nth-child(2n + 2) td:last-child {
+        box-shadow:
+            inset 1px 0 rgba(0,0,0,0.1),
+            inset -1px 0 rgba(0,0,0,0.1);
+    }
+
+    .post-content tbody tr:nth-child(2n + 2) td {
+        box-shadow: inset 1px 0 rgba(0,0,0,0.1);
+    }
+
+    .post-content tbody tr:last-child {
+        border-bottom: 1px solid rgba(0,0,0,.1);
+    }
+
+    .page-footer {
+        padding: 60px 5vmin;
+        margin: 60px auto 0;
+        text-align: center;
+        background-color: #f8f8f8;
+    }
+
+    .page-footer h3 {
+        margin: 0.5rem 0 0 0;
+    }
+
+    .page-footer p {
+        max-width: 500px;
+        margin: 1rem auto 1.5rem;
+        font-size: 1.7rem;
+        line-height: 1.5em;
+        color: rgba(0,0,0,0.6)
+    }
+
+    .powered {
+        display: inline-flex;
+        align-items: center;
+        margin: 30px 0 0;
+        padding: 6px 9px 6px 6px;
+        border: rgba(0,0,0,0.1) 1px solid;
+        font-size: 12px;
+        line-height: 12px;
+        letter-spacing: -0.2px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+        font-weight: 500;
+        color: #222;
+        text-decoration: none;
+        background: #fff;
+        border-radius: 6px;
+    }
+
+    .powered svg {
+        height: 16px;
+        width: 16px;
+        margin: 0 6px 0 0;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            font-size: 1.6rem;
+        }
+        h1 {
+            font-size: 3rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        h1 {
+            font-size: 2.6rem;
+            line-height: 1.15em;
+        }
+        h2 {
+            font-size: 2rem;
+            line-height: 1.2em;
+        }
+        h3 {
+            font-size: 1.7rem;
+        }
+    }
+
+    :root {--ghost-accent-color: #1c1c1c;}
+    </style>
+
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+
+    
+
+</head>
+
+<body class="amp-template">
+    <header class="page-header">
+        <a href="https://gosink.in">
+                <amp-img class="site-icon" src="https://gosink.in/content/images/2019/08/favicon.png" width="50" height="50" layout="fixed"></amp-img>
+        </a>
+    </header>
+
+    <main class="content" role="main">
+        <article class="post">
+
+            <header class="post-header">
+                <h1 class="post-title">Non-Design lessons learned while designing interfaces</h1>
+                <section class="post-meta">
+                    Aman Gupta -
+                    <time class="post-date" datetime="2021-01-24">24 Jan 2021</time>
+                </section>
+            </header>
+            <figure class="post-image">
+                <amp-img src="https://gosink.in/content/images/2021/01/Illustration.png" width="600" height="340" layout="responsive"></amp-img>
+            </figure>
+            <section class="post-content">
+
+                <hr></hr><p>It’s been a year since I joined the <a href="https://medium.com/nextuxdesign"><strong>NextUX Design Agency</strong></a> and I can’t be more grateful and fortunate to have taken that decision. It’s been a wonderful time. I did not grow just design-wise, but also at the personal level too. All thanks to <a href="https://medium.com/u/5e635919ea61">Yagnesh Ahir</a> and <a href="https://medium.com/u/1557faf381d3">Dhanashree Manohar</a>. Now, as I left the company, I would like to reflect on some of the non-design lessons learned.</p><p>When I was given the opportunity to join the team, I was so excited as I was getting a chance to work with the team of designers, the people who think like me, work like me, and understand what I work and also, can give me validations and feedback around what I was doing. But, I had not expected that I was not just going to learn only the design things like UX and UI, but a lot of other things that are parallelly important to designing solutions.</p><p>After joining, in a month, I realized that to design solutions and work in the design industry, you need to be good at more things than just knowing the UI and UX. So, in this blog, I am going to talk about skills that I learned along with designing the UI/UX at NextUX Design agency. And the reason why I wanted to share with you these lessons because, generally, when we start learning the UI/UX, we solely focus on learning the research and designing part, but there is actually a second part of designing solutions that we mostly ignore. But let me tell you, that second part is really going to make an impact on your design career and once you become good at it, you can be a really worthy designer.</p><p>So, let’s start..</p><hr></hr><h3 id="01-communication-is-power">01. Communication is power</h3><p>What you do every time, every day is not communication, it is talking. And there is a big difference between communication and talking. Especially, when you are doing it in the professional world, it is important how you communicate.</p><p>The reason I wanted to talk about the role of communication because as designers we are kind of the central point in the whole product development and customer feedback flow. We are going to work with developers, managers, decision-makers, end-users, and a lot more roles, and to make them understand your work, you need to be able to communicate well. And if we are not clear enough in your way of communicating things, then it is going to affect a lot of people in the whole flow. Our work as a designer is not just to design the interfaces or research problems, but also to communicate the meaning of that work. And if we are not communicating it well, then our work has no meaning.</p><p>This was something that I learned at the very initial days because this is the only way one can tell others what, how, and why you have done that thing.</p><h3 id="02-listening-is-an-underrated-skill-in-design">02. Listening is an underrated skill in design</h3><p>The second most important part of the design is, Feedback. Feedback is the thing for which you explore different ideas, design beautiful interfaces, and make a lot of other design efforts, and if you are not good at listening to what other people have to say about all those efforts, then you are going to miss a lot of good feedback.</p><p>Everyone thinks, they listen well. But, when you listen to feedback and go back to work, then you realize how much did you focus on the listening and what did you miss.</p><p>Especially, when you work in the client-based industry, your whole day is filled with calls, and most of the time, you are going to receive feedback over the calls. And I realized that it is very easy to listen when someone is speaking in front of you, but it is a lot harder to do it when someone is not present upfront. You will lose focus easily. And if you didn’t listen to the feedback properly the first time, then you have to keep asking them again or you might miss designing some things. Without being a good listener, you are going to miss a lot of things. Listening requires deep focus.</p><p>And one more thing that I learned about listening is that, if you are a good listener, you can solve a lot of problems just by being in the conversation.</p><h3 id="03-second-order-thinking-a-skill-we-designers-should-master">03. Second-order thinking — a skill we designers should master</h3><blockquote>First-order<strong> thinking</strong> is the process of considering the intended and perhaps obvious implications of a business decision or policy change. <strong>Second-order thinking</strong> is the process of tracing down and unraveling the implications of those first-order impacts.</blockquote><p>I don’t know how many of you have heard this skill, but this exists. And the people who are good at this are the people who top the chart in making good rational decisions.</p><p>I heard about this from <a href="https://medium.com/u/1557faf381d3">Dhanashree Manohar</a> and for the next few days, I was researching all about second-order thinking.</p><p>The reason why I started practicing this skill because whenever you are going to explore design solutions, the next thing will be to present your design or brainstorm with other people, and when doing that, you will be faced with a lot of cross-questions, and if you can’t think about it and come back with an answer at the moment, then it will become very difficult for you to engage in a healthy and meaningful brainstorming discussion.</p><p>Most of the time, when someone asked me questions, I used to say them, I will get back to you in a couple of minutes. Sometimes, it is good that you are taking extra time to think, as you don’t want to make a wrong decision. But doing it every time is just going to waste unnecessary time, not just yours, but also of your clients too. So, while presenting, and listening to the feedback, I always pushed my brain to think hard and see how that decision is going to impact in future.</p><p>Few people focus on this skill, but I realized if we improve and develop our second-order thinking then it is really going to have a large impact on our work style, and also, it will help us to think deeper than anyone else in the room.</p><blockquote>Good designers are paid for good thinking.</blockquote><h3 id="04-practice-presenting-your-work">04. Practice presenting your work</h3><p>My previous company was a product-based company. There was no client-side talking required for my profile. I just had to show and explain my work to the manager and the manager will have to take it forward. But, when I joined NextUX Design Agency, Presentations and walkthroughs were a regular thing. However, <a href="https://medium.com/u/5e635919ea61">Yagnesh Ahir</a> and <a href="https://medium.com/u/1557faf381d3">Dhanashree Manohar</a> were always there to start the conversation, but I had to take responsibility for my work. If I had done the work, I need to explain it to the client.</p><p>One thing which <a href="https://medium.com/u/5e635919ea61">Yagnesh Ahir</a> told me was if you want useful, actionable feedback, then you have to learn how to present your design.</p><p>The reason why you need to learn and practice presentation because when you are given a design problem, and you start creating the solution, you consider different ideas, constraints, and rationals, and if you don’t communicate it well to others, then how are they going to understand why and what you have designed and if don’t get it, how would they give you the feedback.</p><blockquote>A good presentation or walkthrough of work is not just important for you, but for others too, because they have to get back to you with effective feedback.</blockquote><p>Presenting work can be really fun and when you do it well, it’s a great confidence builder. And a simple way to present well is to set the context before showing your design. Talk about the problem, how did you approach it. And then explain your approaches one by one. In the end, simply ask them, what do you think?. This is something that looks easy, but when you do it in real, you will miss a lot of points. I still practice this habit.</p><h3 id="05-make-priorities-your-friend-and-time-estimates-a-habit">05. Make priorities your friend. And time estimates a habit</h3><blockquote>One piece of advice to improve your productivity is to set priorities and time estimates.</blockquote><p>At the NextUX, two things that have improved my task completion efficiency are setting the priorities before the day starts, and estimating an approx time to complete the task.</p><p>When you are working on multiple projects and with multiple people, then you have to be clear enough on what you are going to work on first and how much time will you take to complete the work. Generally, what happens is everybody wants their work to be done first and as quickly as possible but you have only certain hours and you can’t just sit all day to complete everything. In that case, setting the priorities and adding an approx figure of time will make it easier for you to schedule your work effectively and you can actually produce better results.</p><p>One more reason why you should be setting priorities and task estimates for your tasks because when you are in the creative field like design, usually, you forget about the time, you just keep exploring different UIs or keep reading multiple articles. Ultimately, taking the unnecessary time. So, whenever you start any task, keep in mind how much time are you going to spend on it.</p><p>So, do practice this. It will become a habit for you.</p><h3 id="06-to-become-proficient-take-ownership">06. To become proficient, Take Ownership</h3><p>I remember in my previous company, whenever something was given to me, I used to complete it and leave the office. But after joining NextUX, this attitude was completely changed.</p><p>In my initial days at NextUX, I had no direct responsibility, I just needed to report my daily tasks to my senior designer and just no client communication. But, in the third month of my job, Yagnesh assigned me to a very quite a big project. Though it was mostly done, I did not know they were moving to phase 2 development. I was quite afraid at that time to take such a big responsibility but I always had the back of Yagnesh.</p><p>On the initials day of working with that client, I remember I used to miss a lot of things in design, I did mistakes in the UIs, sometimes, I used to design something different than what was asked to. Sometimes, when working more than the working hours, I used to feel uneasy. But, along the way, I got to know the taste of ownership. After a period of time, When I realized I am the only person responsible for my work and it is my responsibility to do it, then I started paying extra attention and care about my work with that client. I felt like this was something I have been assigned to, the whole responsibility is mine, and I can’t let it down.</p><p>From those days to now, I feel like a more confident designer, and also ready to take up any kind of work. For this, always grateful to <a href="https://medium.com/u/5e635919ea61">Yagnesh Ahir</a>.</p><blockquote>Once Abraham Lincoln said, <strong>“…if you want to test a man’s character, give him power.”</strong></blockquote><p>I just want to add one thing in this, <em>If you want to make someone proficient and responsible in doing something, then just give them ownership of that thing. And see the results.</em></p><h3 id="07-being-calm-should-be-your-1-skill">07. Being calm should be your #1 skill</h3><p>You are what you think, you do things based on how your mind is thinking. You have seen a lot of people who get frustrated easily, and they start doing things back and forth. Ultimately, missing a lot of things. I was once there and to overcome that, I learned the skill of being calm. It is not easy. And if you are not good at being calm, the above skills have no meaning.</p><p>The reason why you should learn the power of calmness because it has a very big impact on your way of working with people and producing good work. Most of the time, when we work with clients, developers, designers, end-users, deadlines then sometimes, it becomes too hectic and frustrating, and we start losing focus, which ultimately affects our decisions and work. In that situation, If you hold the calmness in your mind, then it will make the whole picture very clear and you can easily feel composed and confident.</p><p>Honestly, I was very bad at this, but from <a href="https://medium.com/u/5e635919ea61">Yagnesh Ahir</a>, I learned the importance of being calm. As when you are calm, you listen well, you communicate clearly, you make decisions wisely. And your productivity increases.</p><hr></hr><h3 id="conclusion">Conclusion</h3><p>When I joined the design industry, I always believed that it is my design skills that are going to take me forward in my design career. But, after joining the <a href="https://medium.com/nextuxdesign"><strong>NextUX Design Agency</strong></a> and meeting with these amazing designers and wonderful people, I had to change my mind. I learned that it not just about how good you are in designing interfaces or experiences, but you need to be good at these skills also.</p><p>Last but not least, I just want to thank <a href="https://medium.com/u/1557faf381d3">Dhanashree Manohar</a> and <a href="https://medium.com/u/5e635919ea61">Yagnesh Ahir</a> for making me not just a better designer but also a better person. Really fortunate and grateful to both of them.</p><p>Thanks for reading!</p><hr></hr><p><br />You can follow me here: <a href="https://dribbble.com/iamanguptaa?source=post_page---------------------------" rel="noopener nofollow noopener">Dribbble</a>. <a href="https://www.behance.net/iamanguptaa?source=post_page---------------------------" rel="noopener nofollow noopener">Behance</a>. <a href="https://medium.com/@iamanguptaa?source=post_page---------------------------" rel="noopener">Medium</a>. <a href="https://twitter.com/iAmanguptaa" rel="noopener nofollow noopener">Twitter</a></p>
+
+            </section>
+
+        </article>
+    </main>
+    <footer class="page-footer">
+            <amp-img class="site-icon" src="https://gosink.in/content/images/2019/08/favicon.png" width="50" height="50" layout="fixed"></amp-img>
+        <h3>Sink In - Tech and Travel</h3>
+            <p>Sink In - Tech and Travel</p>
+        <p><a href="https://gosink.in">Read more posts →</a></p>
+        <a class="powered" href="https://ghost.org" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 156 156"><g fill="none" fill-rule="evenodd"><rect fill="#15212B" width="156" height="156" rx="27"/><g transform="translate(36 36)" fill="#F6F8FA"><path d="M0 71.007A4.004 4.004 0 014 67h26a4 4 0 014 4.007v8.986A4.004 4.004 0 0130 84H4a4 4 0 01-4-4.007v-8.986zM50 71.007A4.004 4.004 0 0154 67h26a4 4 0 014 4.007v8.986A4.004 4.004 0 0180 84H54a4 4 0 01-4-4.007v-8.986z"/><rect y="34" width="84" height="17" rx="4"/><path d="M0 4.007A4.007 4.007 0 014.007 0h41.986A4.003 4.003 0 0150 4.007v8.986A4.007 4.007 0 0145.993 17H4.007A4.003 4.003 0 010 12.993V4.007z"/><rect x="67" width="17" height="17" rx="4"/></g></g></svg> Published with Ghost</a>
+    </footer>
+    
+</body>
+</html>
